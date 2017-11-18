@@ -1,0 +1,102 @@
+var mWindowSize={width:document.documentElement.clientWidth,height:document.documentElement.clientHeight};
+//画面の縦横比
+const mScreenRatio={width:12,height:7};
+//ゲーム画面のサイズ
+var mScreenSize;
+//ゲーム画面サイズ決定
+if(mWindowSize.width/mScreenRatio.width>mWindowSize.height/mScreenRatio.height){
+	mScreenSize={width:mWindowSize.height*mScreenRatio.width/mScreenRatio.height,height:mWindowSize.height}
+}
+else{
+	mScreenSize={width:mWindowSize.width,height:mWindowSize.width*mScreenRatio.height/mScreenRatio.width}
+}
+//ゲーム画面サイズにbodyをサイズ変更
+let mGameScreen=document.getElementById("gameScreen");
+mGameScreen.style.width=mScreenSize.width+"px";
+mGameScreen.style.height=mScreenSize.height+"px";
+mGameScreen.style.top=(mWindowSize.height-mScreenSize.height)/2+"px";
+mGameScreen.style.left=(mWindowSize.width-mScreenSize.width)/2+"px";
+
+window.addEventListener('DOMContentLoaded', ()=>{
+	Battle.init([{
+		name:"猫ちゃん",
+		race:"ばけねこ",
+		hp:30,
+		mp:20,
+		atk:20,
+		def:10,
+		mgc:14,
+		spt:13,
+		spd:22,
+		mov:3,
+		item:["きのみ"],
+		moc:{
+			grass:1,
+			sand:1,
+			water:false,
+			magma:false,
+			snow:2,
+			ice:2,
+			air:false,
+			wall:false
+		},
+		image:{
+			body:"pygmy/bakeneko",
+			eye:{normal:"gray",damage:"sanMe"},
+			mouth:{normal:"yaeba",damage:"sanKuti"},
+			accessory:[]
+		}}
+	],[{
+		name:"てきねこ",
+		race:"ばけねこ",
+		hp:30,
+		mp:20,
+		atk:20,
+		def:10,
+		mgc:14,
+		spt:13,
+		spd:22,
+		mov:3,
+		item:[],
+		moc:{
+			grass:1,
+			sand:1,
+			water:false,
+			magma:false,
+			snow:2,
+			ice:2,
+			air:false,
+			wall:false
+		},
+		image:{
+			body:"pygmy/bakeneko",
+			eye:{normal:"gray",damage:"sanMe"},
+			mouth:{normal:"yaeba",damage:"sanKuti"},
+			accessory:[]
+		}}
+	],{
+		feild:[
+			[0,0,0,0,0],
+			[0,0,0,0,0],
+			[1,1,0,1,1],
+			[0,0,0,0,0]
+		],
+		masData:{
+			0:{
+				attribute:"grass",
+				image:"grass",
+				object:[]
+			},
+			1:{
+				attribute:"water",
+				image:"water",
+				object:[]
+			}
+		},
+		charaPosition:{
+			user:[{x:1,y:3},{x:3,y:3}],
+			enemy:[{x:2,y:0}]
+		}
+	})
+	Battle.start();
+});

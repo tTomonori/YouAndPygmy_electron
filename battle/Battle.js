@@ -1,0 +1,36 @@
+class Battle{
+	static init(aUserTeam,aEnemyTeam,aFeild){
+		ThreeWarld.init();
+		//カメラ位置設定
+		ThreeWarld.setCamera({x:aFeild.feild.length/2*mMasSize[0],y:-aFeild.feild.length/2*mMasSize[1]-500,z:mMasSize[2]+400},{x:0.95})
+
+		this.userTeam=new Array();
+		this.enemyTeam=new Array();
+		for(let tChara of aUserTeam){//味方チームのキャラインスタンス生成
+			this.userTeam.push(new Chara(tChara));
+		}
+		for(let tChara of aEnemyTeam){//敵チームのキャラインスタンス生成
+			this.enemyTeam.push(new Chara(tChara));
+		}
+		//ターン初期化
+		Turn.init(this.userTeam.concat(this.enemyTeam));
+		//フィールド初期化
+		Feild.init(aFeild);
+		//キャラ配置
+		let tPositionData=aFeild.charaPosition.user;
+		for(let i=0;i<this.userTeam.length;i++){
+			this.userTeam[i].setPosition(tPositionData[i].x,tPositionData[i].y);
+		}
+		tPositionData=aFeild.charaPosition.enemy;
+		for(let i=0;i<this.enemyTeam.length;i++){
+			this.enemyTeam[i].setPosition(tPositionData[i].x,tPositionData[i].y);
+		}
+	}
+	//戦闘開始
+	static start(){
+		Turn.nextTurn();
+		ThreeWarld.setMouseMove();
+		ThreeWarld.setClick();
+	}
+}
+var mMasSize=[100,100,100];
