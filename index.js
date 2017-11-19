@@ -100,7 +100,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
 		charaPosition:{
 			user:[{x:1,y:3},{x:3,y:3}],
 			enemy:[{x:2,y:0}]
-		}
+		},
+		background:"BG24a_80.jpg"
 	})
 	Battle.start();
 });

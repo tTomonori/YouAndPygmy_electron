@@ -15,7 +15,7 @@ const ipc=electron.ipcRenderer;
 </script>
 <script src="threejsmaster/build/three.min.js"></script>
 <body id="gameScreen" style="position:fixed;margin:0;background:#eef">
-<div id="battleScene" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;">
+<div id="battleScene" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;background-size:cover;">
 	<canvas id="threeWarld" style="position:absolute;top:0;left:0;width:100%;height:100%z-index:-1;"></canvas>
 </div>
 </body>
@@ -23,6 +23,7 @@ const ipc=electron.ipcRenderer;
 
 <script src="3dWarld/ThreeWarld.js"></script>
 <!-- battle -->
+<script src="battle/AttackDivider.js"></script>
 <script src="battle/battle.js"></script>
 <script src="battle/Chara.js"></script>
 <script src="battle/Feild.js"></script>

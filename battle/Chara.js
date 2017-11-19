@@ -5,8 +5,8 @@ class Chara{
 		this.race=aData.race;
 		this.maxHp=aData.hp;
 		this.maxMp=aData.mp;
-		this.hp=this.maxHp-5;
-		this.mp=this.maxMp-10;
+		this.hp=this.maxHp;
+		this.mp=this.maxMp;
 		this.atk=aData.atk;
 		this.def=aData.def;
 		this.mgc=aData.mgc;
@@ -132,16 +132,28 @@ class Chara{
 	//スキルが選択された
 	displaySkillRange(aSkill){
 		this.selectedSkill=aSkill;
-		let tRange=SkillRangeDeriver.deriveRange(aSkill,this);
+		let tRange=SkillRangeDeriver.deriveRange(aSkill,this.getPosition());
 		Feild.resetSelectMasEvent();
 		Feild.displaySkillRange(tRange);
 	}
 	//引数のマスに攻撃
 	attack(aMas){
-		let tAttackedChara=aMas.getOnChara();
-		if(tAttackedChara==null)return;
-		Feild.resetSelectMasEvent();
-		//攻撃
-		console.log("attack");
+		AttackDivider.attack(this.selectedSkill,aMas,this);
+	}
+	//攻撃終了
+	endAttack(){
+		Turn.endTurn();
+	}
+	//ダメージを受ける
+	damage(aDamage){
+		this.hp-=aDamage;
+		if(this.hp<0)this.hp=0;
+		console.log("damage:"+aDamage);
+	}
+	//回復する
+	heal(aDamage){
+		this.hp+=aDamage;
+		if(this.hp>this.maxHp)this.hp=this.maxHp;
+		console.log("heal:"+aDamage);
 	}
 }

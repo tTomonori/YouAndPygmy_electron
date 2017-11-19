@@ -6,7 +6,7 @@ class SkillDictionary{
 SkillDictionary.dictionary={
 	hikkaki:{
 		name:"ひっかき",
-		attack:"attack",
+		attribute:"physics",
 		magnification:"addition",
 		power:0,
 		range:[{range:"circumference",value:1}],
@@ -16,7 +16,7 @@ SkillDictionary.dictionary={
 	},
 	enjutu:{
 		name:"炎術",
-		attack:"attack",
+		attribute:"magic",
 		magnification:"multiplication",
 		power:1.2,
 		range:[{range:"circumference",value:3}],
@@ -26,7 +26,7 @@ SkillDictionary.dictionary={
 	},
 	denkousekka:{
 		name:"電光石火",
-		attack:"attack",
+		attribute:"physics",
 		magnification:"addition",
 		power:5,
 		range:[{range:"straight",value:2}],
@@ -38,7 +38,7 @@ SkillDictionary.dictionary={
 /*
 name:{
 name:"",
-attack:"attack"or"heal",
+attribute:"attack"or"heal",
 magnification:"addition"or"multiplication",
 power:,
 range:[{range:"",value:}],
