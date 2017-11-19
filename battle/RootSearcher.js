@@ -61,4 +61,24 @@ class RootSearcher{
 		tSearchedList.splice(0,1);
 		return tSearchedList;
 	}
+	//移動先へのルートを返す
+	static getRoot(aMovable,aPosition){
+		let tRoot=new Array();
+		let tPosition={pre:{x:aPosition.x,y:aPosition.y}}
+		let tSearchPosition=()=>{
+			for(let tMovable of aMovable){
+				if(tMovable.x==tPosition.pre.x&&tMovable.y==tPosition.pre.y){
+					return tMovable;
+				}
+			}
+			return null;
+		}
+		while(true){
+			let tMovable=tSearchPosition();
+			if(tMovable==null)break;
+			tPosition=tMovable;
+			tRoot.unshift(tMovable);
+		}
+		return tRoot;
+	}
 }

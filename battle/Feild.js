@@ -19,4 +19,8 @@ class Feild{
 		if(this.feild[aY].length<=aX)return null;
 		return this.feild[aY][aX];
 	}
+	//指定した座標を3dの座標に変換
+	static convertToThreeWarldPosition(aX,aY){
+		return {x:mMasSize[0]*aX,y:-mMasSize[1]*aY};
+	}
 }

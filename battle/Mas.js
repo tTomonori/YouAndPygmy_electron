@@ -9,10 +9,11 @@ class Mas{
 
 		this.chara=null;//このマスにいるキャラ
 
+		let tThreePosition=Feild.convertToThreeWarldPosition(this.x,this.y);
 		//3dの要素
 		this.box=ThreeWarld.createTextureBox(mMasSize,"image/battleTile/"+this.image+".jpg");
-		this.box.position.x=mMasSize[0]*this.x;
-		this.box.position.y=-mMasSize[1]*this.y;
+		this.box.position.x=tThreePosition.x;
+		this.box.position.y=tThreePosition.y;
 		this.box.className="mas";
 		this.box.class=this;
 		//マスを変色させるためのbox
@@ -23,9 +24,17 @@ class Mas{
 		this.cover.material.transparent=true;
 		this.cover.material.opacity=0;
 	}
+	//このマスの座標を返す
+	getPosition(){
+		return {x:this.x,y:this.y};
+	}
 	//このマスにいるキャラをセット
 	on(aChara){
 		this.chara=aChara;
+	}
+	//このマスからキャラが移動
+	out(){
+		this.chara=null;
 	}
 	//このマスにいるキャラを返す
 	getOnChara(){
@@ -38,7 +47,9 @@ class Mas{
 	//移動可能マスとしてセットする
 	changeToMovable(){
 		this.mouseOver=()=>{this.changeToSelectedColor();};
-		this.click=()=>{console.log(this.x,this.y);}
+		this.click=()=>{
+			Turn.getTurnChara().moveToSelectedMas(this);
+		}
 		ThreeWarld.setInterval(()=>{
 			this.changeToMovableColor();
 		})
@@ -56,6 +67,11 @@ class Mas{
 	//マスの変色を元に戻す
 	resetCover(){
 		this.cover.material.opacity=0;
+	}
+	//マウスオーバーとクリック時のメソッドリセット
+	resetMouseEvent(){
+		this.mouseOver=()=>{};
+		this.click=()=>{};
 	}
 	//マウスオーバーされた時(他のメソッドで上書きする)
 	mouseOver(){

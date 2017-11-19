@@ -2,7 +2,7 @@ class Battle{
 	static init(aUserTeam,aEnemyTeam,aFeild){
 		ThreeWarld.init();
 		//カメラ位置設定
-		ThreeWarld.setCamera({x:aFeild.feild.length/2*mMasSize[0],y:-aFeild.feild.length/2*mMasSize[1]-500,z:mMasSize[2]+400},{x:0.95})
+		ThreeWarld.setCamera({x:aFeild.feild.length/2*mMasSize[0],y:-aFeild.feild.length/2*mMasSize[1]-600,z:mMasSize[2]+400},{x:0.95})
 
 		this.userTeam=new Array();
 		this.enemyTeam=new Array();
@@ -19,11 +19,11 @@ class Battle{
 		//キャラ配置
 		let tPositionData=aFeild.charaPosition.user;
 		for(let i=0;i<this.userTeam.length;i++){
-			this.userTeam[i].setPosition(tPositionData[i].x,tPositionData[i].y);
+			this.userTeam[i].initPosition(tPositionData[i].x,tPositionData[i].y);
 		}
 		tPositionData=aFeild.charaPosition.enemy;
 		for(let i=0;i<this.enemyTeam.length;i++){
-			this.enemyTeam[i].setPosition(tPositionData[i].x,tPositionData[i].y);
+			this.enemyTeam[i].initPosition(tPositionData[i].x,tPositionData[i].y);
 		}
 	}
 	//戦闘開始

@@ -136,6 +136,50 @@ class ThreeWarld{
 			}
 		}
 	}
+	//移動アニメーション(objectlist[0]がatrgetpositionへ移動)
+	static setMoveAnimation(aObjectList,aTargetPosition,aDuration,aCallBack){
+		let tPosition=aObjectList[0].position;
+		let tSpeed={};
+		let tTimes=Math.ceil(aDuration*0.06);
+		//1フレームで移動させる距離を求める
+		for(let tAxis in aTargetPosition){
+			tSpeed[tAxis]=(aTargetPosition[tAxis]-tPosition[tAxis])/tTimes;
+		}
+		let tLoop=()=>{
+			let tArriveFlag=true;
+			//物体の移動
+			for(let tObject of aObjectList){
+				for(let tAxis in tSpeed){
+					tObject.position[tAxis]+=tSpeed[tAxis];
+					//目標地点に到達したか確認
+					if(tSpeed[tAxis]<0){
+						if(tObject.position[tAxis]>aTargetPosition[tAxis]){
+							tArriveFlag=false;
+						}
+					}
+					else{
+						if(tObject.position[tAxis]<aTargetPosition[tAxis]){
+							tArriveFlag=false;
+						}
+					}
+				}
+			}
+			if(!tArriveFlag){
+				//目標地点に到達していない
+				requestAnimationFrame(tLoop);
+			}
+			else{
+				//目標地点に到達した
+				for(let tObject of aObjectList){
+					for(let tAxis in aTargetPosition){
+						tObject.position[tAxis]=aTargetPosition[tAxis];
+					}
+				}
+				aCallBack();
+			}
+		}
+		tLoop();
+	}
 	//マウスオーバーされているオブジェクトのリストを返す
 	static getOverdObjects(e){
 		// var rect = e.target.getBoundingClientRect();
