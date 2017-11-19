@@ -28,8 +28,11 @@ class Battle{
 			this.enemyTeam[i].initPosition(tPositionData[i].x,tPositionData[i].y);
 		}
 		StatusBox.init();
-		SkillButton.init();
+		CancelMoveButton.init();
 		EndTurnButton.init();
+		ItemButton.init();
+		OptionButton.init();
+		SkillButton.init();
 	}
 	//戦闘開始
 	static start(){

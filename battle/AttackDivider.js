@@ -23,7 +23,7 @@ class AttackDivider{
 				default:
 			}
 		}
-		aChara.endAttack();
+		CharaController.endAttack();
 	}
 	//ダメージ計算
 	static calcuDamage(aSkill,aAttackChara,aDamagedChara){

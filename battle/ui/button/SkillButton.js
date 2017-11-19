@@ -10,6 +10,7 @@ class SkillButton{
 		this.button.style.height=mButtonSize+"px";
 		this.button.style.background="#f33";
 		mBattleSecene.appendChild(this.button);
+		this.button.onclick=()=>{this.click();}
 		//スキルリスト
 		this.skillList=document.createElement("div");
 		this.skillList.id="skillList";
@@ -40,8 +41,18 @@ class SkillButton{
 		this.skillList.appendChild(tMarginBox);
 		this.skills.push(tMarginBox);
 	}
-	//スキルを表示
-	static displaySkill(aSkillList,aSelectedFunction){
+	//クリックされた時
+	static click(){}
+	//クリックした時に実行する関数セット
+	static setClickFunction(aFunction){
+		this.click=()=>{aFunction()}
+	}
+	//クリックした時に実行する関数リセット
+	static resetClickFunction(){
+		this.click=()=>{}
+	}
+	//スキルリストセット
+	static setSkillList(aSkillList){
 		for(let i=0;i<this.skillNum;i++){
 			let tSkillTag=this.skills[i];
 			if(i>=aSkillList.length){
@@ -50,9 +61,16 @@ class SkillButton{
 			}
 			let tSkill=SkillDictionary.getSkill(aSkillList[i]);
 			tSkillTag.textContent=tSkill.name;
-			tSkillTag.onclick=()=>{aSelectedFunction(tSkill)};
+			tSkillTag.onclick=()=>{CharaController.selectedSkill(tSkill)};
 			tSkillTag.style.display="block";
 		}
+	}
+	//スキルリストを表示していたらture
+	static isDisplayed(){
+		return this.skillList.style.display=="block";
+	}
+	//スキルを表示
+	static displaySkill(aSkillList,aSelectedFunction){
 		this.skillList.style.display="block";
 	}
 	//スキルリスト非表示

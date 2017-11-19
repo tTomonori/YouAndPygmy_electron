@@ -13,9 +13,18 @@ class EndTurnButton{
 
 		this.button.onclick=()=>{this.click();};
 	}
+	//クリックされた時
 	static click(){
-		SkillButton.hideSkillList();
-		Feild.resetSelectMasEvent();
-		Turn.endTurn();
+		// SkillButton.hideSkillList();
+		// Feild.resetSelectMasEvent();
+		// Turn.endTurn();
+	}
+	//クリックした時に実行する関数セット
+	static setClickFunction(aFunction){
+		this.click=()=>{aFunction()}
+	}
+	//クリックした時に実行する関数リセット
+	static resetClickFunction(){
+		this.click=()=>{}
 	}
 }

@@ -49,7 +49,8 @@ class Mas{
 		this.changeToMovableColor();
 		this.mouseOver=()=>{this.changeToSelectedColor();};
 		this.click=()=>{
-			Turn.getTurnChara().moveToSelectedMas(this);
+			// Turn.getTurnChara().moveToSelectedMas(this);
+			CharaController.selectedDestination(this);
 		}
 		ThreeWarld.setMouseMoveFunction(()=>{
 			this.changeToMovableColor();
@@ -60,7 +61,8 @@ class Mas{
 		this.changeToAttackableColor();
 		this.mouseOver=()=>{this.changeToSelectedColor();};
 		this.click=()=>{
-			Turn.getTurnChara().attack(this);
+			// Turn.getTurnChara().attack(this);
+			CharaController.selectedAttackMas(this);
 		}
 		ThreeWarld.setMouseMoveFunction(()=>{
 			this.changeToAttackableColor();

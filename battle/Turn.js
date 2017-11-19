@@ -30,7 +30,11 @@ class Turn{
 		if(this.order.length==0)this.resetOrder();
 		this.turnChara=this.order[0];
 		StatusBox.setTurnCharaInfo(this.turnChara);
-		this.turnChara.startTurn();
+		CharaController.setAi(this.turnChara.getAi());
+		MoveSelecter.setTurnChara(this.turnChara);
+		AttackSelecter.setTurnChara(this.turnChara);
+		CharaController.startTurn();
+		// this.turnChara.startTurn();
 	}
 	//ターン終了
 	static endTurn(){

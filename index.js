@@ -47,7 +47,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
 			eye:{normal:"gray",damage:"sanMe"},
 			mouth:{normal:"yaeba",damage:"sanKuti"},
 			accessory:[{name:"星の髪飾り",image:"starOrnaments"}]
-		}}
+		},
+		ai:"user",
+	}
 	],[{
 		name:"てきねこ",
 		race:"ばけねこ",
@@ -77,7 +79,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
 			eye:{normal:"gray",damage:"sanMe"},
 			mouth:{normal:"yaeba",damage:"sanKuti"},
 			accessory:[]
-		}}
+		},
+		ai:"user",
+	}
 	],{
 		feild:[
 			[0,0,0,0,0],

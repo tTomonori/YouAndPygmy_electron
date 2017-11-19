@@ -18,12 +18,13 @@ class Chara{
 		this.item=aData.item;
 		this.moc=aData.moc;
 		this.image=aData.image;
+		this.ai=aData.ai;
 
 		this.movablePositions={};//移動可能なマス
 		this.root=[]//移動経路
 		this.prePosition={}//移動前の座標
 		this.nextPosition={}//移動後の座標
-		this.selectedSkill=null;//選択したスキル
+		this.lastSelectedSkill=null;//選択したスキル
 	}
 	//データ取得
 	getName(){return this.name;}
@@ -39,9 +40,18 @@ class Chara{
 	getYuryoku(){return this.hel;}
 	getBinsei(){return this.spd;}
 	getMove(){return this.mov;}
+	getSkill(){return this.skill;}
 	getMoveCost(){return this.moc;}
 	getImage(){return this.image;}
+	getAi(){return this.ai;}
 	getPosition(){return {x:this.x,y:this.y};}
+	//最後に選択したスキル
+	getLastSelectedSkill(){
+		return this.lastSelectedSkill;
+	}
+	setLastSelectedSkill(aSkill){
+		this.lastSelectedSkill=aSkill;
+	}
 	//キャラの初期位置セット
 	initPosition(aX,aY){
 		this.x=aX;
@@ -52,10 +62,22 @@ class Chara{
 	}
 	//キャラの移動後の座標セット
 	setPosition(aX,aY){
-		Feild.getMas(this.prePosition.x,this.prePosition.y).out();
+		Feild.getMas(this.x,this.y).out();
 		this.x=aX;
 		this.y=aY;
 		Feild.getMas(aX,aY).on(this);
+		//画像の位置セット
+		let tThreePosition=Feild.convertToThreeWarldPosition(this.x,this.y);
+		this.bodyMesh.position.x=tThreePosition.x;
+		this.bodyMesh.position.y=tThreePosition.y;
+		this.eyeMesh.position.x=tThreePosition.x;
+		this.eyeMesh.position.y=tThreePosition.y;
+		this.mouthMesh.position.x=tThreePosition.x;
+		this.mouthMesh.position.y=tThreePosition.y;
+		for(let tAccessory of this.accessoryMeshs){
+			tAccessory.position.x=tThreePosition.x;
+			tAccessory.position.y=tThreePosition.y;
+		}
 	}
 	//3dイメージ作成
 	makeImage(){
@@ -85,75 +107,20 @@ class Chara{
 		this.bodyMesh.className="chara";
 		this.bodyMesh.class=this;
 	}
-	//ターン開始
-	startTurn(){
-		this.prePosition={x:this.x,y:this.y};
-		this.movablePositions=RootSearcher.searchMovable(this.getMove(),this.getMoveCost(),this.getPosition());
-		//移動先選択
-		this.selectDestination();
-	}
-	//移動先選択
-	selectDestination(){
-		//移動可能マスを変色
-		Feild.displayMoveRange(this.movablePositions)
-	}
-	//移動先のマスが選択された
-	moveToSelectedMas(aMas){
-		//移動可能マスを変色
-		Feild.resetSelectMasEvent();
-		//選択したマスへの移動経路取得
-		let tRoot=RootSearcher.getRoot(this.movablePositions,aMas.getPosition());
-		this.root=tRoot
-		this.nextPosition=this.root[this.root.length-1];
-		this.moveWithRoot();
-	}
-	//指定されたルートに沿って移動
-	moveWithRoot(){
-		if(this.root.length==0){//移動終了
-			this.setPosition(this.nextPosition.x,this.nextPosition.y);
-			this.moved();
-			return;
-		}
-		let tNextMas=this.root.shift();
-		this.move(Feild.getMas(tNextMas.x,tNextMas.y));
-	}
 	//指定されたマスへ移動
-	move(aMas){
+	move(aMas,aFunction){
 		let tPosition=aMas.getPosition();
 		let tTarget=Feild.convertToThreeWarldPosition(tPosition.x,tPosition.y);
-		ThreeWarld.setMoveAnimation([this.bodyMesh,this.eyeMesh,this.mouthMesh].concat(this.accessoryMeshs),tTarget,300,()=>{this.moveWithRoot()})
-	}
-	//移動したあと
-	moved(){
-		if(this.selectedSkill!=null)this.displaySkillRange(this.selectedSkill);
-		SkillButton.displaySkill(this.skill,(aSkill)=>{this.displaySkillRange(aSkill)});
-		// Turn.endTurn();
-	}
-	//スキルが選択された
-	displaySkillRange(aSkill){
-		this.selectedSkill=aSkill;
-		let tRange=SkillRangeDeriver.deriveRange(aSkill,this.getPosition());
-		Feild.resetSelectMasEvent();
-		Feild.displaySkillRange(tRange);
-	}
-	//引数のマスに攻撃
-	attack(aMas){
-		AttackDivider.attack(this.selectedSkill,aMas,this);
-	}
-	//攻撃終了
-	endAttack(){
-		Turn.endTurn();
+		ThreeWarld.setMoveAnimation([this.bodyMesh,this.eyeMesh,this.mouthMesh].concat(this.accessoryMeshs),tTarget,300,()=>{aFunction();})
 	}
 	//ダメージを受ける
 	damage(aDamage){
 		this.hp-=aDamage;
 		if(this.hp<0)this.hp=0;
-		console.log("damage:"+aDamage);
 	}
 	//回復する
 	heal(aDamage){
 		this.hp+=aDamage;
 		if(this.hp>this.maxHp)this.hp=this.maxHp;
-		console.log("heal:"+aDamage);
 	}
 }
