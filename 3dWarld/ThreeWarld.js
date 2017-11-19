@@ -23,6 +23,8 @@ class ThreeWarld{
 		this.mousePoint=null;
 		//描画毎に呼ばれる関数
 		this.intervalFunction=new Array();
+		//マウスが移動するたびに呼ばれる関数
+		this.mouseMoveFunctions=new Array();
 
 		let tick=()=>{
 			requestAnimationFrame(tick);
@@ -39,16 +41,6 @@ class ThreeWarld{
 			//描画毎に呼ぶ関数
 			for(let tFunction of this.intervalFunction){
 				tFunction();
-			}
-			//Masクラスのマウスオーバーメソッドを呼ぶ
-			if(this.mousePoint!=null){
-				let tObjects=this.getOverdObjects(this.mousePoint);
-				for(let tObject of tObjects){
-					if(tObject.object.className=="mas"){
-						tObject.object.class.mouseOver();
-						break;
-					}
-				}
 			}
 			// レンダリング
 			ThreeWarld.renderer.render(ThreeWarld.scene, ThreeWarld.camera);
@@ -117,11 +109,33 @@ class ThreeWarld{
 		this.scene.add(tMesh);
 		return tMesh;
 	}
+	//マウスが移動するたびに呼ぶ関数セット
+	static setMouseMoveFunction(aFunction){
+		this.mouseMoveFunctions.push(aFunction);
+	}
+	//マウスが移動するたびに呼ぶ関数リセット
+	static resetMouseMoveFunctions(aFunction){
+		this.mouseMoveFunctions=new Array();
+	}
 	static setMouseMove(){
 		let tCanvas=document.getElementById("threeWarld");
 		tCanvas.onmousemove=(e)=>{
 			//カーソル位置記憶
 			this.mousePoint={clientX:e.clientX,clientY:e.clientY,target:e.target};
+			//マウスが動くたびに呼ぶ関数
+			for(let tFunction of this.mouseMoveFunctions){
+				tFunction();
+			}
+			//Masクラスのマウスオーバーメソッドを呼ぶ
+			if(this.mousePoint!=null){
+				let tObjects=this.getOverdObjects(e);
+				for(let tObject of tObjects){
+					if(tObject.object.className=="mas"){
+						tObject.object.class.mouseOver();
+						break;
+					}
+				}
+			}
 		}
 	}
 	static setClick(){

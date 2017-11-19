@@ -1,9 +1,9 @@
 class RootSearcher{
 	//引数のキャラが移動可能なマスを探す
-	static searchMovable(aChara){
-		let tMove=aChara.getMove();
-		let tMoveCost=aChara.getMoveCost();
-		let tCharaPosition=aChara.getPosition();
+	static searchMovable(aMove,aMoveCost,aCharaPosition){
+		let tMove=aMove;
+		let tMoveCost=aMoveCost;
+		let tCharaPosition=aCharaPosition;
 		let tSearchingList=new Array();
 		let tSearchedList=new Array();
 		tSearchingList.push({x:tCharaPosition.x,y:tCharaPosition.y,cost:0,pre:null});
@@ -44,7 +44,7 @@ class RootSearcher{
 				if(tMas==null)continue;//フィールド外
 				let tCost=tMoveCost[tMas.getAttribute()];
 				if(tCost==false)continue;//移動不可
-				if(tMas.getOnChara()!=null)continue;//他のキャラがいるマス
+				if(tMas.getOnChara()!=null&&tMoveCost["chara"]!=true)continue;//他のキャラがいるマス
 				let tTotalCost=tSearching.cost+tCost;
 				let tPreCostData=tGetSearched(tNextPosition.x,tNextPosition.y)
 				if(tPreCostData!=null&&tPreCostData.cost<=tTotalCost)continue;//他のルートの方が最適

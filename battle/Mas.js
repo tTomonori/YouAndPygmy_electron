@@ -46,18 +46,35 @@ class Mas{
 	}
 	//移動可能マスとしてセットする
 	changeToMovable(){
+		this.changeToMovableColor();
 		this.mouseOver=()=>{this.changeToSelectedColor();};
 		this.click=()=>{
 			Turn.getTurnChara().moveToSelectedMas(this);
 		}
-		ThreeWarld.setInterval(()=>{
+		ThreeWarld.setMouseMoveFunction(()=>{
 			this.changeToMovableColor();
+		})
+	}
+	//攻撃可能マスとしてセットする
+	changeToAttackable(){
+		this.changeToAttackableColor();
+		this.mouseOver=()=>{this.changeToSelectedColor();};
+		this.click=()=>{
+			Turn.getTurnChara().attack(this);
+		}
+		ThreeWarld.setMouseMoveFunction(()=>{
+			this.changeToAttackableColor();
 		})
 	}
 	//移動可能マスとして変色させる
 	changeToMovableColor(){
 		this.cover.material.opacity=0.3;
 		this.cover.material.color={r:0,g:0,b:1};
+	}
+	//攻撃可能マスとして変色させる
+	changeToAttackableColor(){
+		this.cover.material.opacity=0.3;
+		this.cover.material.color={r:1,g:0,b:0};
 	}
 	//選択されているマスとして変色させる
 	changeToSelectedColor(){
@@ -72,6 +89,11 @@ class Mas{
 	resetMouseEvent(){
 		this.mouseOver=()=>{};
 		this.click=()=>{};
+	}
+	//マス選択イベントリセット
+	resetSelectEvent(){
+		this.resetCover();
+		this.resetMouseEvent();
 	}
 	//マウスオーバーされた時(他のメソッドで上書きする)
 	mouseOver(){

@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>あなたとぴぐみー</title>
 </head>
+<link rel="stylesheet" href="index.css">
 <script>
 require('./renderer.js')
 // const $=require("jquery");
@@ -14,9 +15,12 @@ const ipc=electron.ipcRenderer;
 </script>
 <script src="threejsmaster/build/three.min.js"></script>
 <body id="gameScreen" style="position:fixed;margin:0;background:#eef">
-<div id="battleScene" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;pointer-events:none"></div>
-<canvas id="threeWarld" style="position:absolute;top:0;left:0;width:100%;height:100%z-index:2;"></canvas>
+<div id="battleScene" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;">
+	<canvas id="threeWarld" style="position:absolute;top:0;left:0;width:100%;height:100%z-index:-1;"></canvas>
+</div>
 </body>
+<script src="index.js"></script>
+
 <script src="3dWarld/ThreeWarld.js"></script>
 <!-- battle -->
 <script src="battle/battle.js"></script>
@@ -24,7 +28,12 @@ const ipc=electron.ipcRenderer;
 <script src="battle/Feild.js"></script>
 <script src="battle/Mas.js"></script>
 <script src="battle/RootSearcher.js"></script>
+<script src="battle/SkillRangeDeriver.js"></script>
 <script src="battle/Turn.js"></script>
-
-<script src="index.js"></script>
+<!-- battle ui -->
+<script src="battle/ui/EndTurnButton.js"></script>
+<script src="battle/ui/SkillButton.js"></script>
+<script src="battle/ui/StatusBox.js"></script>
+<!-- data -->
+<script src="dictionary/SkillDictionary.js"></script>
 </html>

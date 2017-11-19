@@ -27,8 +27,10 @@ window.addEventListener('DOMContentLoaded', ()=>{
 		def:10,
 		mgc:14,
 		spt:13,
+		hel:12,
 		spd:22,
 		mov:3,
+		skill:["hikkaki","enjutu"],
 		item:["きのみ"],
 		moc:{
 			grass:1,
@@ -44,7 +46,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 			body:"pygmy/bakeneko",
 			eye:{normal:"gray",damage:"sanMe"},
 			mouth:{normal:"yaeba",damage:"sanKuti"},
-			accessory:[]
+			accessory:[{name:"星の髪飾り",image:"starOrnaments"}]
 		}}
 	],[{
 		name:"てきねこ",
@@ -55,8 +57,10 @@ window.addEventListener('DOMContentLoaded', ()=>{
 		def:10,
 		mgc:14,
 		spt:13,
+		hel:12,
 		spd:22,
 		mov:3,
+		skill:["hikkaki","denkousekka"],
 		item:[],
 		moc:{
 			grass:1,

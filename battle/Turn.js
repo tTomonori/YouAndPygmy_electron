@@ -29,6 +29,7 @@ class Turn{
 		//全キャラ行動済みなら順番リセット
 		if(this.order.length==0)this.resetOrder();
 		this.turnChara=this.order[0];
+		StatusBox.setTurnCharaInfo(this.turnChara);
 		this.turnChara.startTurn();
 	}
 	//ターン終了

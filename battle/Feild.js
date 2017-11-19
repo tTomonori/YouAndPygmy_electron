@@ -23,4 +23,33 @@ class Feild{
 	static convertToThreeWarldPosition(aX,aY){
 		return {x:mMasSize[0]*aX,y:-mMasSize[1]*aY};
 	}
+	//リスト内の座標のマスに関数実行
+	static operationMas(aPositionList,aFunction){
+		for(let tPosition of aPositionList){
+			aFunction(this.getMas(tPosition.x,tPosition.y));
+		}
+	}
+	//移動可能マス表示
+	static displayMoveRange(aRange){
+		for(let tPosition of aRange){
+			let tMas=this.getMas(tPosition.x,tPosition.y);
+			tMas.changeToMovable();
+		}
+	}
+	//攻撃可能マス表示
+	static displaySkillRange(aRange){
+		for(let tPosition of aRange){
+			let tMas=this.getMas(tPosition.x,tPosition.y);
+			tMas.changeToAttackable();
+		}
+	}
+	//マス選択イベントリセット
+	static resetSelectMasEvent(){
+		ThreeWarld.resetMouseMoveFunctions();
+		for(let tMasList of this.feild){
+			for(let tMas of tMasList){
+				tMas.resetSelectEvent();
+			}
+		}
+	}
 }

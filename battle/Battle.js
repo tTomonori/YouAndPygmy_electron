@@ -25,6 +25,9 @@ class Battle{
 		for(let i=0;i<this.enemyTeam.length;i++){
 			this.enemyTeam[i].initPosition(tPositionData[i].x,tPositionData[i].y);
 		}
+		StatusBox.init();
+		SkillButton.init();
+		EndTurnButton.init();
 	}
 	//戦闘開始
 	static start(){
@@ -33,4 +36,6 @@ class Battle{
 		ThreeWarld.setClick();
 	}
 }
-var mMasSize=[100,100,100];
+var mMasSize=[80,80,80];
+var mButtonSize=mScreenSize.height/8;
+var mBattleSecene=document.getElementById("battleScene");
