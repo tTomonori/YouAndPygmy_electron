@@ -37,10 +37,17 @@ class Feild{
 		}
 	}
 	//攻撃可能マス表示
-	static displaySkillRange(aRange){
+	static displaySkillAttackRange(aRange){
 		for(let tPosition of aRange){
 			let tMas=this.getMas(tPosition.x,tPosition.y);
 			tMas.changeToAttackable();
+		}
+	}
+	//回復可能マス表示
+	static displaySkillHealRange(aRange){
+		for(let tPosition of aRange){
+			let tMas=this.getMas(tPosition.x,tPosition.y);
+			tMas.changeToHealable();
 		}
 	}
 	//マス選択イベントリセット

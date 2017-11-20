@@ -22,6 +22,9 @@ class SkillRangeDeriver{
 						}
 					}
 					break;
+				case "my"://自分
+					tDerivedRange.push(tCharaPosition);
+					break;
 				default:
 
 			}

@@ -9,7 +9,8 @@ class AttackSelecter{
 		this.selectedSkill=aSkill;
 		Feild.resetSelectMasEvent();
 		let tRange=SkillRangeDeriver.deriveRange(aSkill,this.turnChara.getPosition());
-		Feild.displaySkillRange(tRange);
+		if(aSkill.attribute=="heal")Feild.displaySkillHealRange(tRange);
+		else Feild.displaySkillAttackRange(tRange);
 	}
 	//指定したマスに攻撃
 	static attackTo(aMas){

@@ -70,7 +70,7 @@ class SkillButton{
 		return this.skillList.style.display=="block";
 	}
 	//スキルを表示
-	static displaySkill(aSkillList,aSelectedFunction){
+	static displaySkill(aSkillList){
 		this.skillList.style.display="block";
 	}
 	//スキルリスト非表示

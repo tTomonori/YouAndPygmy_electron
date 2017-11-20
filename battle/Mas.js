@@ -47,7 +47,7 @@ class Mas{
 	//移動可能マスとしてセットする
 	changeToMovable(){
 		this.changeToMovableColor();
-		this.mouseOver=()=>{this.changeToSelectedColor();};
+		this.mouseOverTemp=()=>{this.changeToSelectedColor();};
 		this.click=()=>{
 			// Turn.getTurnChara().moveToSelectedMas(this);
 			CharaController.selectedDestination(this);
@@ -59,13 +59,25 @@ class Mas{
 	//攻撃可能マスとしてセットする
 	changeToAttackable(){
 		this.changeToAttackableColor();
-		this.mouseOver=()=>{this.changeToSelectedColor();};
+		this.mouseOverTemp=()=>{this.changeToSelectedColor();};
 		this.click=()=>{
 			// Turn.getTurnChara().attack(this);
 			CharaController.selectedAttackMas(this);
 		}
 		ThreeWarld.setMouseMoveFunction(()=>{
 			this.changeToAttackableColor();
+		})
+	}
+	//回復可能マスとしてセットする
+	changeToHealable(){
+		this.changeToHealableColor();
+		this.mouseOverTemp=()=>{this.changeToSelectedColor();};
+		this.click=()=>{
+			// Turn.getTurnChara().attack(this);
+			CharaController.selectedAttackMas(this);
+		}
+		ThreeWarld.setMouseMoveFunction(()=>{
+			this.changeToHealableColor();
 		})
 	}
 	//移動可能マスとして変色させる
@@ -78,6 +90,11 @@ class Mas{
 		this.cover.material.opacity=0.3;
 		this.cover.material.color={r:1,g:0,b:0};
 	}
+	//回復可能マスとして変色させる
+	changeToHealableColor(){
+		this.cover.material.opacity=0.3;
+		this.cover.material.color={r:0,g:1,b:0};
+	}
 	//選択されているマスとして変色させる
 	changeToSelectedColor(){
 		this.cover.material.opacity=0.3;
@@ -89,7 +106,7 @@ class Mas{
 	}
 	//マウスオーバーとクリック時のメソッドリセット
 	resetMouseEvent(){
-		this.mouseOver=()=>{};
+		this.mouseOverTemp=()=>{};
 		this.click=()=>{};
 	}
 	//マス選択イベントリセット
@@ -97,9 +114,18 @@ class Mas{
 		this.resetCover();
 		this.resetMouseEvent();
 	}
-	//マウスオーバーされた時(他のメソッドで上書きする)
+	//マウスオーバーされた時
 	mouseOver(){
-
+		this.mouseOverTemp();
+		this.mouseOverForever();
+	}
+	//マウスオーバーされた時(セット,リセットする)(他のメソッドで上書きする)
+	mouseOverTemp(){}
+	//マウスオーバーされた時(常に実行)
+	mouseOverForever(){
+		if(this.getOnChara()!=null){
+			StatusBox.setSelectedCharaInfo(this.getOnChara());
+		}
 	}
 	//クリックされた時(他のメソッドで上書きする)
 	click(){

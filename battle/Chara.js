@@ -12,6 +12,7 @@ class Chara{
 		this.mgc=aData.mgc;
 		this.spt=aData.spt;
 		this.hel=aData.hel;
+		this.tec=aData.tec;
 		this.spd=aData.spd;
 		this.mov=aData.mov;
 		this.skill=aData.skill;
@@ -39,8 +40,10 @@ class Chara{
 	getSeisin(){return this.spt;}
 	getYuryoku(){return this.hel;}
 	getBinsei(){return this.spd;}
+	getWaza(){return this.tec;}
 	getMove(){return this.mov;}
 	getSkill(){return this.skill;}
+	getItem(){return this.item;}
 	getMoveCost(){return this.moc;}
 	getImage(){return this.image;}
 	getAi(){return this.ai;}
@@ -117,10 +120,12 @@ class Chara{
 	damage(aDamage){
 		this.hp-=aDamage;
 		if(this.hp<0)this.hp=0;
+		console.log(aDamage+"ダメージ");
 	}
 	//回復する
 	heal(aDamage){
 		this.hp+=aDamage;
 		if(this.hp>this.maxHp)this.hp=this.maxHp;
+		console.log(aDamage+"回復");
 	}
 }

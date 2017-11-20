@@ -17,10 +17,13 @@ class StatusBox{
 		this.selectedBox.style.bottom="0";
 		mBattleSecene.appendChild(this.selectedBox);
 		this.selectedCharaInfo=this.createCharaBox();
+		this.selectedCharaInfo.style.display="none";
 		this.selectedBox.appendChild(this.selectedCharaInfo);
 		this.selectedItemInfo=this.createItemBox();
+		this.selectedItemInfo.style.display="none";
 		this.selectedBox.appendChild(this.selectedItemInfo);
 		this.selectedSkillInfo=this.createSkillBox();
+		this.selectedSkillInfo.style.display="none";
 		this.selectedBox.appendChild(this.selectedSkillInfo);
 	}
 	//情報を表示するためのbox作成
@@ -177,10 +180,13 @@ class StatusBox{
 		let tYuryoku=tCreateValueBox("癒","left");
 		tYuryoku.style.top=this.infoBoxSize.height/2+"px";
 		tBox.appendChild(tYuryoku);
-		let tBinsei=tCreateValueBox("敏","right");
-		tBinsei.style.top=this.infoBoxSize.height/2+"px";
+		let tWaza=tCreateValueBox("技","right");
+		tWaza.style.top=this.infoBoxSize.height/2+"px";
+		tBox.appendChild(tWaza);
+		let tBinsei=tCreateValueBox("敏","left");
+		tBinsei.style.bottom="0";
 		tBox.appendChild(tBinsei);
-		let tMove=tCreateValueBox("歩","left");
+		let tMove=tCreateValueBox("歩","right");
 		tMove.style.bottom="0";
 		tBox.appendChild(tMove);
 
@@ -200,6 +206,27 @@ class StatusBox{
 	//ターン中のキャラの情報セット
 	static setTurnCharaInfo(aChara){
 		this.setCharaInfo(aChara,this.turnCharaInfo);
+	}
+	//選択したキャラの情報セット
+	static setSelectedCharaInfo(aChara){
+		this.selectedCharaInfo.style.display="block";
+		this.selectedItemInfo.style.display="none";
+		this.selectedSkillInfo.style.display="none";
+		this.setCharaInfo(aChara,this.selectedCharaInfo);
+	}
+	//スキルの情報セット
+	static setSelectedSkillInfo(aSkill){
+		this.selectedCharaInfo.style.display="none";
+		this.selectedItemInfo.style.display="none";
+		this.selectedSkillInfo.style.display="block";
+		this.setSkillInfo(aSkill,this.selectedSkillInfo);
+	}
+	//アイテムの情報セット
+	static setSelectedItemInfo(aItem){
+		this.selectedCharaInfo.style.display="none";
+		this.selectedItemInfo.style.display="block";
+		this.selectedSkillInfo.style.display="none";
+		this.setItemInfo(aItem,this.selectedItemInfo);
 	}
 	//キャラ情報セット
 	static setCharaInfo(aChara,aTag){
@@ -249,12 +276,20 @@ class StatusBox{
 		//ゆりょく
 		tValueContainer=aTag.children[8];
 		tValueContainer.children[1].textContent=aChara.getYuryoku();
-		//びんせい
+		//わざ
 		tValueContainer=aTag.children[9];
+		tValueContainer.children[1].textContent=aChara.getWaza();
+		//びんせい
+		tValueContainer=aTag.children[10];
 		tValueContainer.children[1].textContent=aChara.getBinsei();
 		//いどう
-		tValueContainer=aTag.children[10];
+		tValueContainer=aTag.children[11];
 		tValueContainer.children[1].textContent=aChara.getMove();
-
+	}
+	//スキル情報セット
+	static setSkillInfo(aSkill,aTag){
+	}
+	//アイテム情報セット
+	static setItemInfo(aItem,aTag){
 	}
 }

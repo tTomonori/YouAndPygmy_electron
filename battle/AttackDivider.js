@@ -13,14 +13,20 @@ class AttackDivider{
 			let tChara=tMas.getOnChara();
 			if(tChara==null)continue;
 			let tDamage=this.calcuDamage(aSkill,aChara,tChara);
-			switch (tDamage.effect) {
-				case "damage"://ダメージ
+			if(tDamage.accuracy-Math.random()*100>=0){
+				switch (tDamage.effect) {
+					case "damage"://ダメージ
 					tChara.damage(tDamage.damage);
 					break;
-				case "heal"://回復
+					case "heal"://回復
 					tChara.heal(tDamage.damage);
 					break;
-				default:
+					default:
+				}
+			}
+			else{
+				//攻撃が外れた
+				console.log("attack miss");
 			}
 		}
 		CharaController.endAttack();
@@ -53,6 +59,10 @@ class AttackDivider{
 			case "multiplication"://乗算
 				tPower=Math.floor(tPower*aSkill.power);
 				break;
+			case "fixed"://固定値
+				tPower=aSkill.power;
+				tDefence=0;
+				break;
 			default:
 		}
 		//ダメージ計算
@@ -61,10 +71,14 @@ class AttackDivider{
 			case "magic"://魔法攻撃
 				let tDamage=tPower-tDefence;
 				if(tDamage<0)tDamage=0;
-				return {effect:"damage",damage:tDamage};
+				//命中率
+				let tAccuracy=aSkill.accuracy+(aAttackChara.getWaza()-aDamagedChara.getBinsei());
+				if(tAccuracy>100)tAccuracy=100;
+				else if(tAccuracy<0)tAccuracy=0;
+				return {effect:"damage",damage:tDamage,accuracy:tAccuracy};
 				break;
 			case "heal"://回復
-				return {effect:"heal",damage:tPower};
+				return {effect:"heal",damage:tPower,accuracy:aSkill.accuracy};
 				break;
 			default:
 		}

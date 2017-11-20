@@ -15,6 +15,7 @@ class CharaController{
 	//ターン開始
 	static startTurn(){
 		 SkillButton.setSkillList(this.turnChara.getSkill());
+		 ItemButton.setItemList(this.turnChara.getItem());
 		this.setBeforMoveUi();
 	}
 	//移動先のマスが選択された
@@ -25,8 +26,14 @@ class CharaController{
 	}
 	//スキルが選択された
 	static selectedSkill(aSkill){
+		StatusBox.setSelectedSkillInfo(aSkill);
 		this.turnChara.setLastSelectedSkill(aSkill);
 		AttackSelecter.displayAttackRange(aSkill);
+	}
+	//アイテムが選択された
+	static selectedItem(aItem){
+		StatusBox.setSelectedItemInfo(aItem);
+		AttackSelecter.displayAttackRange(aItem);
 	}
 	//攻撃するマスが選択された
 	static selectedAttackMas(aMas){
@@ -54,19 +61,37 @@ class CharaController{
 		//攻撃可能マス表示
 		if(tLastSelectedSkill!=null)AttackSelecter.displayAttackRange(tLastSelectedSkill);
 	}
+	//アイテム,使用先を選択するためのuiセット
+	static setSelectItemUi(){
+		Feild.resetSelectMasEvent();
+	}
 	//移動する前のuiセット
 	static setBeforMoveUi(){
 		SkillButton.hideSkillList();
+		ItemButton.hideItemList();
 		//ボタンセット
-		CancelMoveButton.resetClickFunction();
+		CancelMoveButton.setClickFunction(()=>{
+			this.setBeforMoveUi();
+		})
 		EndTurnButton.setClickFunction(()=>{
 			this.resetButtonFunctions();
 			SkillButton.hideSkillList();
+			ItemButton.hideItemList();
 			Feild.resetSelectMasEvent();
 			Turn.endTurn();
 		})
 		ItemButton.setClickFunction(()=>{
-
+			if(ItemButton.isDisplayed()){
+				//アイテムリストが表示されている
+				ItemButton.hideItemList();
+				this.setSelectMoveUi();
+			}
+			else{
+				//アイテムリストが表示されていない
+				SkillButton.hideSkillList();
+				ItemButton.displayItem();
+				this.setSelectItemUi();
+			}
 		})
 		OptionButton.setClickFunction(()=>{
 
@@ -79,6 +104,7 @@ class CharaController{
 			}
 			else{
 				//スキルリストが表示されていない
+				ItemButton.hideItemList();
 				SkillButton.displaySkill();
 				this.setSelectSkillUi();
 			}
@@ -98,11 +124,21 @@ class CharaController{
 		EndTurnButton.setClickFunction(()=>{
 			this.resetButtonFunctions();
 			SkillButton.hideSkillList();
+			ItemButton.hideItemList();
 			Feild.resetSelectMasEvent();
 			Turn.endTurn();
 		})
 		ItemButton.setClickFunction(()=>{
-
+			if(ItemButton.isDisplayed()){
+				//アイテムリストが表示されている
+				ItemButton.hideItemList();
+			}
+			else{
+				//アイテムリストが表示されていない
+				SkillButton.hideSkillList();
+				ItemButton.displayItem();
+				this.setSelectItemUi();
+			}
 		})
 		OptionButton.setClickFunction(()=>{
 
@@ -114,7 +150,9 @@ class CharaController{
 			}
 			else{
 				//スキルリストが表示されていない
+				ItemButton.hideItemList();
 				SkillButton.displaySkill();
+				this.setSelectSkillUi();
 			}
 		})
 		this.setSelectSkillUi();
