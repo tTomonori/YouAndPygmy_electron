@@ -59,7 +59,12 @@ class Mas{
 	//攻撃可能マスとしてセットする
 	changeToAttackable(){
 		this.changeToAttackableColor();
-		this.mouseOverTemp=()=>{this.changeToSelectedColor();};
+		this.mouseOverTemp=()=>{
+			this.changeToSelectedColor();
+			if(this.chara!=null){
+				DamagePredictor.displayPredict(CharaController.getSelectedSkill(),Turn.getTurnChara(),this.chara);
+			}
+		};
 		this.click=()=>{
 			// Turn.getTurnChara().attack(this);
 			CharaController.selectedAttackMas(this);
@@ -71,7 +76,12 @@ class Mas{
 	//回復可能マスとしてセットする
 	changeToHealable(){
 		this.changeToHealableColor();
-		this.mouseOverTemp=()=>{this.changeToSelectedColor();};
+		this.mouseOverTemp=()=>{
+			this.changeToSelectedColor();
+			if(this.chara!=null){
+				DamagePredictor.displayPredict(CharaController.getSelectedSkill(),Turn.getTurnChara(),this.chara);
+			}
+		};
 		this.click=()=>{
 			// Turn.getTurnChara().attack(this);
 			CharaController.selectedAttackMas(this);

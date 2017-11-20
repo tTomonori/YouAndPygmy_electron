@@ -52,7 +52,7 @@ class ThreeWarld{
 	static setInterval(aFunction){
 		this.intervalFunction.push(aFunction);
 	}
-	//描画まいに呼ぶ関数リセット
+	//描画毎に呼ぶ関数リセット
 	static resetInterval(){
 		this.intervalFunction=new Array();
 	}

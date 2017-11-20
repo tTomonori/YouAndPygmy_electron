@@ -9,35 +9,20 @@ class AttackDivider{
 	//反撃する
 	static counter(aActivatedSkill,aCounterChara,aAttackedChara){
 		let tEndFunction=()=>{CharaController.endAttack()};
-		//受けたスキルが回復
-		if(aActivatedSkill.attribute=="heal"){
-			tEndFunction();
-			return;
-		}
 		//倒されている
 		if(aCounterChara.getHp()<=0){
 			tEndFunction();
 			return;
 		}
-		let tSkills=aCounterChara.getSkill();
-		let tCounterPosition=aCounterChara.getPosition();
-		let tAttackedPosition=aAttackedChara.getPosition();
-		for(let tSkill of tSkills){
-			//反撃不可スキル
-			if(tSkill.counter==false)continue;
-			//攻撃範囲取得
-			let tRange=SkillRangeDeriver.deriveRange(tSkill,tCounterPosition);
-			for(let tRangePosition of tRange){
-				if(tRangePosition.x==tAttackedPosition.x&&tRangePosition.y==tAttackedPosition.y){
-					//反撃スキルの射程内
-					this.endActivatSkill=()=>{tEndFunction();}
-					this.activateSkill(tSkill,Feild.getMas(tRangePosition.x,tRangePosition.y),aCounterChara);
-					return;
-				}
-			}
+		let tCounterSkill=this.getCouterSkill(aActivatedSkill,aCounterChara,aAttackedChara);
+		if(tCounterSkill==null){
+			//反撃不可
+			tEndFunction();
+			return;
 		}
-		//反撃不可
-		tEndFunction();
+		//反撃可能
+		this.endActivatSkill=()=>{tEndFunction();}
+		this.activateSkill(tCounterSkill,aAttackedChara.getMas(),aCounterChara);
 	}
 	//スキルを使用する
 	static activateSkill(aSkill,aMas,aChara){
@@ -90,6 +75,29 @@ class AttackDivider{
 			//全てのキャラのアニメーション終了
 			this.endActivatSkill();
 		}
+	}
+	//反撃で発動するスキルを取得
+	static getCouterSkill(aActivatedSkill,aCounterChara,aAttackedChara){
+		//受けたスキルが回復
+		if(aActivatedSkill.attribute=="heal")return null;
+
+		let tSkills=aCounterChara.getSkill();
+		let tCounterPosition=aCounterChara.getPosition();
+		let tAttackedPosition=aAttackedChara.getPosition();
+		for(let tSkill of tSkills){
+			//反撃不可スキル
+			if(tSkill.counter==false)continue;
+			//攻撃範囲取得
+			let tRange=SkillRangeDeriver.deriveRange(tSkill,tCounterPosition);
+			for(let tRangePosition of tRange){
+				if(tRangePosition.x==tAttackedPosition.x&&tRangePosition.y==tAttackedPosition.y){
+					//反撃スキルの射程内
+					return tSkill;
+				}
+			}
+		}
+		//反撃可能なスキルなし
+		return null;
 	}
 	//ダメージ計算
 	static calcuDamage(aSkill,aAttackChara,aDamagedChara){

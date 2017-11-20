@@ -4,6 +4,10 @@ class CharaController{
 		this.turnChara=Turn.getTurnChara();
 		this.ai=aAi;
 	}
+	//選択しているスキル(アイテムの効果)を返す
+	static getSelectedSkill(){
+		return this.selectingSkill;
+	}
 	//ボタンクリック時の関数を全てリセット
 	static resetButtonFunctions(){
 		CancelMoveButton.resetClickFunction();
@@ -26,12 +30,14 @@ class CharaController{
 	}
 	//スキルが選択された
 	static selectedSkill(aSkill){
+		this.selectingSkill=aSkill;
 		StatusBox.setSelectedSkillInfo(aSkill);
 		this.turnChara.setLastSelectedSkill(aSkill);
 		AttackSelecter.displayAttackRange(aSkill);
 	}
 	//アイテムが選択された
 	static selectedItem(aItem){
+		this.selectingSkill=aItem;
 		StatusBox.setSelectedItemInfo(aItem);
 		AttackSelecter.displayAttackRange(aItem);
 	}
@@ -39,7 +45,9 @@ class CharaController{
 	static selectedAttackMas(aMas){
 		//キャラがいるマスのみ攻撃可能
 		let tChara=aMas.getOnChara();
-		if(tChara!=null)AttackSelecter.attackTo(tChara);
+		if(tChara!=null){
+			AttackSelecter.attackTo(tChara);
+		}
 	}
 	//移動したあと
 	static moved(){

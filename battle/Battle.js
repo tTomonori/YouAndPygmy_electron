@@ -27,12 +27,14 @@ class Battle{
 		for(let i=0;i<this.enemyTeam.length;i++){
 			this.enemyTeam[i].initPosition(tPositionData[i].x,tPositionData[i].y);
 		}
-		StatusBox.init();
 		CancelMoveButton.init();
 		EndTurnButton.init();
 		ItemButton.init();
 		OptionButton.init();
 		SkillButton.init();
+
+		DamagePredictor.init();
+		StatusBox.init();
 	}
 	//戦闘開始
 	static start(){
