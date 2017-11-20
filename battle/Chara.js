@@ -15,11 +15,15 @@ class Chara{
 		this.tec=aData.tec;
 		this.spd=aData.spd;
 		this.mov=aData.mov;
-		this.skill=aData.skill;
 		this.item=aData.item;
 		this.moc=aData.moc;
 		this.image=aData.image;
 		this.ai=aData.ai;
+		//スキルデータを取得して記憶
+		this.skill=new Array();
+		for(let tSkillName of aData.skill){
+			this.skill.push(SkillDictionary.getSkill(tSkillName));
+		}
 
 		this.movablePositions={};//移動可能なマス
 		this.root=[]//移動経路
@@ -48,6 +52,7 @@ class Chara{
 	getImage(){return this.image;}
 	getAi(){return this.ai;}
 	getPosition(){return {x:this.x,y:this.y};}
+	getMas(){return Feild.getMas(this.x,this.y)}
 	//最後に選択したスキル
 	getLastSelectedSkill(){
 		return this.lastSelectedSkill;

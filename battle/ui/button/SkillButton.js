@@ -59,7 +59,7 @@ class SkillButton{
 				tSkillTag.style.display="none";
 				continue;
 			}
-			let tSkill=SkillDictionary.getSkill(aSkillList[i]);
+			let tSkill=aSkillList[i];
 			tSkillTag.textContent=tSkill.name;
 			tSkillTag.onclick=()=>{CharaController.selectedSkill(tSkill)};
 			tSkillTag.style.display="block";

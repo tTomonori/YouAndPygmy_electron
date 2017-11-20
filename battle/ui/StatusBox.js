@@ -307,10 +307,10 @@ class StatusBox{
 		let tObject=tCreateRangeBox("障害物貫通","left");
 		tObject.style.bottom="0";
 		tBox.appendChild(tObject);
-		//壁貫通
-		let tWall=tCreateRangeBox("壁貫通","right");
-		tWall.style.bottom="0";
-		tBox.appendChild(tWall);
+		// 反撃
+		let tCounter=tCreateRangeBox("反撃","right");
+		tCounter.style.bottom="0";
+		tBox.appendChild(tCounter);
 
 		return tBox;
 	}
@@ -458,7 +458,7 @@ class StatusBox{
 		//巻き込み範囲
 		switch (aSkill.involve.involve) {
 			case "none":
-				aTag.children[5].children[2].textContent="なし";
+				aTag.children[5].children[2].textContent="---";
 				break;
 			case "circumference":
 				aTag.children[5].children[2].textContent="周囲距離"+aSkill.involve.value;
@@ -470,8 +470,8 @@ class StatusBox{
 		}
 		//障害物貫通
 		aTag.children[6].children[2].textContent=(aSkill.object)?"可":"不可";
-		//壁貫通
-		aTag.children[7].children[2].textContent=(aSkill.wall)?"可":"不可";
+		//反撃
+		aTag.children[7].children[2].textContent=(aSkill.counter)?"可":"---";
 	}
 	//アイテム情報セット
 	static setItemInfo(aItem,aTag){

@@ -12,8 +12,8 @@ class AttackSelecter{
 		if(aSkill.attribute=="heal")Feild.displaySkillHealRange(tRange);
 		else Feild.displaySkillAttackRange(tRange);
 	}
-	//指定したマスに攻撃
-	static attackTo(aMas){
-		AttackDivider.attack(this.selectedSkill,aMas,this.turnChara);
+	//指定したキャラに攻撃
+	static attackTo(aChara){
+		AttackDivider.attack(this.selectedSkill,aChara,this.turnChara);
 	}
 }

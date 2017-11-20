@@ -14,6 +14,7 @@ SkillDictionary.dictionary={
 		involve:{involve:"none"},
 		object:false,
 		wall:false,
+		counter:true,
 		animation:"test",
 	},
 	enjutu:{
@@ -26,6 +27,7 @@ SkillDictionary.dictionary={
 		involve:{involve:"circumference",value:1},
 		object:true,
 		wall:false,
+		counter:false,
 		animation:"test",
 	},
 	denkousekka:{
@@ -38,6 +40,7 @@ SkillDictionary.dictionary={
 		involve:{involve:"through"},
 		object:false,
 		wall:false,
+		counter:false,
 		animation:"test",
 	}
 }
@@ -53,5 +56,6 @@ involve:{involve:"none"},
 object:true or false,
 wall:true or false,
 animation:,
+counter:,
 }
 */

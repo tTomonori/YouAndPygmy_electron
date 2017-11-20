@@ -1,6 +1,46 @@
 class AttackDivider{
 	//攻撃する
-	static attack(aSkill,aMas,aChara){
+	static attack(aSkill,aDefender,aAttacker){
+		this.endActivatSkill=()=>{
+			this.counter(aSkill,aDefender,aAttacker);
+		}
+		this.activateSkill(aSkill,aDefender.getMas(),aAttacker);
+	}
+	//反撃する
+	static counter(aActivatedSkill,aCounterChara,aAttackedChara){
+		let tEndFunction=()=>{CharaController.endAttack()};
+		//受けたスキルが回復
+		if(aActivatedSkill.attribute=="heal"){
+			tEndFunction();
+			return;
+		}
+		//倒されている
+		if(aCounterChara.getHp()<=0){
+			tEndFunction();
+			return;
+		}
+		let tSkills=aCounterChara.getSkill();
+		let tCounterPosition=aCounterChara.getPosition();
+		let tAttackedPosition=aAttackedChara.getPosition();
+		for(let tSkill of tSkills){
+			//反撃不可スキル
+			if(tSkill.counter==false)continue;
+			//攻撃範囲取得
+			let tRange=SkillRangeDeriver.deriveRange(tSkill,tCounterPosition);
+			for(let tRangePosition of tRange){
+				if(tRangePosition.x==tAttackedPosition.x&&tRangePosition.y==tAttackedPosition.y){
+					//反撃スキルの射程内
+					this.endActivatSkill=()=>{tEndFunction();}
+					this.activateSkill(tSkill,Feild.getMas(tRangePosition.x,tRangePosition.y),aCounterChara);
+					return;
+				}
+			}
+		}
+		//反撃不可
+		tEndFunction();
+	}
+	//スキルを使用する
+	static activateSkill(aSkill,aMas,aChara){
 		let tAttackedChara=aMas.getOnChara();
 		if(tAttackedChara==null)return;
 		//攻撃可能
@@ -48,7 +88,7 @@ class AttackDivider{
 	static endDamagedAnimation(){
 		if(--this.animatingCharaNum<=0){
 			//全てのキャラのアニメーション終了
-			CharaController.endAttack();
+			this.endActivatSkill();
 		}
 	}
 	//ダメージ計算

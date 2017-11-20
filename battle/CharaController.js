@@ -38,7 +38,8 @@ class CharaController{
 	//攻撃するマスが選択された
 	static selectedAttackMas(aMas){
 		//キャラがいるマスのみ攻撃可能
-		if(aMas.getOnChara()!=null)AttackSelecter.attackTo(aMas);
+		let tChara=aMas.getOnChara();
+		if(tChara!=null)AttackSelecter.attackTo(tChara);
 	}
 	//移動したあと
 	static moved(){
