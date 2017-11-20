@@ -193,15 +193,132 @@ class StatusBox{
 
 		return tBox;
 	}
-	//アイテム用の情報box作成
-	static createItemBox(){
-		let tBox=document.createElement("div");
-		return tBox;
-	}
 	//スキル用の情報box作成
 	static createSkillBox(){
 		let tBox=document.createElement("div");
+		tBox.style.position="absolute";
+		tBox.style.left="0";
+		tBox.style.top="0";
+		tBox.style.width="100%";
+		tBox.style.height="100%";
+		tBox.style.color="#fff";
+		tBox.style.fontSize=this.infoBoxSize.width/4/9+"px";
+		//画像
+		let tImageContainer=document.createElement("div");
+		tImageContainer.classList.add("imageContainer");
+		tImageContainer.style.position="absolute";
+		tImageContainer.style.letf="0";
+		tImageContainer.style.top="0";
+		tImageContainer.style.width=this.infoBoxSize.height+"px";
+		tImageContainer.style.height=this.infoBoxSize.height+"px";
+		tImageContainer.style.background="#eeeeff";
+		tImageContainer.style.border="solid 1px #000";
+		tImageContainer.style.overflow="hidden";
+		tBox.appendChild(tImageContainer);
+		//スキル画像
+		let tSkill=document.createElement("img");
+		tSkill.classList.add("skillImage");
+		tSkill.style.position="absolute";
+		tSkill.style.width="100%";
+		tSkill.style.left="0";
+		tSkill.style.top="0";
+		tSkill.style.width=tImageContainer.width;
+		tImageContainer.appendChild(tSkill);
+		//スキル名
+		let tNameBox=document.createElement("div");
+		tNameBox.classList.add("nameBox")
+		tNameBox.style.position="absolute";
+		tNameBox.style.top="0";
+		tNameBox.style.left=this.infoBoxSize.width/4+"px";
+		tNameBox.style.height=this.infoBoxSize.height/3+"px";
+		tBox.appendChild(tNameBox);
+		//属性
+		let tAttribute=document.createElement("div");
+		tAttribute.style.position="absolute";
+		tAttribute.style.top=this.infoBoxSize.height/3+"px";
+		tAttribute.style.left=this.infoBoxSize.width/4+"px";
+		tAttribute.style.height=this.infoBoxSize.height/3+"px";
+		let tAttributeLabel=document.createElement("span");
+		tAttributeLabel.textContent="属性　";
+		tAttribute.appendChild(tAttributeLabel);
+		let tAttributeValue=document.createElement("span");
+		tAttribute.appendChild(tAttributeValue);
+		tBox.appendChild(tAttribute);
+		//威力,命中
+		let tPowerAndAccuracy=document.createElement("div");
+		tPowerAndAccuracy.style.position="absolute";
+		tPowerAndAccuracy.style.bottom="0";
+		tPowerAndAccuracy.style.left=this.infoBoxSize.width/4+"px";
+		tPowerAndAccuracy.style.height=this.infoBoxSize.height/3+"px";
+		tPowerAndAccuracy.style.width=this.infoBoxSize.width/4+"px";
+		//威力
+		let tPower=document.createElement("span");
+		tPower.style.position="absolute";
+		tPower.style.top="0";
+		tPower.style.left="0";
+		tPower.style.height="100%";
+		tPower.style.width=this.infoBoxSize.width/8+"px";
+		let tPowerLabel=document.createElement("span");
+		tPowerLabel.textContent="威力";
+		tPower.appendChild(tPowerLabel);
+		tPower.appendChild(document.createElement("br"));
+		let tPowerValue=document.createElement("span");
+		tPower.appendChild(tPowerValue);
+		tPowerAndAccuracy.appendChild(tPower);
+		//命中
+		let tAccuracy=document.createElement("span");
+		tAccuracy.style.position="absolute";
+		tAccuracy.style.top="0";
+		tAccuracy.style.right="0";
+		tAccuracy.style.height="100%";
+		tAccuracy.style.width=this.infoBoxSize.width/8+"px";
+		let tAccuracyLabel=document.createElement("span");
+		tAccuracyLabel.textContent="命中";
+		tAccuracy.appendChild(tAccuracyLabel);
+		tAccuracy.appendChild(document.createElement("br"));
+		let tAccuracyValue=document.createElement("span");
+		tAccuracy.appendChild(tAccuracyValue);
+		tPowerAndAccuracy.appendChild(tAccuracy);
+		tBox.appendChild(tPowerAndAccuracy);
+
+		let tCreateRangeBox=((aName,aPosition)=>{//攻撃範囲情報表示欄生成
+			let tRangeBox=document.createElement("div");
+			tRangeBox.style.position="absolute";
+			tRangeBox.style.right=(aPosition=="left")?this.infoBoxSize.width/4+"px":"0";
+			tRangeBox.style.width=this.infoBoxSize.width/4+"px";
+			tRangeBox.style.height=this.infoBoxSize.height/2+"px";
+			let tName=document.createElement("span");
+			tName.textContent=aName;
+			tRangeBox.appendChild(tName);
+			tRangeBox.appendChild(document.createElement("br"));
+			let tValue=document.createElement("span");
+			tRangeBox.appendChild(tValue);
+			return tRangeBox;
+		})
+		//範囲
+		let tRange=tCreateRangeBox("範囲","left");
+		tRange.style.top="0";
+		tBox.appendChild(tRange);
+		//巻き込み範囲
+		let tInvolve=tCreateRangeBox("巻き込み","right");
+		tInvolve.style.top="0";
+		tBox.appendChild(tInvolve);
+		//物体貫通
+		let tObject=tCreateRangeBox("障害物貫通","left");
+		tObject.style.bottom="0";
+		tBox.appendChild(tObject);
+		//壁貫通
+		let tWall=tCreateRangeBox("壁貫通","right");
+		tWall.style.bottom="0";
+		tBox.appendChild(tWall);
+
 		return tBox;
+	}
+	//アイテム用の情報box作成
+	static createItemBox(){
+		// let tBox=document.createElement("div");
+		// return tBox;
+		return this.createSkillBox();
 	}
 	//ターン中のキャラの情報セット
 	static setTurnCharaInfo(aChara){
@@ -288,8 +405,76 @@ class StatusBox{
 	}
 	//スキル情報セット
 	static setSkillInfo(aSkill,aTag){
+		//画像セット
+		aTag.children[0].firstChild.src="";
+		//スキル名
+		aTag.children[1].textContent=aSkill.name;
+		//属性
+		switch (aSkill.attribute) {
+			case "physics":
+				aTag.children[2].children[1].textContent="物理";
+				break;
+			case "magic":
+				aTag.children[2].children[1].textContent="魔法";
+				break;
+			case "heal":
+				aTag.children[2].children[1].textContent="回復";
+				break;
+			default:
+		}
+		//威力
+		switch (aSkill.magnification) {
+			case "addition"://加算
+				aTag.children[3].children[0].children[2].textContent=(aSkill.power<0)?aSkill.power:"+"+aSkill.power;
+				break;
+			case "multiplication"://乗算
+				aTag.children[3].children[0].children[2].textContent=aSkill.power*100+"%";
+				break;
+			case "fixed"://固定
+				aTag.children[3].children[0].children[2].textContent="固定"+aSkill.power;
+				break;
+			default:
+		}
+		//命中
+		aTag.children[3].children[1].children[2].textContent=aSkill.accuracy+"%";
+		//範囲
+		aTag.children[4].children[2].textContent="";
+		for(let i=0;i<aSkill.range.length;i++){
+			let tRange=aSkill.range[i];
+			if(i>0)aTag.children[4].children[2].textContent+=",";
+			switch (tRange.range) {
+				case "circumference":
+					aTag.children[4].children[2].textContent+="射程"+tRange.value;
+					break;
+				case "straight":
+					aTag.children[4].children[2].textContent+="直線"+tRange.value;
+					break;
+				case "my":
+					aTag.children[4].children[2].textContent+="自分";
+					break;
+				default:
+			}
+		}
+		//巻き込み範囲
+		switch (aSkill.involve.involve) {
+			case "none":
+				aTag.children[5].children[2].textContent="なし";
+				break;
+			case "circumference":
+				aTag.children[5].children[2].textContent="周囲距離"+aSkill.involve.value;
+				break;
+			case "through":
+				aTag.children[5].children[2].textContent="直線貫通";
+				break;
+			default:
+		}
+		//障害物貫通
+		aTag.children[6].children[2].textContent=(aSkill.object)?"可":"不可";
+		//壁貫通
+		aTag.children[7].children[2].textContent=(aSkill.wall)?"可":"不可";
 	}
 	//アイテム情報セット
 	static setItemInfo(aItem,aTag){
+		this.setSkillInfo(aItem,aTag);
 	}
 }
