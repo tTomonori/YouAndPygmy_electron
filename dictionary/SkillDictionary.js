@@ -14,6 +14,7 @@ SkillDictionary.dictionary={
 		involve:{involve:"none"},
 		object:false,
 		wall:false,
+		animation:"test",
 	},
 	enjutu:{
 		name:"炎術",
@@ -25,6 +26,7 @@ SkillDictionary.dictionary={
 		involve:{involve:"circumference",value:1},
 		object:true,
 		wall:false,
+		animation:"test",
 	},
 	denkousekka:{
 		name:"電光石火",
@@ -36,6 +38,7 @@ SkillDictionary.dictionary={
 		involve:{involve:"through"},
 		object:false,
 		wall:false,
+		animation:"test",
 	}
 }
 /*
@@ -49,5 +52,6 @@ range:[{range:"",value:}],
 involve:{involve:"none"},
 object:true or false,
 wall:true or false,
+animation:,
 }
 */

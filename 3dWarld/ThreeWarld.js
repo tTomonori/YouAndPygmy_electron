@@ -89,7 +89,7 @@ class ThreeWarld{
 	}
 	//キャラのオブジェクト生成
 	static createChara(aSize,aImage){
-		// // 画像を指定したmaterialの用意
+		//画像を指定したmaterialの用意
 		//何も表示しない面
 		let tTransparent=new THREE.MeshBasicMaterial( {
 			map:THREE.ImageUtils.loadTexture("",{},()=>{this.renderer.render(this.scene, this.camera);}),
@@ -106,6 +106,8 @@ class ThreeWarld{
 		// Cubeの用意
 		let tGeometry = new THREE.CubeGeometry(aSize[0],aSize[1],aSize[2]);
 		let tMesh = new THREE.Mesh( tGeometry, tMaterial );
+		// let tMesh=new THREE.Sprite(tMaterial[3]);
+		// tMesh.scale.multiplyScalar(10);
 		this.scene.add(tMesh);
 		return tMesh;
 	}
@@ -193,6 +195,14 @@ class ThreeWarld{
 			}
 		}
 		tLoop();
+	}
+	//アニメションセット(aFunctionの戻り値が true:繰り返し,false:callback)
+	static setAnimation(aFunction,aCallBack){
+		let tAnimate=()=>{
+			if(aFunction())requestAnimationFrame(tAnimate);
+			else aCallBack();
+		}
+		tAnimate();
 	}
 	//マウスオーバーされているオブジェクトのリストを返す
 	static getOverdObjects(e){

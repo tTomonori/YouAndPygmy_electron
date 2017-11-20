@@ -15,6 +15,7 @@ ItemDictionary.dictionary={
 			involve:{involve:"none"},
 			object:false,
 			wall:false,
+			animation:"test"
 		}
 	}
 }

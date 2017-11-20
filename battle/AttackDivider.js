@@ -8,28 +8,48 @@ class AttackDivider{
 		SkillButton.hideSkillList();
 		//巻き込み範囲取得
 		let tInvolveRange=SkillRangeDeriver.deriveInvolveRange(aSkill,aChara,aMas);
+		//ダメージを受けるキャラを取得
+		let tDamagedCharas=new Array();
 		for(let tPosition of tInvolveRange){
 			let tMas=Feild.getMas(tPosition.x,tPosition.y);
+			if(tMas==null)continue;
 			let tChara=tMas.getOnChara();
 			if(tChara==null)continue;
-			let tDamage=this.calcuDamage(aSkill,aChara,tChara);
-			if(tDamage.accuracy-Math.random()*100>=0){
-				switch (tDamage.effect) {
-					case "damage"://ダメージ
-					tChara.damage(tDamage.damage);
-					break;
-					case "heal"://回復
-					tChara.heal(tDamage.damage);
-					break;
-					default:
+			tDamagedCharas.push(tChara);
+		}
+		//アニメーション実行
+		SkillAnimater.animate(aSkill.animation,aChara,tDamagedCharas).then(()=>{
+			this.animatingCharaNum=tDamagedCharas.length;
+			for(let tChara of tDamagedCharas){
+				let tDamage=this.calcuDamage(aSkill,aChara,tChara);
+				if(tDamage.accuracy-Math.random()*100>=0){
+					switch (tDamage.effect) {
+						case "damage"://ダメージ
+							tChara.damage(tDamage.damage);
+							//ダメージによるキャライラストアニメーション
+							tChara.damagedAnimate(()=>{this.endDamagedAnimation();});
+						break;
+						case "heal"://回復
+							tChara.heal(tDamage.damage);
+							this.endDamagedAnimation();
+						break;
+						default:
+					}
+				}
+				else{
+					//攻撃が外れた
+					console.log("attack miss");
+					this.endDamagedAnimation();
 				}
 			}
-			else{
-				//攻撃が外れた
-				console.log("attack miss");
-			}
+		})
+	}
+	//ダメージを受けた時の顔画像変更アニメ終了
+	static endDamagedAnimation(){
+		if(--this.animatingCharaNum<=0){
+			//全てのキャラのアニメーション終了
+			CharaController.endAttack();
 		}
-		CharaController.endAttack();
 	}
 	//ダメージ計算
 	static calcuDamage(aSkill,aAttackChara,aDamagedChara){

@@ -58,8 +58,8 @@ class CharaController{
 	static setSelectSkillUi(){
 		Feild.resetSelectMasEvent();
 		let tLastSelectedSkill=this.turnChara.getLastSelectedSkill();
-		//攻撃可能マス表示
-		if(tLastSelectedSkill!=null)AttackSelecter.displayAttackRange(tLastSelectedSkill);
+		//最後に選択したスキルを自動選択
+		if(tLastSelectedSkill!=null)this.selectedSkill(tLastSelectedSkill);
 	}
 	//アイテム,使用先を選択するためのuiセット
 	static setSelectItemUi(){
