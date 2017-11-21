@@ -4,7 +4,7 @@ class Battle{
 		//背景設定
 		// mBattleSecene.style.backgroundImage="url('image/background/"+aFeild.background+"')";
 		//カメラ位置設定
-		ThreeWarld.setCamera({x:aFeild.feild.length/2*mMasSize[0],y:-aFeild.feild.length/2*mMasSize[1]-600,z:mMasSize[2]+400},{x:0.95})
+		ThreeWarld.setCamera({x:aFeild.feild[0].length/2*mMasSize[0],y:-aFeild.feild.length*mMasSize[1]-mMasSize[1]*5,z:mMasSize[2]+400},{x:0.95})
 
 		this.userTeam=new Array();
 		this.enemyTeam=new Array();

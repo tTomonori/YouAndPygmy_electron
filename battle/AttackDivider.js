@@ -149,7 +149,7 @@ class AttackDivider{
 			case "physics"://物理攻撃
 			case "magic"://魔法攻撃
 				let tDamage=tPower-tDefence;
-				if(tDamage<0)tDamage=0;
+				if(tDamage<1)tDamage=1;//最低1ダメージ
 				//命中率
 				let tAccuracy=aSkill.accuracy+(aAttackChara.getWaza()-aDamagedChara.getBinsei());
 				if(tAccuracy>100)tAccuracy=100;

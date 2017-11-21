@@ -14,7 +14,7 @@ class SkillAnimater{
 						tSphere.position.x=tThreePosition.x;
 						tSphere.position.y=tThreePosition.y;
 						tSphere.position.z=mMasSize[2];
-						tSphere.renderOrder=1;
+						tSphere.renderOrder=tPosition.y+0.9;
 						tSphere.material.transparent=true;
 						tSphere.material.opacity=0.6;
 						tSphere.material.color={r:1,g:0.6,b:0}

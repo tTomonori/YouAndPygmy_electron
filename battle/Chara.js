@@ -67,9 +67,10 @@ class Chara{
 	initPosition(aX,aY){
 		this.x=aX;
 		this.y=aY;
-		let tMas=Feild.getMas(aX,aY);
-		tMas.on(this);
+		// let tMas=Feild.getMas(aX,aY);
+		// tMas.on(this);
 		this.makeImage();
+		this.setPosition(aX,aY);
 	}
 	//キャラの移動後の座標セット
 	setPosition(aX,aY){
@@ -81,16 +82,21 @@ class Chara{
 		let tThreePosition=Feild.convertToThreeWarldPosition(this.x,this.y);
 		this.bodyMesh.position.x=tThreePosition.x;
 		this.bodyMesh.position.y=tThreePosition.y;
+		this.bodyMesh.renderOrder=this.y+0.3;
 		this.eyeMesh.position.x=tThreePosition.x;
 		this.eyeMesh.position.y=tThreePosition.y;
+		this.eyeMesh.renderOrder=this.y+0.31;
 		this.mouthMesh.position.x=tThreePosition.x;
 		this.mouthMesh.position.y=tThreePosition.y;
+		this.mouthMesh.renderOrder=this.y+0.31;
 		for(let tAccessory of this.accessoryMeshs){
 			tAccessory.position.x=tThreePosition.x;
 			tAccessory.position.y=tThreePosition.y;
+			tAccessory.renderOrder=this.y+0.32;
 		}
 		this.shadowMesh.position.x=tThreePosition.x;
 		this.shadowMesh.position.y=tThreePosition.y;
+		this.shadowMesh.renderOrder=this.y+0.1;
 	}
 	//3dイメージ作成
 	makeImage(){
@@ -101,18 +107,21 @@ class Chara{
 		this.bodyMesh.position.x=tThreePosition.x;
 		this.bodyMesh.position.y=tThreePosition.y;
 		this.bodyMesh.position.z=mMasSize[2]+mMasSize[2]/3;
+		// this.bodyMesh.material[3].depthTest=false;
 		this.bodyMesh.material.transparent=true;
 		//目
 		this.eyeMesh=ThreeWarld.createChara(tPosition,"image/eye/"+this.image.eye.normal+".png");
 		this.eyeMesh.position.x=tThreePosition.x;
 		this.eyeMesh.position.y=tThreePosition.y;
 		this.eyeMesh.position.z=mMasSize[2]+mMasSize[2]/3;
+		// this.eyeMesh.material[3].depthTest=false;
 		this.eyeMesh.material.transparent=true;
 		//口
 		this.mouthMesh=ThreeWarld.createChara(tPosition,"image/mouth/"+this.image.mouth.normal+".png");
 		this.mouthMesh.position.x=tThreePosition.x;
 		this.mouthMesh.position.y=tThreePosition.y;
 		this.mouthMesh.position.z=mMasSize[2]+mMasSize[2]/3;
+		// this.mouthMesh.material[3].depthTest=false;
 		this.mouthMesh.material.transparent=true;
 		//アクセサリ
 		this.accessoryMeshs=new Array();
@@ -121,6 +130,7 @@ class Chara{
 			tAccessory.position.x=tThreePosition.x;
 			tAccessory.position.y=tThreePosition.y;
 			tAccessory.position.z=mMasSize[2]+mMasSize[2]/3;
+			// tAccessory.material[3].depthTest=false;
 			tAccessory.material.transparent=true;
 
 			this.accessoryMeshs.push(tAccessory);

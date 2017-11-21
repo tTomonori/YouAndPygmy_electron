@@ -15,12 +15,15 @@ class Mas{
 		this.box.position.x=tThreePosition.x;
 		this.box.position.y=tThreePosition.y;
 		this.box.className="mas";
+		this.box.renderOrder=this.y;
 		this.box.class=this;
 		//マスを変色させるためのbox
 		this.cover=ThreeWarld.createBox([mMasSize[0],mMasSize[1],1])
 		this.cover.position.x=this.box.position.x;
 		this.cover.position.y=this.box.position.y;
 		this.cover.position.z=mMasSize[2]/2;
+		this.cover.renderOrder=this.y+0.2;
+		this.cover.material.depthTest=false;
 		this.cover.material.transparent=true;
 		this.cover.material.opacity=0;
 	}

@@ -119,10 +119,12 @@ window.addEventListener('DOMContentLoaded', ()=>{
 	}
 	],{
 		feild:[
-			[0,0,0,0,0],
-			[0,0,0,0,0],
-			[1,1,0,1,1],
-			[0,0,0,0,0]
+			[1,0,0,0,0,0,1],
+			[1,0,0,0,0,0,1],
+			[1,1,0,0,0,1,1],
+			[1,1,1,0,0,1,1],
+			[1,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0]
 		],
 		masData:{
 			0:{
@@ -137,7 +139,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 			}
 		},
 		charaPosition:{
-			user:[{x:1,y:3},{x:3,y:3}],
+			user:[{x:5,y:4},{x:2,y:4}],
 			enemy:[{x:2,y:0}]
 		},
 		background:"BG24a_80.jpg"
