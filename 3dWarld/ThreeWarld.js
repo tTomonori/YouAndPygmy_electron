@@ -36,8 +36,9 @@ class ThreeWarld{
 			// box.rotation.y += 0.01;
 			// ThreeWarld.camera.rotation.x += 0.001;
 			// ThreeWarld.camera.position.y -= 1;
-			// camera.rotation.y += 0.001;
-			// camera.rotation.z -= 0.001;
+			// this.camera.rotation.x += 0.01;
+			// this.camera.rotation.y += 0.01;
+			// this.camera.rotation.z -= 0.01;
 			// camera.lookAt(new THREE.Vector3(0, 100, 0));
 
 			//描画毎に呼ぶ関数
@@ -97,6 +98,21 @@ class ThreeWarld{
 		//sceneオブジェクトに追加
 		this.scene.add(tCylinder);
 		return tCylinder;
+	}
+	//球体を生成する
+	static createSphere(aRadius){
+		let tGeometry = new THREE.SphereGeometry(aRadius,50);
+		let tMaterial = new THREE.MeshBasicMaterial();
+		let tSphere = new THREE.Mesh(tGeometry, tMaterial);
+		//sceneオブジェクトに追加
+		this.scene.add(tSphere);
+		return tSphere;
+	}
+	//物体を削除する
+	static deleteObject(aObject){
+		this.scene.remove(aObject);
+		aObject.geometry.dispose();
+		aObject.material.dispose();
 	}
 	//キャラのオブジェクト生成
 	static createChara(aSize,aImage){
