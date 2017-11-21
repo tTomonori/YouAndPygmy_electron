@@ -25,6 +25,8 @@ class ThreeWarld{
 		this.intervalFunction=new Array();
 		//マウスが移動するたびに呼ばれる関数
 		this.mouseMoveFunctions=new Array();
+		//マウスが移動するたびに呼ばれる関数(消えない方)
+		this.mouseMoveForeverFunctions=new Array();
 
 		let tick=()=>{
 			requestAnimationFrame(tick);
@@ -87,6 +89,15 @@ class ThreeWarld{
 		this.scene.add(tBox);
 		return tBox;
 	}
+	//円柱を生成する
+	static createCylinder(aRadius,aHeight){
+		let tGeometry = new THREE.CylinderGeometry(aRadius,aRadius,aHeight,50);
+		let tMaterial = new THREE.MeshBasicMaterial();
+		let tCylinder = new THREE.Mesh(tGeometry, tMaterial);
+		//sceneオブジェクトに追加
+		this.scene.add(tCylinder);
+		return tCylinder;
+	}
 	//キャラのオブジェクト生成
 	static createChara(aSize,aImage){
 		//画像を指定したmaterialの用意
@@ -115,6 +126,10 @@ class ThreeWarld{
 	static setMouseMoveFunction(aFunction){
 		this.mouseMoveFunctions.push(aFunction);
 	}
+	//マウスが移動するたびに呼ぶ関数セット(消えない方)
+	static setMouseMoveForeverFunction(aFunction){
+		this.mouseMoveForeverFunctions.push(aFunction);
+	}
 	//マウスが移動するたびに呼ぶ関数リセット
 	static resetMouseMoveFunctions(aFunction){
 		this.mouseMoveFunctions=new Array();
@@ -124,6 +139,10 @@ class ThreeWarld{
 		tCanvas.onmousemove=(e)=>{
 			//カーソル位置記憶
 			this.mousePoint={clientX:e.clientX,clientY:e.clientY,target:e.target};
+			//マウスが動くたびに呼ぶ関数(消えない方)
+			for(let tFunction of this.mouseMoveForeverFunctions){
+				tFunction();
+			}
 			//マウスが動くたびに呼ぶ関数
 			for(let tFunction of this.mouseMoveFunctions){
 				tFunction();

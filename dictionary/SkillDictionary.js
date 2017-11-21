@@ -6,6 +6,7 @@ class SkillDictionary{
 SkillDictionary.dictionary={
 	hikkaki:{
 		name:"ひっかき",
+		mp:0,
 		attribute:"physics",
 		magnification:"addition",
 		power:0,
@@ -19,6 +20,7 @@ SkillDictionary.dictionary={
 	},
 	enjutu:{
 		name:"炎術",
+		mp:10,
 		attribute:"magic",
 		magnification:"multiplication",
 		power:1.2,
@@ -32,6 +34,7 @@ SkillDictionary.dictionary={
 	},
 	denkousekka:{
 		name:"電光石火",
+		mp:10,
 		attribute:"physics",
 		magnification:"addition",
 		power:5,
@@ -42,11 +45,40 @@ SkillDictionary.dictionary={
 		wall:false,
 		counter:false,
 		animation:"test",
-	}
+	},
+	tataku:{
+		name:"たたく",
+		mp:0,
+		attribute:"physics",
+		magnification:"addition",
+		power:0,
+		accuracy:100,
+		range:[{range:"circumference",value:1}],
+		involve:{involve:"none"},
+		object:false,
+		wall:false,
+		counter:true,
+		animation:"test",
+	},
+	suihou:{
+		name:"水泡",
+		mp:5,
+		attribute:"magic",
+		magnification:"addition",
+		power:5,
+		accuracy:95,
+		range:[{range:"circumference",value:3}],
+		involve:{involve:"none"},
+		object:true,
+		wall:false,
+		counter:false,
+		animation:"test",
+	},
 }
 /*
 name:{
 name:"",
+mp:,
 attribute:"attack"or"heal",
 magnification:"addition"or"multiplication",
 power:,

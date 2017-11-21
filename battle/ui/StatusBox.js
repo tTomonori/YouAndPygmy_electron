@@ -232,18 +232,54 @@ class StatusBox{
 		tNameBox.style.left=this.infoBoxSize.width/4+"px";
 		tNameBox.style.height=this.infoBoxSize.height/3+"px";
 		tBox.appendChild(tNameBox);
+		// //属性
+		// let tAttribute=document.createElement("div");
+		// tAttribute.style.position="absolute";
+		// tAttribute.style.top=this.infoBoxSize.height/3+"px";
+		// tAttribute.style.left=this.infoBoxSize.width/4+"px";
+		// tAttribute.style.height=this.infoBoxSize.height/3+"px";
+		// let tAttributeLabel=document.createElement("span");
+		// tAttributeLabel.textContent="属性　";
+		// tAttribute.appendChild(tAttributeLabel);
+		// let tAttributeValue=document.createElement("span");
+		// tAttribute.appendChild(tAttributeValue);
+		// tBox.appendChild(tAttribute);
+		//属性,消費きりょく
+		let tAttributeAndWillpower=document.createElement("div");
+		tAttributeAndWillpower.style.position="absolute";
+		tAttributeAndWillpower.style.bottom=this.infoBoxSize.height/3+"px";
+		tAttributeAndWillpower.style.left=this.infoBoxSize.width/4+"px";
+		tAttributeAndWillpower.style.height=this.infoBoxSize.height/3+"px";
+		tAttributeAndWillpower.style.width=this.infoBoxSize.width/4+"px";
 		//属性
-		let tAttribute=document.createElement("div");
+		let tAttribute=document.createElement("span");
 		tAttribute.style.position="absolute";
-		tAttribute.style.top=this.infoBoxSize.height/3+"px";
-		tAttribute.style.left=this.infoBoxSize.width/4+"px";
-		tAttribute.style.height=this.infoBoxSize.height/3+"px";
+		tAttribute.style.top="0";
+		tAttribute.style.left="0";
+		tAttribute.style.height="100%";
+		tAttribute.style.width=this.infoBoxSize.width/8+"px";
 		let tAttributeLabel=document.createElement("span");
-		tAttributeLabel.textContent="属性　";
+		tAttributeLabel.textContent="属性";
 		tAttribute.appendChild(tAttributeLabel);
+		tAttribute.appendChild(document.createElement("br"));
 		let tAttributeValue=document.createElement("span");
 		tAttribute.appendChild(tAttributeValue);
-		tBox.appendChild(tAttribute);
+		tAttributeAndWillpower.appendChild(tAttribute);
+		//きりょく
+		let tWillpower=document.createElement("span");
+		tWillpower.style.position="absolute";
+		tWillpower.style.top="0";
+		tWillpower.style.right="0";
+		tWillpower.style.height="100%";
+		tWillpower.style.width=this.infoBoxSize.width/8+"px";
+		let tWillpowerLabel=document.createElement("span");
+		tWillpowerLabel.textContent="きりょく";
+		tWillpower.appendChild(tWillpowerLabel);
+		tWillpower.appendChild(document.createElement("br"));
+		let tWillpowerValue=document.createElement("span");
+		tWillpower.appendChild(tWillpowerValue);
+		tAttributeAndWillpower.appendChild(tWillpower);
+		tBox.appendChild(tAttributeAndWillpower);
 		//威力,命中
 		let tPowerAndAccuracy=document.createElement("div");
 		tPowerAndAccuracy.style.position="absolute";
@@ -412,16 +448,18 @@ class StatusBox{
 		//属性
 		switch (aSkill.attribute) {
 			case "physics":
-				aTag.children[2].children[1].textContent="物理";
+				aTag.children[2].children[0].children[2].textContent="物理";
 				break;
 			case "magic":
-				aTag.children[2].children[1].textContent="魔法";
+				aTag.children[2].children[0].children[2].textContent="魔法";
 				break;
 			case "heal":
-				aTag.children[2].children[1].textContent="回復";
+				aTag.children[2].children[0].children[2].textContent="回復";
 				break;
 			default:
 		}
+		//消費気力
+		aTag.children[2].children[1].children[2].textContent=(aSkill.mp==undefined)?"---":aSkill.mp;
 		//威力
 		switch (aSkill.magnification) {
 			case "addition"://加算

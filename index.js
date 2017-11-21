@@ -50,6 +50,39 @@ window.addEventListener('DOMContentLoaded', ()=>{
 			accessory:[{name:"星の髪飾り",image:"starOrnaments"}]
 		},
 		ai:"user",
+	},
+	{
+		name:"すらりん",
+		race:"すらいむ",
+		hp:32,
+		mp:15,
+		atk:10,
+		def:17,
+		mgc:18,
+		spt:20,
+		hel:12,
+		tec:10,
+		spd:7,
+		mov:3,
+		skill:["tataku","suihou"],
+		item:["kinomi"],
+		moc:{
+			grass:1.5,
+			sand:1.5,
+			water:1,
+			magma:false,
+			snow:1,
+			ice:1,
+			air:false,
+			wall:false
+		},
+		image:{
+			body:"pygmy/suraimu",
+			eye:{normal:"green",damage:"sanMe"},
+			mouth:{normal:"smile",damage:"sanKuti"},
+			accessory:[{name:"星の髪飾り",image:"starOrnaments"}]
+		},
+		ai:"user",
 	}
 	],[{
 		name:"てきねこ",

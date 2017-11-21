@@ -1,5 +1,5 @@
 class Chara{
-	constructor(aData){
+	constructor(aData,aTeam){
 		this.data=aData;
 		this.name=aData.name;
 		this.race=aData.race;
@@ -19,6 +19,8 @@ class Chara{
 		this.moc=aData.moc;
 		this.image=aData.image;
 		this.ai=aData.ai;
+		//チーム
+		this.team=aTeam
 		//スキルデータを取得して記憶
 		this.skill=new Array();
 		for(let tSkillName of aData.skill){
@@ -53,6 +55,7 @@ class Chara{
 	getAi(){return this.ai;}
 	getPosition(){return {x:this.x,y:this.y};}
 	getMas(){return Feild.getMas(this.x,this.y)}
+	getTeam(){return this.team;}
 	//最後に選択したスキル
 	getLastSelectedSkill(){
 		return this.lastSelectedSkill;
@@ -86,26 +89,32 @@ class Chara{
 			tAccessory.position.x=tThreePosition.x;
 			tAccessory.position.y=tThreePosition.y;
 		}
+		this.shadowMesh.position.x=tThreePosition.x;
+		this.shadowMesh.position.y=tThreePosition.y;
 	}
 	//3dイメージ作成
 	makeImage(){
 		let tPosition=[mMasSize[0],0,mMasSize[2]*3/2];
 		let tThreePosition=Feild.convertToThreeWarldPosition(this.x,this.y);
+		//体
 		this.bodyMesh=ThreeWarld.createChara(tPosition,"image/"+this.image.body+".png");
 		this.bodyMesh.position.x=tThreePosition.x;
 		this.bodyMesh.position.y=tThreePosition.y;
 		this.bodyMesh.position.z=mMasSize[2]+mMasSize[2]/3;
 		this.bodyMesh.material.transparent=true;
+		//目
 		this.eyeMesh=ThreeWarld.createChara(tPosition,"image/eye/"+this.image.eye.normal+".png");
 		this.eyeMesh.position.x=tThreePosition.x;
 		this.eyeMesh.position.y=tThreePosition.y;
 		this.eyeMesh.position.z=mMasSize[2]+mMasSize[2]/3;
 		this.eyeMesh.material.transparent=true;
+		//口
 		this.mouthMesh=ThreeWarld.createChara(tPosition,"image/mouth/"+this.image.mouth.normal+".png");
 		this.mouthMesh.position.x=tThreePosition.x;
 		this.mouthMesh.position.y=tThreePosition.y;
 		this.mouthMesh.position.z=mMasSize[2]+mMasSize[2]/3;
 		this.mouthMesh.material.transparent=true;
+		//アクセサリ
 		this.accessoryMeshs=new Array();
 		for(let tAccessoryPath of this.image.accessory){
 			let tAccessory=ThreeWarld.createChara(tPosition,"image/accessory/"+tAccessoryPath.image+".png");
@@ -116,18 +125,40 @@ class Chara{
 
 			this.accessoryMeshs.push(tAccessory);
 		}
-
+		//影(チーム判別用)
+		this.shadowMesh=ThreeWarld.createCylinder(mMasSize[0]/6,1);
+		this.shadowMesh.position.x=tThreePosition.x;
+		this.shadowMesh.position.y=tThreePosition.y;
+		this.shadowMesh.rotation.x=Math.PI/2;
+		this.shadowMesh.position.z=mMasSize[2]/2+1;
+		this.shadowMesh.renderOrder=-1;
+		this.shadowMesh.material.transparent=true;
+		this.shadowMesh.material.opacity=0.8;
+		this.shadowMesh.material.color=mTeamColor[this.team];
+		//メッシュにインスタンスを付与する
 		this.bodyMesh.className="chara";
 		this.bodyMesh.class=this;
 		//画像変更用
 		this.damageEyeImage=document.createElement("img");
 		this.damageEyeImage.src="image/eye/"+this.image.eye.damage+".png";
+		this.damageEyeImage=new THREE.Texture(this.damageEyeImage);
+		this.damageEyeImage.needsUpdate=true;
+		this.damageEyeImage.minFilter=THREE.LinearFilter;
 		this.normalEyeImage=document.createElement("img");
 		this.normalEyeImage.src="image/eye/"+this.image.eye.normal+".png";
+		this.normalEyeImage=new THREE.Texture(this.normalEyeImage);
+		this.normalEyeImage.needsUpdate=true;
+		this.normalEyeImage.minFilter=THREE.LinearFilter;
 		this.damageMouthImage=document.createElement("img");
 		this.damageMouthImage.src="image/mouth/"+this.image.mouth.damage+".png";
+		this.damageMouthImage=new THREE.Texture(this.damageMouthImage);
+		this.damageMouthImage.needsUpdate=true;
+		this.damageMouthImage.minFilter=THREE.LinearFilter;
 		this.normalMouthImage=document.createElement("img");
 		this.normalMouthImage.src="image/mouth/"+this.image.mouth.normal+".png";
+		this.normalMouthImage=new THREE.Texture(this.normalMouthImage);
+		this.normalMouthImage.needsUpdate=true;
+		this.normalMouthImage.minFilter=THREE.LinearFilter;
 	}
 	//3dイメージに関数実行
 	operateMesh(aFunction){
@@ -137,30 +168,27 @@ class Chara{
 		for(let tMesh of this.accessoryMeshs){
 			aFunction(tMesh.material[3]);
 		}
+		aFunction(this.shadowMesh.material);
 	}
 	//ダメージを受けた時用の顔画像に変更する
 	changeToDamageFace(){
-		this.eyeMesh.material[3].map=new THREE.Texture(this.damageEyeImage);
-		this.mouthMesh.material[3].map=new THREE.Texture(this.damageMouthImage);
-		this.eyeMesh.material[3].map.needsUpdate=true;
-		this.mouthMesh.material[3].map.needsUpdate=true;
-		this.eyeMesh.material[3].map.minFilter=THREE.LinearFilter;
-		this.mouthMesh.material[3].map.minFilter=THREE.LinearFilter;
+		this.eyeMesh.material[3].map=this.damageEyeImage;
+		this.mouthMesh.material[3].map=this.damageMouthImage;
 	}
 	//通常時の顔に変更する
 	changeToNormalFace(){
-		this.eyeMesh.material[3].map=new THREE.Texture(this.normalEyeImage);
-		this.mouthMesh.material[3].map=new THREE.Texture(this.normalMouthImage);
-		this.eyeMesh.material[3].map.needsUpdate=true;
-		this.mouthMesh.material[3].map.needsUpdate=true;
-		this.eyeMesh.material[3].map.minFilter=THREE.LinearFilter;
-		this.mouthMesh.material[3].map.minFilter=THREE.LinearFilter;
+		this.eyeMesh.material[3].map=this.normalEyeImage;
+		this.mouthMesh.material[3].map=this.normalMouthImage;
 	}
 	//指定されたマスへ移動
 	move(aMas,aFunction){
 		let tPosition=aMas.getPosition();
 		let tTarget=Feild.convertToThreeWarldPosition(tPosition.x,tPosition.y);
-		ThreeWarld.setMoveAnimation([this.bodyMesh,this.eyeMesh,this.mouthMesh].concat(this.accessoryMeshs),tTarget,300,()=>{aFunction();})
+		ThreeWarld.setMoveAnimation([this.bodyMesh,this.eyeMesh,this.mouthMesh,this.shadowMesh].concat(this.accessoryMeshs),tTarget,300,()=>{aFunction();})
+	}
+	//気力を消費する
+	useKiryoku(aMp){
+		this.mp-=aMp;
 	}
 	//ダメージを受ける
 	damage(aDamage){
@@ -202,4 +230,9 @@ class Chara{
 			return true;
 		},()=>{aCallBack()})
 	}
+}
+
+const mTeamColor={
+	ally:{r:0,g:0,b:0.4},
+	enemy:{r:0.4,g:0,b:0}
 }

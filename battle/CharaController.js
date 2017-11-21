@@ -33,7 +33,13 @@ class CharaController{
 		this.selectingSkill=aSkill;
 		StatusBox.setSelectedSkillInfo(aSkill);
 		this.turnChara.setLastSelectedSkill(aSkill);
-		AttackSelecter.displayAttackRange(aSkill);
+		if(this.turnChara.getMp()<aSkill.mp){
+			//気力が足りない
+			AttackSelecter.displayNotEnoughSkillRange(aSkill);
+		}
+		else{
+			AttackSelecter.displayAttackRange(aSkill);
+		}
 	}
 	//アイテムが選択された
 	static selectedItem(aItem){
@@ -43,11 +49,8 @@ class CharaController{
 	}
 	//攻撃するマスが選択された
 	static selectedAttackMas(aMas){
-		//キャラがいるマスのみ攻撃可能
-		let tChara=aMas.getOnChara();
-		if(tChara!=null){
-			AttackSelecter.attackTo(tChara);
-		}
+		if(AttackSelecter.judgeAttackable(aMas,this.selectingSkill))
+			AttackSelecter.attackTo(aMas,this.selectingSkill);
 	}
 	//移動したあと
 	static moved(){

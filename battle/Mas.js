@@ -62,7 +62,7 @@ class Mas{
 		this.mouseOverTemp=()=>{
 			this.changeToSelectedColor();
 			if(this.chara!=null){
-				DamagePredictor.displayPredict(CharaController.getSelectedSkill(),Turn.getTurnChara(),this.chara);
+				DamagePredictor.displayPredict(CharaController.getSelectedSkill(),Turn.getTurnChara(),this);
 			}
 		};
 		this.click=()=>{
@@ -79,7 +79,7 @@ class Mas{
 		this.mouseOverTemp=()=>{
 			this.changeToSelectedColor();
 			if(this.chara!=null){
-				DamagePredictor.displayPredict(CharaController.getSelectedSkill(),Turn.getTurnChara(),this.chara);
+				DamagePredictor.displayPredict(CharaController.getSelectedSkill(),Turn.getTurnChara(),this);
 			}
 		};
 		this.click=()=>{

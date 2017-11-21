@@ -9,10 +9,10 @@ class Battle{
 		this.userTeam=new Array();
 		this.enemyTeam=new Array();
 		for(let tChara of aUserTeam){//味方チームのキャラインスタンス生成
-			this.userTeam.push(new Chara(tChara));
+			this.userTeam.push(new Chara(tChara,"ally"));
 		}
 		for(let tChara of aEnemyTeam){//敵チームのキャラインスタンス生成
-			this.enemyTeam.push(new Chara(tChara));
+			this.enemyTeam.push(new Chara(tChara,"enemy"));
 		}
 		//ターン初期化
 		Turn.init(this.userTeam.concat(this.enemyTeam));

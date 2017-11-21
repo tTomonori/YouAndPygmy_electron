@@ -26,8 +26,17 @@ class AttackDivider{
 	}
 	//スキルを使用する
 	static activateSkill(aSkill,aMas,aChara){
+		//選択したマスにキャラがいない
 		let tAttackedChara=aMas.getOnChara();
 		if(tAttackedChara==null)return;
+		//気力が足りない
+		let tMp=aSkill.mp
+		if(tMp!=undefined&&aChara.getMp()<tMp){
+			console.log("気力が足りないスキルは使っちゃダメ");
+			return;
+		}
+		//気力消費
+		if(tMp!=undefined)aChara.useKiryoku(aSkill.mp)
 		//攻撃可能
 		Feild.resetSelectMasEvent();
 		SkillButton.hideSkillList();
@@ -87,6 +96,8 @@ class AttackDivider{
 		for(let tSkill of tSkills){
 			//反撃不可スキル
 			if(tSkill.counter==false)continue;
+			//気力が足りない
+			if(aCounterChara.getMp()<tSkill.mp)continue;
 			//攻撃範囲取得
 			let tRange=SkillRangeDeriver.deriveRange(tSkill,tCounterPosition);
 			for(let tRangePosition of tRange){

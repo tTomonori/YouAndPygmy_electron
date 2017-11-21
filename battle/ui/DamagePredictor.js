@@ -45,18 +45,31 @@ class DamagePredictor{
 		this.tag.appendChild(tCreatePredictBox("攻撃","left"));
 		this.tag.appendChild(tCreatePredictBox("反撃","right"));
 		mBattleSecene.appendChild(this.tag);
+
+		//マウスが移動するたびにダメージ予測欄を消す
+		ThreeWarld.setMouseMoveForeverFunction(()=>{
+			this.hidePredict();
+		})
 	}
 	//ダメージ予測表示
-	static displayPredict(aSkill,aAttacker,aDefender){
-		//攻撃予測
-		let tDamage=AttackDivider.calcuDamage(aSkill,aAttacker,aDefender);
-		this.setDamageInfo(tDamage,this.tag.children[0]);
-		//反撃予測
-		let tCounterSkill=AttackDivider.getCouterSkill(aSkill,aDefender,aAttacker);
-		if(tCounterSkill==null)tDamage=null;
-		else tDamage=AttackDivider.calcuDamage(tCounterSkill,aDefender,aAttacker);
-		this.setDamageInfo(tDamage,this.tag.children[1]);
-		
+	static displayPredict(aSkill,aAttacker,aMas){
+		if(AttackSelecter.judgeAttackable(aMas,aSkill)){
+			let tDefender=aMas.getOnChara();
+			//攻撃予測
+			let tDamage=AttackDivider.calcuDamage(aSkill,aAttacker,tDefender);
+			this.setDamageInfo(tDamage,this.tag.children[0]);
+			//反撃予測
+			let tCounterSkill=AttackDivider.getCouterSkill(aSkill,tDefender,aAttacker);
+			if(tCounterSkill==null)tDamage=null;
+			else tDamage=AttackDivider.calcuDamage(tCounterSkill,tDefender,aAttacker);
+			this.setDamageInfo(tDamage,this.tag.children[1]);
+		}
+		else{
+			//攻撃不可のマス
+			this.setDamageInfo(null,this.tag.children[0]);
+			this.setDamageInfo(null,this.tag.children[1]);
+		}
+
 		this.tag.style.display="block";
 	}
 	//予測boxに情報表示
