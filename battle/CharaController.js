@@ -76,6 +76,7 @@ class CharaController{
 	//アイテム,使用先を選択するためのuiセット
 	static setSelectItemUi(){
 		Feild.resetSelectMasEvent();
+		ItemButton.clickList(0);
 	}
 	//移動する前のuiセット
 	static setBeforMoveUi(){

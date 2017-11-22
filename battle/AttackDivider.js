@@ -36,7 +36,9 @@ class AttackDivider{
 			return;
 		}
 		//気力消費
-		if(tMp!=undefined)aChara.useKiryoku(aSkill.mp)
+		if(tMp!=undefined)aChara.useKiryoku(aSkill.mp);
+		//アイテム消費
+		if(aSkill.consum==true)aChara.useItem(aSkill.key);
 		//攻撃可能
 		Feild.resetSelectMasEvent();
 		SkillButton.hideSkillList();

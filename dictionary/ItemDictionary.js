@@ -6,6 +6,7 @@ class ItemDictionary{
 ItemDictionary.dictionary={
 	kinomi:{
 		skill:{
+			key:"kinomi",
 			name:"きのみ",
 			attribute:"heal",
 			magnification:"fixed",
@@ -15,7 +16,8 @@ ItemDictionary.dictionary={
 			involve:{involve:"none"},
 			object:false,
 			wall:false,
-			animation:"test"
+			animation:"test",
+			consum:true
 		}
 	}
 }

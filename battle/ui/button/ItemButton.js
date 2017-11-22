@@ -51,6 +51,10 @@ class ItemButton{
 	}
 	//クリックされた時
 	static click(){}
+	//リストをクリックする
+	static clickList(aNum){
+		this.items[aNum].click();
+	}
 	//クリックした時に実行する関数セット
 	static setClickFunction(aFunction){
 		this.click=()=>{aFunction()}
@@ -65,11 +69,13 @@ class ItemButton{
 			let tItemTag=this.items[i];
 			if(i>=aItemList.length){
 				tItemTag.style.display="none";
+				tItemTag.onclick=()=>{};
 				continue;
 			}
-			let tItem=ItemDictionary.getItem(aItemList[i]).skill;
-			tItemTag.textContent=tItem.name;
-			tItemTag.onclick=()=>{CharaController.selectedItem(tItem)};
+			let tItem=aItemList[i]
+			let tItemEffect=ItemDictionary.getItem(tItem.name).skill;
+			tItemTag.textContent=tItemEffect.name+"　x"+tItem.number;
+			tItemTag.onclick=()=>{CharaController.selectedItem(tItemEffect)};
 			tItemTag.style.display="block";
 		}
 		if(aItemList.length==0)this.noneItem.style.display="block";

@@ -43,7 +43,7 @@ class SkillButton{
 	}
 	//クリックされた時
 	static click(){}
-	//リストがクリックされた時
+	//リストをクリックする
 	static clickList(aNum){
 		this.skills[aNum].click();
 	}

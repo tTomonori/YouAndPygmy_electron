@@ -200,6 +200,16 @@ class Chara{
 	useKiryoku(aMp){
 		this.mp-=aMp;
 	}
+	//アイテムを使用した
+	useItem(aItemName){
+		for(let i=0;i<this.item.length;i++){
+			let tItem=this.item[i];
+			if(tItem.name!=aItemName)continue;
+			tItem.number--;
+			//アイテムがなくなった
+			if(tItem.number<=0)this.item.splice(i,1);
+		}
+	}
 	//ダメージを受ける
 	damage(aDamage){
 		this.hp-=aDamage;

@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 		spd:22,
 		mov:3,
 		skill:["hikkaki","enjutu"],
-		item:["kinomi"],
+		item:[{name:"kinomi",number:2}],
 		moc:{
 			grass:1,
 			sand:1,
@@ -65,7 +65,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 		spd:7,
 		mov:3,
 		skill:["tataku","suihou"],
-		item:["kinomi"],
+		item:[{name:"kinomi",number:1}],
 		moc:{
 			grass:1.5,
 			sand:1.5,
