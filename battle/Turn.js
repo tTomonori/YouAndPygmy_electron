@@ -41,4 +41,20 @@ class Turn{
 		this.actedChara.push(this.order.shift());
 		this.nextTurn();
 	}
+	//キャラを消す(戦闘不能)
+	static deleteChara(aChara){
+		let tDelete=(aList)=>{
+			let i=0;
+			for(let tChara of aList){
+				if(tChara==aChara){
+					aList.splice(i,1);
+					return;
+				}
+				i++;
+			}
+		}
+		tDelete(this.allChara);
+		tDelete(this.order);
+		tDelete(this.actedChara);
+	}
 }

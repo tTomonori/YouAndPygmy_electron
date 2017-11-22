@@ -112,7 +112,16 @@ class ThreeWarld{
 	static deleteObject(aObject){
 		this.scene.remove(aObject);
 		aObject.geometry.dispose();
-		aObject.material.dispose();
+		if(aObject.material.dispose==undefined){
+			//面ごとに違うマテリアルが使われている
+			for(let tMaterial of aObject.material){
+				tMaterial.dispose();
+			}
+		}
+		else{
+			//全ての面が同じ
+			aObject.material.dispose()
+		}
 	}
 	//キャラのオブジェクト生成
 	static createChara(aSize,aImage){

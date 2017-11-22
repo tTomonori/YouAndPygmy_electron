@@ -41,4 +41,18 @@ class SkillAnimater{
 			this.resolve();
 		}
 	}
+	//配列の関数を全て実行し,全てからresが帰ってきたら,呼び出し元へresを返す
+	static executeAnimations(aFunctions){
+		this.animatingNum=aFunctions.length;
+		return new Promise((res,rej)=>{
+			if(this.animatingNum==0){
+				res();
+				return;
+			}
+			this.resolve=()=>{res();}
+			for(let tFunction of aFunctions){
+				tFunction().then(()=>{this.endAnimation();})
+			}
+		})
+	}
 }

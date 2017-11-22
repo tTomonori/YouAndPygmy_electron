@@ -42,6 +42,10 @@ class Battle{
 		ThreeWarld.setMouseMove();
 		ThreeWarld.setClick();
 	}
+	//キャラを消す(戦闘不能)
+	static deleteChara(aChara){
+		Turn.deleteChara(aChara);
+	}
 }
 var mMasSize=[80,80,80];
 var mButtonSize=mScreenSize.height/8;

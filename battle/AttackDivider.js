@@ -1,7 +1,7 @@
 class AttackDivider{
 	//攻撃する
 	static attack(aSkill,aDefender,aAttacker){
-		this.endActivatSkill=()=>{
+		this.endActivateSkill=()=>{
 			this.counter(aSkill,aDefender,aAttacker);
 		}
 		this.activateSkill(aSkill,aDefender.getMas(),aAttacker);
@@ -10,7 +10,7 @@ class AttackDivider{
 	static counter(aActivatedSkill,aCounterChara,aAttackedChara){
 		let tEndFunction=()=>{CharaController.endAttack()};
 		//倒されている
-		if(aCounterChara.getHp()<=0){
+		if(aCounterChara.isDown()||aAttackedChara.isDown()){
 			tEndFunction();
 			return;
 		}
@@ -21,7 +21,7 @@ class AttackDivider{
 			return;
 		}
 		//反撃可能
-		this.endActivatSkill=()=>{tEndFunction();}
+		this.endActivateSkill=()=>{tEndFunction();}
 		this.activateSkill(tCounterSkill,aAttackedChara.getMas(),aCounterChara);
 	}
 	//スキルを使用する
@@ -55,15 +55,18 @@ class AttackDivider{
 		}
 		//アニメーション実行
 		SkillAnimater.animate(aSkill.animation,aChara,tDamagedCharas).then(()=>{
-			this.animatingCharaNum=tDamagedCharas.length;
+			//スキルエフェクト終了
+			let tDamagedFunctions=new Array();
 			for(let tChara of tDamagedCharas){
+				//ダメージ計算
 				let tDamage=this.calcuDamage(aSkill,aChara,tChara);
-				if(tDamage.accuracy-Math.random()*100>=0){
+				if(tDamage.accuracy-Math.random()*100>=0){//当たり,回避判定
+					//攻撃が当たった
 					switch (tDamage.effect) {
 						case "damage"://ダメージ
 							tChara.damage(tDamage.damage);
 							//ダメージによるキャライラストアニメーション
-							tChara.damagedAnimate(()=>{this.endDamagedAnimation();});
+							tDamagedFunctions.push(()=>{return tChara.damagedAnimate()})
 						break;
 						case "heal"://回復
 							tChara.heal(tDamage.damage);
@@ -75,17 +78,34 @@ class AttackDivider{
 				else{
 					//攻撃が外れた
 					console.log("attack miss");
-					this.endDamagedAnimation();
 				}
 			}
+			//被ダメージエフェクト
+			SkillAnimater.executeAnimations(tDamagedFunctions).then(()=>{
+				//被ダメージエフェクト終了
+				let tDownFunctions=new Array();
+				for(let tChara of tDamagedCharas){
+					//戦闘不能判定
+					if(!tChara.isDown())continue;
+					tDownFunctions.push(()=>{return tChara.down()})
+				}
+				SkillAnimater.executeAnimations(tDownFunctions).then(()=>{
+					//戦闘不能アニメーション終了
+					this.endActivateSkill();
+				})
+			})
 		})
 	}
 	//ダメージを受けた時の顔画像変更アニメ終了
 	static endDamagedAnimation(){
 		if(--this.animatingCharaNum<=0){
 			//全てのキャラのアニメーション終了
-			this.endActivatSkill();
+			this.endActivateSkill();
 		}
+	}
+	//戦闘不能判定
+	static judgeDown(){
+
 	}
 	//反撃で発動するスキルを取得
 	static getCouterSkill(aActivatedSkill,aCounterChara,aAttackedChara){

@@ -56,6 +56,8 @@ class Chara{
 	getPosition(){return {x:this.x,y:this.y};}
 	getMas(){return Feild.getMas(this.x,this.y)}
 	getTeam(){return this.team;}
+	//戦闘不能判定
+	isDown(){return (this.hp<=0)}
 	//最後に選択したスキル
 	getLastSelectedSkill(){
 		return this.lastSelectedSkill;
@@ -171,14 +173,23 @@ class Chara{
 		this.normalMouthImage.minFilter=THREE.LinearFilter;
 	}
 	//3dイメージに関数実行
-	operateMesh(aFunction){
+	operateMaterials(aFunction){
 		aFunction(this.bodyMesh.material[3]);
 		aFunction(this.eyeMesh.material[3]);
 		aFunction(this.mouthMesh.material[3]);
 		for(let tMesh of this.accessoryMeshs){
 			aFunction(tMesh.material[3]);
 		}
-		aFunction(this.shadowMesh.material);
+		// aFunction(this.shadowMesh.material);
+	}
+	operateMeshs(aFunction){
+		aFunction(this.bodyMesh);
+		aFunction(this.eyeMesh);
+		aFunction(this.mouthMesh);
+		for(let tMesh of this.accessoryMeshs){
+			aFunction(tMesh);
+		}
+		// aFunction(this.shadowMesh);
 	}
 	//ダメージを受けた時用の顔画像に変更する
 	changeToDamageFace(){
@@ -225,30 +236,51 @@ class Chara{
 	//被ダメージアニメ
 	damagedAnimate(aCallBack){
 		let i=0;
-		ThreeWarld.setAnimation(()=>{
-			if(i>=56){
-				this.operateMesh((aMesh)=>{
-					aMesh.opacity=1;
+		return new Promise((res,rej)=>{
+			ThreeWarld.setAnimation(()=>{
+				if(i>55){
+					//アニメ終了
+					this.operateMaterials((aMesh)=>{
+						aMesh.opacity=1;
+					})
+					this.changeToNormalFace();
+					return false;
+				}
+				if(i==0){this.changeToDamageFace();}
+				if(i%14==7){this.operateMaterials((aMaterial)=>{aMaterial.opacity=0;})}
+				if(i%14==0){this.operateMaterials((aMaterial)=>{aMaterial.opacity=1;})}
+				i++;
+				return true;
+			},()=>{res();})
+		})
+	}
+	//戦闘不能アニメ,戦闘不能処理
+	down(){
+		return new Promise((res,rej)=>{
+			let i=0;
+			ThreeWarld.setAnimation(()=>{
+				if(i>50){
+					//アニメーション終了
+					this.deleteChara();
+					return false;
+				}
+				if(i==0){this.shadowMesh.material.opacity=0;}
+				this.operateMeshs((aMesh)=>{
+					aMesh.position.z-=1;
+					aMesh.material[3].opacity-=0.02;
 				})
-				this.changeToNormalFace();
-				return false;
-			}
-			if(i==0){
-				this.changeToDamageFace();
-			}
-			if(i%14==7){
-				this.operateMesh((aMesh)=>{
-					aMesh.opacity=0;
-				})
-			}
-			if(i%14==0){
-				this.operateMesh((aMesh)=>{
-					aMesh.opacity=1;
-				})
-			}
-			i++;
-			return true;
-		},()=>{aCallBack()})
+				i++;
+				return true;
+			},()=>{res();})
+		})
+	}
+	//キャラをフィールドから消す
+	deleteChara(){
+		//3dイメージを削除
+		this.operateMeshs((aMesh)=>{ThreeWarld.deleteObject(aMesh);})
+		//今いるマスから削除
+		this.getMas().out();
+		Battle.deleteChara(this);
 	}
 }
 
