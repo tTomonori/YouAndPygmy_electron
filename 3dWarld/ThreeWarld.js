@@ -34,8 +34,8 @@ class ThreeWarld{
 			// // // 箱を回転させる
 			// box.rotation.x += 0.01;
 			// box.rotation.y += 0.01;
-			// ThreeWarld.camera.rotation.x += 0.001;
-			// ThreeWarld.camera.position.y -= 1;
+			// this.camera.position.x += 1;
+			// this.camera.position.y -= 1;
 			// this.camera.rotation.x += 0.01;
 			// this.camera.rotation.y += 0.01;
 			// this.camera.rotation.z -= 0.01;
@@ -68,6 +68,12 @@ class ThreeWarld{
 		if(aRotation.y!=undefined)this.camera.rotation.y=aRotation.y;
 		if(aRotation.z!=undefined)this.camera.rotation.z=aRotation.z;
 	}
+	//meshに貼る画像を生成
+	static createTexture(aFileName){
+		let tTexture=THREE.ImageUtils.loadTexture(aFileName,{},()=>{this.renderer.render(this.scene, this.camera);})
+		tTexture.minFilter=THREE.LinearFilter;//縮小時の警告を消す
+		return tTexture;
+	}
 	//画像を貼り付けた箱を作成
 	static createTextureBox(aSize,aImage){
 		// 箱を作成
@@ -82,8 +88,8 @@ class ThreeWarld{
 		this.scene.add(tBox);
 		return tBox;
 	}
+	// 箱を作成
 	static createBox(aSize){
-		// 箱を作成
 		let tGeometry = new THREE.BoxGeometry(aSize[0],aSize[1],aSize[2]);
 		let tMaterial = new THREE.MeshBasicMaterial();
 		let tBox = new THREE.Mesh(tGeometry, tMaterial);

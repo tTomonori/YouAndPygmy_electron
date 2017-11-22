@@ -23,9 +23,17 @@ class Mas{
 		this.cover.position.y=this.box.position.y;
 		this.cover.position.z=mMasSize[2]/2;
 		this.cover.renderOrder=this.y+0.2;
-		this.cover.material.depthTest=false;
+		// this.cover.material.depthTest=false;
 		this.cover.material.transparent=true;
 		this.cover.material.opacity=0;
+		//オブジェクト
+		this.objects=new Array();
+		for(let tObjectName of this.object){
+			let tObject=ObjectMaker.createObject(tObjectName);
+			tObject.position.x=tThreePosition.x;
+			tObject.position.y=tThreePosition.y;
+			this.objects.push(tObject);
+		}
 	}
 	//このマスの座標を返す
 	getPosition(){

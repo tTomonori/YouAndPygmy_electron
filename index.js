@@ -52,7 +52,7 @@ function prepareBattle(){
 			snow:2,
 			ice:2,
 			air:false,
-			wall:false
+			object:false
 		},
 		image:{
 			body:"pygmy/bakeneko",
@@ -85,7 +85,7 @@ function prepareBattle(){
 			snow:1,
 			ice:1,
 			air:false,
-			wall:false
+			object:false
 		},
 		image:{
 			body:"pygmy/suraimu",
@@ -118,7 +118,7 @@ function prepareBattle(){
 			snow:2,
 			ice:2,
 			air:false,
-			wall:false
+			object:false
 		},
 		image:{
 			body:"pygmy/bakeneko",
@@ -131,7 +131,7 @@ function prepareBattle(){
 	],{
 		feild:[
 			[1,0,0,0,0,0,1],
-			[1,0,0,0,0,0,1],
+			[1,0,0,0,2,0,1],
 			[1,1,0,0,0,1,1],
 			[1,1,1,0,0,1,1],
 			[1,0,0,0,0,0,0],
@@ -147,6 +147,11 @@ function prepareBattle(){
 				attribute:"water",
 				image:"water",
 				object:[]
+			},
+			2:{
+				attribute:"object",
+				image:"grass",
+				object:["stump"]
 			}
 		},
 		charaPosition:{

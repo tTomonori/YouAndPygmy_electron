@@ -333,6 +333,7 @@ class Chara{
 	deleteChara(){
 		//3dイメージを削除
 		this.operateMeshs((aMesh)=>{ThreeWarld.deleteObject(aMesh);})
+		ThreeWarld.deleteObject(this.shadowMesh);
 		this.normalEyeImage.dispose();
 		this.damageEyeImage.dispose();
 		this.normalMouthImage.dispose();
