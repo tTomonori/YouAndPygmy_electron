@@ -43,6 +43,10 @@ class SkillButton{
 	}
 	//クリックされた時
 	static click(){}
+	//リストがクリックされた時
+	static clickList(aNum){
+		this.skills[aNum].click();
+	}
 	//クリックした時に実行する関数セット
 	static setClickFunction(aFunction){
 		this.click=()=>{aFunction()}
@@ -57,6 +61,7 @@ class SkillButton{
 			let tSkillTag=this.skills[i];
 			if(i>=aSkillList.length){
 				tSkillTag.style.display="none";
+				tSkillTag.onclick=()=>{}
 				continue;
 			}
 			let tSkill=aSkillList[i];
