@@ -49,8 +49,10 @@ class CharaController{
 	}
 	//攻撃するマスが選択された
 	static selectedAttackMas(aMas){
-		if(AttackSelecter.judgeAttackable(aMas,this.selectingSkill))
+		if(AttackSelecter.judgeAttackable(aMas,this.selectingSkill)){
+			this.resetButtonFunctions();
 			AttackSelecter.attackTo(aMas,this.selectingSkill);
+		}
 	}
 	//移動したあと
 	static moved(){

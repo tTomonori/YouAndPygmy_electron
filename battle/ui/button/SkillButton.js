@@ -40,19 +40,26 @@ class SkillButton{
 		tMarginBox.style.marginBottom="7px";
 		this.skillList.appendChild(tMarginBox);
 		this.skills.push(tMarginBox);
+
+		//ボタンのクリックが有効かどうか
+		this.activeButtonFlag=false;
 	}
 	//クリックされた時
 	static click(){}
 	//リストをクリックする
 	static clickList(aNum){
+		//ボタンのクリックが無効になっていたら実行しない
+		if(!this.activeButtonFlag)return;
 		this.skills[aNum].click();
 	}
 	//クリックした時に実行する関数セット
 	static setClickFunction(aFunction){
 		this.click=()=>{aFunction()}
+		this.activeButtonFlag=true;
 	}
 	//クリックした時に実行する関数リセット
 	static resetClickFunction(){
+		this.activeButtonFlag=false;
 		this.click=()=>{}
 	}
 	//スキルリストセット

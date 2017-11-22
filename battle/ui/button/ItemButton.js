@@ -48,19 +48,26 @@ class ItemButton{
 		tMarginBox.style.marginBottom="7px";
 		this.itemList.appendChild(tMarginBox);
 		this.items.push(tMarginBox);
+
+		//ボタンのクリックが有効かどうか
+		this.activeButtonFlag=false;
 	}
 	//クリックされた時
 	static click(){}
 	//リストをクリックする
 	static clickList(aNum){
+		//ボタンのクリックが無効になっていたら実行しない
+		if(!this.activeButtonFlag)return;
 		this.items[aNum].click();
 	}
 	//クリックした時に実行する関数セット
 	static setClickFunction(aFunction){
 		this.click=()=>{aFunction()}
+		this.activeButtonFlag=true;
 	}
 	//クリックした時に実行する関数リセット
 	static resetClickFunction(){
+		this.activeButtonFlag=false;
 		this.click=()=>{}
 	}
 	//アイテムリストセット

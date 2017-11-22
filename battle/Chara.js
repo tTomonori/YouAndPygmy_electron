@@ -235,6 +235,7 @@ class Chara{
 	}
 	//被ダメージアニメ
 	damagedAnimate(aCallBack){
+		this.changeToDamageFace();
 		let i=0;
 		return new Promise((res,rej)=>{
 			ThreeWarld.setAnimation(()=>{
@@ -246,9 +247,8 @@ class Chara{
 					this.changeToNormalFace();
 					return false;
 				}
-				if(i==0){this.changeToDamageFace();}
 				if(i%14==7){this.operateMaterials((aMaterial)=>{aMaterial.opacity=0;})}
-				if(i%14==0){this.operateMaterials((aMaterial)=>{aMaterial.opacity=1;})}
+				else if(i%14==0){this.operateMaterials((aMaterial)=>{aMaterial.opacity=1;})}
 				i++;
 				return true;
 			},()=>{res();})
@@ -256,6 +256,8 @@ class Chara{
 	}
 	//戦闘不能アニメ,戦闘不能処理
 	down(){
+		this.changeToDamageFace();
+		this.shadowMesh.material.opacity=0;
 		return new Promise((res,rej)=>{
 			let i=0;
 			ThreeWarld.setAnimation(()=>{
@@ -264,7 +266,6 @@ class Chara{
 					this.deleteChara();
 					return false;
 				}
-				if(i==0){this.shadowMesh.material.opacity=0;}
 				this.operateMeshs((aMesh)=>{
 					aMesh.position.z-=1;
 					aMesh.material[3].opacity-=0.02;
@@ -278,6 +279,10 @@ class Chara{
 	deleteChara(){
 		//3dイメージを削除
 		this.operateMeshs((aMesh)=>{ThreeWarld.deleteObject(aMesh);})
+		this.normalEyeImage.dispose();
+		this.damageEyeImage.dispose();
+		this.normalMouthImage.dispose();
+		this.damageMouthImage.dispose();
 		//今いるマスから削除
 		this.getMas().out();
 		Battle.deleteChara(this);
