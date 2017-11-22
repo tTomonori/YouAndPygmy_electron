@@ -30,6 +30,7 @@ class CharaController{
 	}
 	//スキルが選択された
 	static selectedSkill(aSkill){
+		ItemButton.hideItemList();
 		this.selectingSkill=aSkill;
 		StatusBox.setSelectedSkillInfo(aSkill);
 		this.turnChara.setLastSelectedSkill(aSkill);

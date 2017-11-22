@@ -3,7 +3,8 @@ class KeyMonitor{
 	static startMonitor(){
 		$(window).keydown((e)=>{
 			let tKeyCode=e.keyCode;
-			this.assignedFunctions.get(tKeyCode)();
+			let tFunction=this.assignedFunctions.get(tKeyCode);
+			if(tFunction!=null)tFunction();
 		})
 	}
 	//キー入力監視終了

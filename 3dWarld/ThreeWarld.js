@@ -123,6 +123,20 @@ class ThreeWarld{
 			aObject.material.dispose()
 		}
 	}
+	//文字オブジェクトを生成する
+	static createTextObject(aText,aSize){
+		var tGeometry=new THREE.TextGeometry(aText,{
+			font:mFont,
+			size:aSize,
+			height:2,
+			curveSegments:20,
+		});
+		var tMaterial=new THREE.MeshBasicMaterial()
+		var tText=new THREE.Mesh(tGeometry,tMaterial);
+		tText.rotation.x=Math.PI/2;
+		this.scene.add(tText);
+		return tText;
+	}
 	//キャラのオブジェクト生成
 	static createChara(aSize,aImage){
 		//画像を指定したmaterialの用意

@@ -221,20 +221,74 @@ class Chara{
 			if(tItem.number<=0)this.item.splice(i,1);
 		}
 	}
+	//文字を表示
+	displayText(aText,aColor,aAnimation,aLength){
+		let tTextlength=(aLength==undefined)?String(aText).length:aLength;
+		let tSize=mMasSize[0]/3;
+		let tText=ThreeWarld.createTextObject(aText,tSize);
+		let tPosition=this.bodyMesh.position;
+		tText.position.x=tPosition.x-(tTextlength/2*tSize);
+		tText.position.y=tPosition.y-5;
+		tText.material.color=aColor;
+		tText.renderOrder=this.bodyMesh.renderOrder+0.1;
+		switch (aAnimation) {
+			case "rise":
+				tText.position.z=mMasSize[2]*1.5;
+				return new Promise((res,rej)=>{
+					let i=0;
+					ThreeWarld.setAnimation(()=>{
+						if(i>60){
+							ThreeWarld.deleteObject(tText);
+							return false;
+						}
+						tText.position.z+=0.6;
+						i++;
+						return true;
+					},()=>{res();})
+				})
+				break;
+			case "bound":
+				let tZ=mMasSize[2]*1.5;
+				let tAmplitude=mMasSize[0]/3;
+				let tP=Math.PI/70;
+				return new Promise((res,rej)=>{
+					let i=0;
+					ThreeWarld.setAnimation(()=>{
+						if(i>66){
+							ThreeWarld.deleteObject(tText);
+							return false;
+						}
+						tText.position.z=tZ+tAmplitude*Math.sin(tP*i);
+						i+=1.2;
+						return true;
+					},()=>{res();})
+				})
+				break;
+			default:
+
+		}
+	}
 	//ダメージを受ける
 	damage(aDamage){
 		this.hp-=aDamage;
 		if(this.hp<0)this.hp=0;
 		console.log(aDamage+"ダメージ");
+		this.displayText(aDamage,{r:1,g:0,b:0},"bound");
 	}
 	//回復する
 	heal(aDamage){
 		this.hp+=aDamage;
 		if(this.hp>this.maxHp)this.hp=this.maxHp;
 		console.log(aDamage+"回復");
+		this.displayText(aDamage,{r:0,g:1,b:0.2},"rise");
+	}
+	//スキル回避
+	avoid(){
+		console.log("スキル回避");
+		this.displayText("Miss",{r:0.3,g:0.3,b:0.3},"rise",2.6);
 	}
 	//被ダメージアニメ
-	damagedAnimate(aCallBack){
+	damagedAnimate(){
 		this.changeToDamageFace();
 		let i=0;
 		return new Promise((res,rej)=>{

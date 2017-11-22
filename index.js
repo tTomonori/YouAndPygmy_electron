@@ -16,8 +16,19 @@ mGameScreen.style.width=mScreenSize.width+"px";
 mGameScreen.style.height=mScreenSize.height+"px";
 mGameScreen.style.top=(mWindowSize.height-mScreenSize.height)/2+"px";
 mGameScreen.style.left=(mWindowSize.width-mScreenSize.width)/2+"px";
+//3dで表示するフォント
+var mFont;
 
 window.addEventListener('DOMContentLoaded', ()=>{
+	//フォントをロード
+	let tLoader=new THREE.FontLoader();
+	tLoader.load("threejsmaster/examples/fonts/helvetiker_bold.typeface.json",(aFont)=>{
+		mFont=aFont;
+		prepareBattle();
+	})
+});
+
+function prepareBattle(){
 	Battle.init([{
 		name:"猫ちゃん",
 		race:"ばけねこ",
@@ -145,4 +156,4 @@ window.addEventListener('DOMContentLoaded', ()=>{
 		background:"BG24a_80.jpg"
 	})
 	Battle.start();
-});
+}

@@ -77,7 +77,7 @@ class AttackDivider{
 				}
 				else{
 					//攻撃が外れた
-					console.log("attack miss");
+					tChara.avoid();
 				}
 			}
 			//被ダメージエフェクト
