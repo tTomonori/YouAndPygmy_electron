@@ -1,11 +1,12 @@
 class Feild{
 	static init(aFeildData){
+		mFeildSize={x:aFeildData.feild[0].length,y:aFeildData.feild.length};
 		this.feild=new Array();
-		for(let i=0;i<aFeildData.feild.length;i++){
+		for(let i=0;i<mFeildSize.y;i++){
 			let tMasList=aFeildData.feild[i];
 			let tLine=new Array();
 			this.feild.push(tLine);
-			for(let j=0;j<tMasList.length;j++){
+			for(let j=0;j<mFeildSize.x;j++){
 				let tMasNum=tMasList[j];
 				tLine.push(new Mas(j,i,aFeildData.masData[tMasNum]));
 			}
@@ -60,3 +61,4 @@ class Feild{
 		}
 	}
 }
+var mFeildSize={x:0,y:0};

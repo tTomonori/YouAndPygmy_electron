@@ -221,6 +221,18 @@ class ThreeWarld{
 		let tCanvas=document.getElementById("threeWarld");
 		let tCameraMove=()=>{}
 		ThreeWarld.setMouseMoveForeverFunction(()=>{tCameraMove()})
+		//カメラ座標上限下限
+		let tMinX=-mMasSize[0];
+		let tMaxX=mMasSize[0]*mFeildSize.x;
+		let tMinY=-mMasSize[1]*mFeildSize.y-mMasSize[1]*7;
+		let tMaxY=-mMasSize[1]*7;
+		let tCorrection=()=>{//カメラ座標上限下限補正
+			if(this.camera.position.x<tMinX)this.camera.position.x=tMinX;
+			else if(this.camera.position.x>tMaxX)this.camera.position.x=tMaxX;
+			if(this.camera.position.y>tMaxY)this.camera.position.y=tMaxY;
+			else if(this.camera.position.y<tMinY)this.camera.position.y=tMinY;
+		}
+		//右クリックドラッグでカメラ移動
 		tCanvas.oncontextmenu=(e)=>{
 			let tPreMouse;
 			tPreMouse=this.mousePoint;
@@ -228,12 +240,22 @@ class ThreeWarld{
 				this.camera.position.x+=1.2*(tPreMouse.clientX-this.mousePoint.clientX);
 				this.camera.position.y-=1.2*(tPreMouse.clientY-this.mousePoint.clientY);
 				tPreMouse=this.mousePoint;
+				tCorrection();
 			}
 			tCanvas.onmouseup=()=>{
 				tCameraMove=()=>{}
 				tCanvas.onmouseup=()=>{}
 			}
 		}
+		//スクロールでカメラ移動
+		var mousewheelevent = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
+		$(document).on(mousewheelevent,(e)=>{
+			var tDeltaY = e.originalEvent.deltaY;
+			var tDeltaX = e.originalEvent.deltaX;
+			this.camera.position.x+=tDeltaX;
+			this.camera.position.y-=tDeltaY;
+			tCorrection();
+    });
 	}
 	//移動アニメーション(objectlist[0]がatrgetpositionへ移動)
 	static setMoveAnimation(aObjectList,aTargetPosition,aDuration,aCallBack){
