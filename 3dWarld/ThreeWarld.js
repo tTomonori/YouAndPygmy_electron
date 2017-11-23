@@ -216,6 +216,25 @@ class ThreeWarld{
 			}
 		}
 	}
+	//右クリックドラッグでカメラ移動
+	static setDrag(){
+		let tCanvas=document.getElementById("threeWarld");
+		let tCameraMove=()=>{}
+		ThreeWarld.setMouseMoveForeverFunction(()=>{tCameraMove()})
+		tCanvas.oncontextmenu=(e)=>{
+			let tPreMouse;
+			tPreMouse=this.mousePoint;
+			tCameraMove=()=>{
+				this.camera.position.x+=1.2*(tPreMouse.clientX-this.mousePoint.clientX);
+				this.camera.position.y-=1.2*(tPreMouse.clientY-this.mousePoint.clientY);
+				tPreMouse=this.mousePoint;
+			}
+			tCanvas.onmouseup=()=>{
+				tCameraMove=()=>{}
+				tCanvas.onmouseup=()=>{}
+			}
+		}
+	}
 	//移動アニメーション(objectlist[0]がatrgetpositionへ移動)
 	static setMoveAnimation(aObjectList,aTargetPosition,aDuration,aCallBack){
 		let tPosition=aObjectList[0].position;

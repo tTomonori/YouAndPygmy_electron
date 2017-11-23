@@ -41,6 +41,7 @@ class Battle{
 		Turn.nextTurn();
 		ThreeWarld.setMouseMove();
 		ThreeWarld.setClick();
+		ThreeWarld.setDrag();
 	}
 	//キャラを消す(戦闘不能)
 	static deleteChara(aChara){
