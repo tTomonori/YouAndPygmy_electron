@@ -8,7 +8,21 @@ class SkillButton{
 		this.button.style.left="0";
 		this.button.style.width=mButtonSize+"px";
 		this.button.style.height=mButtonSize+"px";
-		this.button.style.background="#f33";
+		// this.button.style.background="#f33";
+		this.buttonImage=document.createElement("img");
+		this.buttonImage.src="image/ui/skillButton.png";
+		this.buttonImage.style.position="absolute";
+		this.buttonImage.style.top="0";
+		this.buttonImage.style.left="0";
+		this.buttonImage.style.width="100%";
+		this.skillImage=document.createElement("img");
+		this.skillImage.src="image/ui/skill.png";
+		this.skillImage.style.position="absolute";
+		this.skillImage.style.top="15%";
+		this.skillImage.style.left="15%";
+		this.skillImage.style.width="70%";
+		this.button.appendChild(this.buttonImage);
+		this.button.appendChild(this.skillImage);
 		mBattleSecene.appendChild(this.button);
 		this.button.onclick=()=>{this.click();}
 		//スキルリスト

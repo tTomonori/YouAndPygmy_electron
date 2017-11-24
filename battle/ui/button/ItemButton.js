@@ -8,7 +8,21 @@ class ItemButton{
 		this.button.style.left="0";
 		this.button.style.width=mButtonSize+"px";
 		this.button.style.height=mButtonSize+"px";
-		this.button.style.background="#3df";
+		// this.button.style.background="#3df";
+		this.buttonImage=document.createElement("img");
+		this.buttonImage.src="image/ui/itemButton.png";
+		this.buttonImage.style.position="absolute";
+		this.buttonImage.style.top="0";
+		this.buttonImage.style.left="0";
+		this.buttonImage.style.width="100%";
+		this.itemImage=document.createElement("img");
+		this.itemImage.src="image/ui/item.png";
+		this.itemImage.style.position="absolute";
+		this.itemImage.style.top="15%";
+		this.itemImage.style.left="25%";
+		this.itemImage.style.height="70%";
+		this.button.appendChild(this.buttonImage);
+		this.button.appendChild(this.itemImage);
 		mBattleSecene.appendChild(this.button);
 
 		this.button.onclick=()=>{this.click();};
