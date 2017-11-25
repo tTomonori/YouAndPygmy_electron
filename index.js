@@ -18,16 +18,26 @@ mGameScreen.style.top=(mWindowSize.height-mScreenSize.height)/2+"px";
 mGameScreen.style.left=(mWindowSize.width-mScreenSize.width)/2+"px";
 //3dで表示するフォント
 var mFont;
+//主人公
+var mMyChara;
 
 window.addEventListener('DOMContentLoaded', ()=>{
-	//フォントをロード
-	let tLoader=new THREE.FontLoader();
-	tLoader.load("threejsmaster/examples/fonts/helvetiker_bold.typeface.json",(aFont)=>{
-		mFont=aFont;
-		prepareBattle();
+	//セーブデータをロード
+	Database.loadSaveData(()=>{
+		//フォントをロード
+		let tLoader=new THREE.FontLoader();
+		tLoader.load("threejsmaster/examples/fonts/helvetiker_bold.typeface.json",(aFont)=>{
+			mFont=aFont;
+			// prepareBattle();//バトル開始
+			prepareMap();//マップ準備
+		})
 	})
 });
-
+function prepareMap(){
+	let tHeroPosition=Database.getPosition();
+	Map.setMap(MapDictionary.getMap(tHeroPosition.mapName));
+	mMyChara=new Hero(tHeroPosition);
+}
 function prepareBattle(){
 	Battle.init([{
 		name:"猫ちゃん",
