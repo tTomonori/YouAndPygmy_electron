@@ -188,20 +188,22 @@ class ThreeMap{
 		return tText;
 	}
 	//キャラのオブジェクト生成
-	static createChara(aSize){
+	static createChara(aSize,aMaterial){
 		//画像を指定したmaterialの用意
 		//何も表示しない面
 		let tTransparent=new THREE.MeshBasicMaterial( {
 			map:THREE.ImageUtils.loadTexture("",{},()=>{this.renderer.render(this.scene, this.camera);}),
 			transparent:true
 		});
+		let tImageMaterial=new THREE.MeshBasicMaterial( {
+			map:aMaterial,
+			transparent:true
+		});
 		let tMaterial = [
-			tTransparent,tTransparent,tTransparent,tTransparent,tTransparent,tTransparent];
+			tTransparent,tTransparent,tTransparent,tImageMaterial,tTransparent,tTransparent];
 		// Cubeの用意
 		let tGeometry = new THREE.CubeGeometry(aSize[0],aSize[1],aSize[2]);
 		let tMesh = new THREE.Mesh( tGeometry, tMaterial );
-		// let tMesh=new THREE.Sprite(tMaterial[3]);
-		// tMesh.scale.multiplyScalar(10);
 		this.scene.add(tMesh);
 		return tMesh;
 	}

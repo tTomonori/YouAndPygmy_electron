@@ -40,6 +40,7 @@ class KeyMonitor{
 	//キー入力監視終了
 	static stopMonitor(){
 		$(window).off();
+		this.pushingKeys.length=0;
 	}
 	//キー入力時の関数セット
 	static setKey(aKeyCode,aFunction){
@@ -77,5 +78,5 @@ KeyMonitor.assignedFunctions=new Map();
 // KeyMonitor.setKey(38,()=>{mMyChara.move("up")})
 // KeyMonitor.setKey(39,()=>{mMyChara.move("right")})
 // KeyMonitor.setKey(40,()=>{mMyChara.move("down")})
-KeyMonitor.setCrossKey((aDirection)=>{mMyChara.move(aDirection)});
+KeyMonitor.setCrossKey((aDirection)=>{mMyChara.moveByInput(aDirection)});
 KeyMonitor.startMonitor();

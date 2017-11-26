@@ -8,6 +8,8 @@ class Battle{
 
 		this.userTeam=new Array();
 		this.enemyTeam=new Array();
+		this.userTeamDown=new Array();
+		this.enemyTeamDown=new Array();
 		for(let tChara of aUserTeam){//味方チームのキャラインスタンス生成
 			this.userTeam.push(new Chara(tChara,"ally"));
 		}
@@ -46,6 +48,39 @@ class Battle{
 	//キャラを消す(戦闘不能)
 	static deleteChara(aChara){
 		Turn.deleteChara(aChara);
+		//倒されたキャラを配列から移動
+		let tCharas;
+		let tDowns;
+		if(aChara.getTeam()=="ally"){
+			tCharas=this.userTeam;
+			tDowns=this.userTeamDown;
+		}
+		else{
+			tCharas=this.enemyTeam;
+			tDowns=this.enemyTeamDown;
+		}
+		for(let i=0;i<tCharas.length;i++){
+			if(tCharas[i]==aChara){
+				tCharas.splice(i,1);
+				tDowns.push(aChara);
+			}
+		}
+	}
+	//勝敗判定
+	static judge(){
+		if(this.userTeam.length==0){
+			this.finish("lose");
+			return true;
+		}
+		if(this.enemyTeam.length==0){
+			this.finish("win");
+			return true;
+		}
+		return false;
+	}
+	//勝敗決定
+	static finish(aWinOrLose){
+		SceneChanger.endBattle(aWinOrLose);
 	}
 }
 var mMasSize=[80,80,80];

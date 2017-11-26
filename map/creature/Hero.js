@@ -1,17 +1,6 @@
 class Hero extends Creature{
 	constructor(aPosition){
 		super(aPosition,"chara");
-		//連続移動できるように移動関数をオーバーライド
-		this.preMove=this.move;
-		this.move=(aDirection)=>{
-			this.preMove(aDirection).then((aFlag)=>{
-				if(!aFlag)return;//移動できなかった
-				let tDirection=KeyMonitor.getPushingCrossKeys();
-				if(tDirection.length==0)return;
-				//すぐに移動関数を呼ぶ
-				this.move(tDirection[0]);
-			})
-		}
 		//カメラセット
 		let tPosition=Map.convertToThreeWarldPosition({x:this.x,y:this.y,z:this.z});
 		tPosition.y-=mGroundSize[1]*6;
@@ -43,5 +32,30 @@ class Hero extends Creature{
 				},()=>{res()})
 			})
 		}
+	}
+	//キー長押し移動
+	confirmKeyAndMove(){
+		let tDirection=KeyMonitor.getPushingCrossKeys();
+		if(tDirection.length==0)return;
+		this.moveByInput(tDirection[0]);//すぐに移動関数を呼ぶ
+	}
+	//ユーザのキー入力による移動
+	moveByInput(aDirection){
+		this.move(aDirection).then((aFlag)=>{
+			if(!aFlag)return;//移動できなかった
+			//マスのイベント処理
+			let tEvent=this.ground.getEvent();
+			if(tEvent!=null){
+				//イベント実行
+				Event.runEvents(tEvent).then(()=>{
+					//キー長押し移動
+					this.confirmKeyAndMove();
+				})
+			}
+			else{
+				//キー長押し移動
+				this.confirmKeyAndMove();
+			}
+		})
 	}
 }

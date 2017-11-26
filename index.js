@@ -34,6 +34,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 	})
 });
 function prepareMap(){
+	Encounter.init();
 	let tHeroPosition=Database.getPosition();
 	Map.setMap(MapDictionary.getMap(tHeroPosition.mapName));
 	mMyChara=new Hero(tHeroPosition);
@@ -170,5 +171,5 @@ function prepareBattle(){
 		},
 		background:"BG24a_80.jpg"
 	})
-	Battle.start();
+	// Battle.start();
 }

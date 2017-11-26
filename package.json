@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron ."
   },
-  "repository": "",
+  "repository": "https://github.com/tTomonori/YouAndPygmy.git",
   "keywords": [
     "Electron",
     "quick",

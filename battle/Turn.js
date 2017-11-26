@@ -26,6 +26,8 @@ class Turn{
 	}
 	//次のターン開始
 	static nextTurn(){
+		//勝敗判定
+		if(Battle.judge())return;
 		//全キャラ行動済みなら順番リセット
 		if(this.order.length==0)this.resetOrder();
 		this.turnChara=this.order[0];

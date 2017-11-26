@@ -4,6 +4,8 @@ class Map{
 		ThreeMap.init();
 		//カメラセット
 		ThreeMap.setCamera({x:400,y:-1200,z:mGroundSize[2]+400},{x:0.95});
+
+		this.encountData=aMap.encount;
 		//マップセット
 		this.map={};
 		let tChipList=aMap.map.chip;
@@ -44,6 +46,7 @@ class Map{
 			tMapTemp.push(tGround);
 		}
 	}
+	static getEncountData(){return this.encountData}
 	//マスを取得(z,yは一致,zは最も近いマス)
 	static getGround(aX,aY,aZ){
 		if(this.map[aY]==undefined)return null;

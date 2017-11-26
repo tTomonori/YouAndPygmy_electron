@@ -5,6 +5,7 @@ class Ground{
 		this.z=aPosition.z;
 		this.position=aPosition;
 		this.chip=aChip.data;
+		this.event=(this.chip.event==undefined)?null:this.chip.event;
 		this.box=ThreeMap.createGround(aChip.key);
 		//groundの位置調整
 		this.box.position.x=mGroundSize[0]*this.x;
@@ -29,6 +30,7 @@ class Ground{
 	}
 	getPosition(){return this.position}
 	getOnChara(){return this.onChara}
+	getEvent(){return this.event}
 	canOn(){return this.chip.canOn}
 	//指定した方向の高さを返す
 	getHeight(aDirection){

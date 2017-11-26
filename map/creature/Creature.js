@@ -4,11 +4,6 @@ class Creature{
 		this.y=aPosition.y;
 		this.z=aPosition.z;
 		//キャラのイメージ用意
-		//メッシュ用意
-		this.mesh=ThreeMap.createChara([mGroundSize[0],0,mGroundSize[1]]);
-		this.mesh.position.x=mGroundSize[0]*this.x;
-		this.mesh.position.y=-mGroundSize[1]*this.y;
-		this.mesh.position.z=mGroundSize[2]*(1+this.z);
 		//画像用意
 		this.imageSize={width:48,height:48};
 		//キャンバス
@@ -24,6 +19,11 @@ class Creature{
 		let tMaterial=new THREE.Texture(this.canvas);
 		tMaterial.needsUpdate=true;
 		tMaterial.minFilter=THREE.LinearFilter;
+		//メッシュ用意
+		this.mesh=ThreeMap.createChara([mGroundSize[0],0,mGroundSize[1]],tMaterial);
+		this.mesh.position.x=mGroundSize[0]*this.x;
+		this.mesh.position.y=-mGroundSize[1]*this.y;
+		this.mesh.position.z=mGroundSize[2]*(1+this.z);
 		this.charaChip.onload=()=>{
 			//画像読み込み完了
 			//初期画像セット

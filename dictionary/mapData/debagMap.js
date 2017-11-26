@@ -7,8 +7,8 @@ MapDictionary.dictionary.debag1={
 				2:[{x:3},0,0,0,0,0,0],
 				3:[{x:3},0,0,0,0,0,0],
 				4:[{x:3},0,0,0,0,0,0],
-				5:[{x:3},0,0,0,0,0,0],
-				6:[{x:3},0,0,0,0,0,0],
+				5:[{x:3},5,5,5,6,6,6],
+				6:[{x:3},5,5,5,6,6,6],
 				7:[{x:3},0,0,0,0,0,0],
 			},
 			0.5:{
@@ -62,6 +62,16 @@ MapDictionary.dictionary.debag1={
 				image:{above:"grass",side:"soil"},
 				object:"stump"
 			},
+			5:{
+				canOn:true,
+				image:{above:"grass",side:"soil"},
+				event:[{event:"randomEncount",num:0}]
+			},
+			6:{
+				canOn:true,
+				image:{above:"grass",side:"soil"},
+				event:[{event:"randomEncount",num:1}]
+			},
 			soil:{
 				image:{above:"soil",side:"soil"}
 			}
@@ -69,6 +79,43 @@ MapDictionary.dictionary.debag1={
 	},
 	creature:{
 
+	},
+	encount:{
+		0:{
+			userPygmyNum:5,
+			enemies:[{race:"bakeneko",level:2,status:"default"},{race:"bakeneko",level:2,status:"default"}],
+			feild:[
+				[1,0,0,0,0,0,1],
+				[1,0,0,0,2,0,1],
+				[1,1,0,0,0,1,1],
+				[1,1,1,0,0,1,1],
+				[1,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0]
+			],
+			masData:{
+				0:{
+					attribute:"grass",
+					image:"grass",
+					object:[]
+				},
+				1:{
+					attribute:"water",
+					image:"water",
+					object:[]
+				},
+				2:{
+					attribute:"object",
+					image:"grass",
+					object:["stump"]
+				}
+			},
+			charaPosition:{
+				user:[{x:0,y:5},{x:1,y:5},{x:3,y:5},{x:5,y:5},{x:6,y:5}],
+				enemy:[{x:2,y:0},{x:3,y:0}]
+			},
+			background:"BG24a_80.jpg"
+		},
+		1:{}
 	}
 }
 MapDictionary.dictionary.debag2={
