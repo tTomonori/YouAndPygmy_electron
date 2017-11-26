@@ -47,6 +47,7 @@ class Hero extends Creature{
 			let tEvent=this.ground.getEvent();
 			if(tEvent!=null){
 				//イベント実行
+				console.log(this.ground);
 				Event.runEvents(tEvent).then(()=>{
 					//キー長押し移動
 					this.confirmKeyAndMove();
@@ -57,5 +58,19 @@ class Hero extends Creature{
 				this.confirmKeyAndMove();
 			}
 		})
+	}
+	//位置を再設定
+	setPosition(aPosition){
+		this.x=aPosition.x;
+		this.y=aPosition.y;
+		this.z=aPosition.z;
+		let tThreePosition=MapFeild.convertToThreeWarldPosition(aPosition);
+		this.mesh.position.x=tThreePosition.x;
+		this.mesh.position.y=tThreePosition.y;
+		this.mesh.position.z=tThreePosition.z;
+		this.ground=MapFeild.getGround(aPosition.x,aPosition.y,aPosition.z);
+		tThreePosition.y-=mGroundSize[1]*6;
+		tThreePosition.z+=mGroundSize[2]*4;
+		ThreeMap.setCamera(tThreePosition,{x:0.95});
 	}
 }

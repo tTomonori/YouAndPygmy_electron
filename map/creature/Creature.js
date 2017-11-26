@@ -143,5 +143,9 @@ class Creature{
 			},()=>{res()})
 		})
 	}
+	//キャラを削除
+	destructor(){
+		// ThreeMap.deleteObject(this.mesh);
+	}
 }
 var mMoveFrame=10;

@@ -34,6 +34,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 	})
 });
 function prepareMap(){
+	ThreeMap.init();
 	User.init();
 	Encounter.init();
 	let tHeroPosition=Database.getPosition();

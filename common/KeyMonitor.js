@@ -63,7 +63,6 @@ class KeyMonitor{
 	}
 	//バトル用キー入力
 	static setBattleKey(){
-		this.stopMonitor();
 		//ショートカットキー設定
 		this.setKey(90,()=>{SkillButton.click()})
 		this.setKey(88,()=>{ItemButton.click()})
@@ -76,8 +75,10 @@ class KeyMonitor{
 	}
 	//マップ用キー入力
 	static setMapKey(){
-		this.stopMonitor();
 		this.setCrossKey((aDirection)=>{mMyChara.moveByInput(aDirection)});
 		this.startMonitor();
 	}
 }
+KeyMonitor.crossKeyFlag=false;
+KeyMonitor.assignedFunctions=new Map();
+KeyMonitor.pushingKeys=new Array();

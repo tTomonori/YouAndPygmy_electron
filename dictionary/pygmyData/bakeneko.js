@@ -3,13 +3,13 @@ PygmyDictionary.dictionary.bakeneko={
 	raceStatus:{
 		tairyoku:100,
 		kiryoku:50,
-		tikara:115,
+		tikara:125,
 		mamori:85,
-		maryoku:100,
+		maryoku:110,
 		seisin:90,
 		yuryoku:75,
 		waza:110,
-		binsei:125,
+		binsei:130,
 		idou:4,
 	},
 	moveCost:{

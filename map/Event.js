@@ -25,8 +25,15 @@ class Event{
 				case "battle":
 
 					break;
-				case "randomEncount":
+				case "randomEncount"://ランダムエンカウントするマスを踏んだ
 					Encounter.countRandomEncount(aEvent.num).then(()=>{
+						res();
+					})
+					break;
+				case "moveMap"://マップ移動
+				KeyMonitor.stopMonitor();
+					SceneChanger.moveMap(aEvent).then(()=>{
+						KeyMonitor.setMapKey();
 						res();
 					})
 					break;

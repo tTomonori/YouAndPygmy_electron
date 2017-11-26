@@ -1,7 +1,6 @@
 class MapFeild{
 	//マップセット
 	static setMap(aMap){
-		ThreeMap.init();
 		//カメラセット
 		ThreeMap.setCamera({x:400,y:-1200,z:mGroundSize[2]+400},{x:0.95});
 
@@ -38,13 +37,21 @@ class MapFeild{
 		}
 		//マップ移動マスセット
 		for(let tNeighbor of aMap.map.neighbor){
-			let tGround=new Ground({x:tNeighbor.x,y:tNeighbor.y,z:tNeighbor.z},{key:tNeighbor.chip,data:tChipList[tNeighbor.chip]});
+			let tChip=tChipList[tNeighbor.chip];
+			let tMoveChip={};
+			for(let tPropety in tChip){//chipをコピー(元の値を上書きしないように)
+				tMoveChip[tPropety]=tChip[tPropety];
+			}
+			tMoveChip.event=[{event:"moveMap",mapName:tNeighbor.mapName,neighborPosition:tNeighbor.neighborPosition}];
+			let tGround=new Ground({x:tNeighbor.x,y:tNeighbor.y,z:tNeighbor.z},{key:tNeighbor.chip,data:tMoveChip});
 			if(this.map[tNeighbor.y]==undefined)this.map[tNeighbor.y]={};
 			let tMapTemp=this.map[tNeighbor.y];
 			if(tMapTemp[tNeighbor.x]==undefined)tMapTemp[tNeighbor.x]=new Array();
 			tMapTemp=tMapTemp[tNeighbor.x];
 			tMapTemp.push(tGround);
 		}
+		//creatureをセット
+
 	}
 	static getEncountData(){return this.encountData}
 	//マスを取得(z,yは一致,zは最も近いマス)
@@ -68,6 +75,23 @@ class MapFeild{
 	//指定した座標を3dの座標に変換
 	static convertToThreeWarldPosition(aPosition){
 		return {x:mGroundSize[0]*aPosition.x,y:-mGroundSize[1]*aPosition.y,z:mGroundSize[2]*(1+aPosition.z)};
+	}
+	//マップリセット
+	static releaseMap(){
+		//ground
+		let i=0;
+		for(let tZ in this.map){
+			let tFlat=this.map[tZ];
+			for(let tY in tFlat){
+				let tCol=tFlat[tY];
+				for(let tX in tCol){
+					let tGround=tCol[tX];
+					tGround.destructor();
+				}
+			}
+		}
+		//Creature
+
 	}
 }
 var mMapScene=document.getElementById("mapScene");

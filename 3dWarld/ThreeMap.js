@@ -190,6 +190,10 @@ class ThreeMap{
 			aObject.material.dispose()
 		}
 	}
+	//物体のmeshのみ削除
+	static deleteMesh(aMesh){
+		this.scene.remove(aMesh);
+	}
 	//文字オブジェクトを生成する
 	static createTextObject(aText,aSize){
 		var tGeometry=new THREE.TextGeometry(aText,{

@@ -45,4 +45,11 @@ class Ground{
 	out(){
 		this.onChara=null;
 	}
+	//マスを削除
+	destructor(){
+		ThreeMap.deleteMesh(this.box);
+		for(let tUnder of this.underGround){
+			ThreeMap.deleteMesh(tUnder);
+		}
+	}
 }

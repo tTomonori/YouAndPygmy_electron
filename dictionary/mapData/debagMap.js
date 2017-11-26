@@ -84,8 +84,8 @@ MapDictionary.dictionary.debag1={
 		0:{
 			userPygmyNum:5,
 			enemies:[
-				{race:"bakeneko",level:4,status:"default",skill:["hikkaki","denkousekka"]},
-				{race:"suraimu",level:4,status:"default",skill:["suihou","tataku"]}
+				{race:"bakeneko",level:9,status:"default",skill:["hikkaki","denkousekka"]},
+				{race:"suraimu",level:9,status:"default",skill:["suihou","tataku"]}
 			],
 			feildData:{
 				feild:[
@@ -120,7 +120,45 @@ MapDictionary.dictionary.debag1={
 				background:"BG24a_80.jpg"
 			}
 		},
-		1:{}
+		1:{
+			userPygmyNum:5,
+			enemies:[
+				{race:"suraimu",level:8,status:"default",skill:["tataku","suihou"]},
+				{race:"suraimu",level:8,status:"default",skill:["tataku","suihou"]}
+			],
+			feildData:{
+				feild:[
+					[0,0,0,0,0,0,0],
+					[2,0,0,0,0,2,0],
+					[2,0,0,1,1,0,0],
+					[0,0,1,1,1,0,0],
+					[0,0,2,2,2,0,2],
+					[0,0,0,0,0,0,0]
+				],
+				masData:{
+					0:{
+						attribute:"grass",
+						image:"grass",
+						object:[]
+					},
+					1:{
+						attribute:"water",
+						image:"water",
+						object:[]
+					},
+					2:{
+						attribute:"object",
+						image:"grass",
+						object:["stump"]
+					}
+				},
+				charaPosition:{
+					user:[{x:0,y:5},{x:1,y:5},{x:4,y:5},{x:5,y:5},{x:6,y:5}],
+					enemy:[{x:2,y:1},{x:4,y:1}]
+				},
+				background:"BG24a_80.jpg"
+			}
+		}
 	}
 }
 MapDictionary.dictionary.debag2={
@@ -143,7 +181,9 @@ MapDictionary.dictionary.debag2={
 			0:{
 				canOn:true,
 				image:{above:"grass",side:"soil"},
-				height:{up:0,right:0,bottom:0,left:0},
+			},
+			soil:{
+				image:{above:"soil",side:"soil"}
 			}
 		}
 	}

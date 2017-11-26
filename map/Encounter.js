@@ -4,7 +4,7 @@ class Encounter{
 	}
 	//エンカウントするまでの歩数を設定
 	static initEncountCount(){
-		this.encountCount=5+Math.floor(Math.random()*1)
+		this.encountCount=5+Math.floor(Math.random()*5)
 	}
 	//ランダムエンカウントするか判定
 	static countRandomEncount(aNum){
