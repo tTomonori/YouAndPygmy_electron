@@ -3,18 +3,18 @@ class Chara{
 		this.data=aData;
 		this.name=aData.name;
 		this.race=aData.race;
-		this.maxHp=aData.hp;
-		this.maxMp=aData.mp;
-		this.hp=this.maxHp;
-		this.mp=this.maxMp;
-		this.atk=aData.atk;
-		this.def=aData.def;
-		this.mgc=aData.mgc;
-		this.spt=aData.spt;
-		this.hel=aData.hel;
-		this.tec=aData.tec;
-		this.spd=aData.spd;
-		this.mov=aData.mov;
+		this.maxTairyoku=aData.status.tairyoku;
+		this.maxKiryoku=aData.status.kiryoku;
+		this.tairyoku=aData.status.currentTairyoku;
+		this.kiryoku=this.maxKiryoku;
+		this.tikara=aData.status.tikara;
+		this.mamori=aData.status.mamori;
+		this.maryoku=aData.status.maryoku;
+		this.seisin=aData.status.seisin;
+		this.yuryoku=aData.status.yuryoku;
+		this.waza=aData.status.waza;
+		this.binsei=aData.status.binsei;
+		this.idou=aData.status.idou;
 		this.item=aData.item;
 		this.moc=aData.moc;
 		this.image=aData.image;
@@ -36,18 +36,18 @@ class Chara{
 	//データ取得
 	getName(){return this.name;}
 	getRace(){return this.race;}
-	getHp(){return this.hp;}
-	getMaxHp(){return this.maxHp;}
-	getMp(){return this.mp;}
-	getMaxMp(){return this.maxMp;}
-	getTikara(){return this.atk;}
-	getMamori(){return this.def;}
-	getMaryoku(){return this.mgc;}
-	getSeisin(){return this.spt;}
-	getYuryoku(){return this.hel;}
-	getBinsei(){return this.spd;}
-	getWaza(){return this.tec;}
-	getMove(){return this.mov;}
+	getHp(){return this.tairyoku;}
+	getMaxHp(){return this.maxTairyoku;}
+	getMp(){return this.kiryoku;}
+	getMaxMp(){return this.maxKiryoku;}
+	getTikara(){return this.tikara;}
+	getMamori(){return this.mamori;}
+	getMaryoku(){return this.maryoku;}
+	getSeisin(){return this.seisin;}
+	getYuryoku(){return this.yuryoku;}
+	getBinsei(){return this.binsei;}
+	getWaza(){return this.waza;}
+	getMove(){return this.idou;}
 	getSkill(){return this.skill;}
 	getItem(){return this.item;}
 	getMoveCost(){return this.moc;}
@@ -57,7 +57,7 @@ class Chara{
 	getMas(){return Feild.getMas(this.x,this.y)}
 	getTeam(){return this.team;}
 	//戦闘不能判定
-	isDown(){return (this.hp<=0)}
+	isDown(){return (this.tairyoku<=0)}
 	//最後に選択したスキル
 	getLastSelectedSkill(){
 		return this.lastSelectedSkill;
@@ -209,7 +209,7 @@ class Chara{
 	}
 	//気力を消費する
 	useKiryoku(aMp){
-		this.mp-=aMp;
+		this.kiryoku-=aMp;
 	}
 	//アイテムを使用した
 	useItem(aItemName){
@@ -270,15 +270,15 @@ class Chara{
 	}
 	//ダメージを受ける
 	damage(aDamage){
-		this.hp-=aDamage;
-		if(this.hp<0)this.hp=0;
+		this.tairyoku-=aDamage;
+		if(this.tairyoku<0)this.tairyoku=0;
 		console.log(aDamage+"ダメージ");
 		this.displayText(aDamage,{r:1,g:0,b:0},"bound");
 	}
 	//回復する
 	heal(aDamage){
-		this.hp+=aDamage;
-		if(this.hp>this.maxHp)this.hp=this.maxHp;
+		this.tairyoku+=aDamage;
+		if(this.tairyoku>this.maxTairyoku)this.tairyoku=this.maxTairyoku;
 		console.log(aDamage+"回復");
 		this.displayText(aDamage,{r:0,g:1,b:0.2},"rise");
 	}

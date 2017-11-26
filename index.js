@@ -34,6 +34,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 	})
 });
 function prepareMap(){
+	User.init();
 	Encounter.init();
 	let tHeroPosition=Database.getPosition();
 	MapFeild.setMap(MapDictionary.getMap(tHeroPosition.mapName));
@@ -44,16 +45,19 @@ function prepareBattle(){
 	Battle.init([{
 		name:"猫ちゃん",
 		race:"ばけねこ",
-		hp:30,
-		mp:20,
-		atk:20,
-		def:10,
-		mgc:14,
-		spt:13,
-		hel:12,
-		tec:16,
-		spd:22,
-		mov:3,
+		status:{
+			tairyoku:30,
+			currentTairyoku:20,
+			kiryoku:20,
+			tikara:20,
+			mamori:10,
+			maryoku:14,
+			seisin:13,
+			yuryoku:12,
+			waza:16,
+			binsei:22,
+			idou:3,
+		},
 		skill:["hikkaki","enjutu"],
 		item:[{name:"kinomi",number:2}],
 		moc:{
@@ -77,16 +81,19 @@ function prepareBattle(){
 	{
 		name:"すらりん",
 		race:"すらいむ",
-		hp:32,
-		mp:15,
-		atk:10,
-		def:17,
-		mgc:18,
-		spt:20,
-		hel:12,
-		tec:10,
-		spd:7,
-		mov:3,
+		status:{
+			tairyoku:32,
+			currentTairyoku:30,
+			kiryoku:15,
+			tikara:10,
+			mamori:17,
+			maryoku:18,
+			seisin:20,
+			yuryoku:12,
+			waza:10,
+			binsei:7,
+			idou:3,
+		},
 		skill:["tataku","suihou"],
 		item:[{name:"kinomi",number:1}],
 		moc:{
@@ -110,16 +117,19 @@ function prepareBattle(){
 	],[{
 		name:"てきねこ",
 		race:"ばけねこ",
-		hp:30,
-		mp:20,
-		atk:20,
-		def:10,
-		mgc:14,
-		spt:13,
-		hel:12,
-		tec:16,
-		spd:22,
-		mov:3,
+		status:{
+			tairyoku:30,
+			currentTairyoku:30,
+			kiryoku:20,
+			tikara:20,
+			mamori:10,
+			maryoku:14,
+			seisin:13,
+			yuryoku:12,
+			waza:16,
+			binsei:22,
+			idou:3,
+		},
 		skill:["hikkaki","denkousekka"],
 		item:[],
 		moc:{

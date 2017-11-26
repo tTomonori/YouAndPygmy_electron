@@ -15,7 +15,7 @@ class PygmyDictionary{
 					break;
 				case "kiryoku":
 					tStatus=(aLevel<50)
-					?Math.floor(tRaceStatus*aLevel/50)
+					?Math.floor(tRaceStatus*0.1+(tRaceStatus*0.9*aLevel/50))
 					:tRaceStatus
 					break;
 				case "tikara":

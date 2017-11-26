@@ -54,6 +54,23 @@ class ThreeMap{
 			"down":new THREE.CubeGeometry(mGroundSize[0],mGroundSize[1],mGroundSize[2]),
 			"left":new THREE.CubeGeometry(mGroundSize[0],mGroundSize[1],mGroundSize[2]),
 		}
+		//画像の向きを変える
+		//右面
+		this.groundGeometry.faces[0].a=2;
+		this.groundGeometry.faces[0].b=3;
+		this.groundGeometry.faces[0].c=0;
+		this.groundGeometry.faces[1].a=3;
+		this.groundGeometry.faces[1].b=1;
+		this.groundGeometry.faces[1].c=0;
+		//左面
+		this.groundGeometry.faces[2].a=5;
+		this.groundGeometry.faces[2].b=4;
+		this.groundGeometry.faces[2].c=7;
+		this.groundGeometry.faces[3].a=4;
+		this.groundGeometry.faces[3].b=6;
+		this.groundGeometry.faces[3].c=7;
+		// this.groundGeometry.faces[3]={a:}
+		//頂点の位置を変更して三角柱にする
 		this.upGeometry.up.vertices[2].z-=mGroundSize[2];
 		this.upGeometry.up.vertices[7].z-=mGroundSize[2];
 		this.upGeometry.right.vertices[5].z-=mGroundSize[2];

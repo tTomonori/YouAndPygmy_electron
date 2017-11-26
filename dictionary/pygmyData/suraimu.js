@@ -1,4 +1,4 @@
-PygmyDictionary.dictionary.bakeneko={
+PygmyDictionary.dictionary.suraimu={
 	race:"すらいむ",
 	raceStatus:{
 		tairyoku:130,

@@ -10,4 +10,14 @@ class User{
 			this.acconpanying.push(new Pygmy(tPygmyData));
 		}
 	}
+	//バトル用のぴぐみーのデータを取得
+	static getPygmiesBattleData(aNum){
+		let tPygmyDatas=new Array();
+		for(let i=0;tPygmyDatas.length<aNum&&i<this.acconpanying.length;i++){
+			let tPygmy=this.acconpanying[i];
+			if(tPygmy.getCurrentTairyoku()==0)continue;//戦闘不能
+			tPygmyDatas.push(tPygmy.getBattleData());
+		}
+		return tPygmyDatas;
+	}
 }

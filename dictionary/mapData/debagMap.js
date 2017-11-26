@@ -83,37 +83,42 @@ MapDictionary.dictionary.debag1={
 	encount:{
 		0:{
 			userPygmyNum:5,
-			enemies:[{race:"bakeneko",level:2,status:"default"},{race:"bakeneko",level:2,status:"default"}],
-			feild:[
-				[1,0,0,0,0,0,1],
-				[1,0,0,0,2,0,1],
-				[1,1,0,0,0,1,1],
-				[1,1,1,0,0,1,1],
-				[1,0,0,0,0,0,0],
-				[0,0,0,0,0,0,0]
+			enemies:[
+				{race:"bakeneko",level:4,status:"default",skill:["hikkaki","denkousekka"]},
+				{race:"suraimu",level:4,status:"default",skill:["suihou","tataku"]}
 			],
-			masData:{
-				0:{
-					attribute:"grass",
-					image:"grass",
-					object:[]
+			feildData:{
+				feild:[
+					[1,0,0,0,0,0,1],
+					[1,0,0,0,2,0,1],
+					[1,1,0,0,0,1,1],
+					[1,1,1,0,0,1,1],
+					[1,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0]
+				],
+				masData:{
+					0:{
+						attribute:"grass",
+						image:"grass",
+						object:[]
+					},
+					1:{
+						attribute:"water",
+						image:"water",
+						object:[]
+					},
+					2:{
+						attribute:"object",
+						image:"grass",
+						object:["stump"]
+					}
 				},
-				1:{
-					attribute:"water",
-					image:"water",
-					object:[]
+				charaPosition:{
+					user:[{x:2,y:5},{x:3,y:5},{x:4,y:5},{x:5,y:5},{x:6,y:5}],
+					enemy:[{x:2,y:0},{x:3,y:0}]
 				},
-				2:{
-					attribute:"object",
-					image:"grass",
-					object:["stump"]
-				}
-			},
-			charaPosition:{
-				user:[{x:0,y:5},{x:1,y:5},{x:3,y:5},{x:5,y:5},{x:6,y:5}],
-				enemy:[{x:2,y:0},{x:3,y:0}]
-			},
-			background:"BG24a_80.jpg"
+				background:"BG24a_80.jpg"
+			}
 		},
 		1:{}
 	}

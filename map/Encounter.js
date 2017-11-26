@@ -24,13 +24,29 @@ class Encounter{
 	//ランダムエンカウントした
 	static randomEncount(aNum){
 		return new Promise((res,rej)=>{
-			// let tEncountData=this.getRandomEncountBattleData(aNum);
-			// let tUserPygmies=User.getPygmiesBattleData(tEncountData.userPygmyNum);
-			// let tEnemies=new Array();
-			// for(let tEnemyData of tEncountData.enemies){
-      //
-			// }
-			prepareBattle();//決め打ちのデータ使用(仮)
+			let tEncountData=this.getRandomEncountBattleData(aNum);//バトルデータ
+			let tUserPygmies=User.getPygmiesBattleData(tEncountData.userPygmyNum);//ユーザのぴぐみー
+			let tEnemies=new Array();
+			for(let tEnemyData of tEncountData.enemies){//敵のデータ
+				let tData={};
+				let tRaceData=PygmyDictionary.getData(tEnemyData.race);
+				tData.name=tRaceData.race;
+				tData.race=tRaceData.race;
+				tData.level=tEnemyData.level;
+				if(tEnemyData.status=="default"){//種族値とレベルからステータスを決定
+					tData.status=PygmyDictionary.calcuStatus(tRaceData.raceStatus,tEnemyData.level);
+					tData.status.currentTairyoku=tData.status.tairyoku;
+				}
+				tData.skill=tEnemyData.skill;
+				tData.item=(tEnemyData.item==undefined)?[]:tEnemyData.item;
+				tData.moc=tRaceData.moveCost;
+				tData.image=tRaceData.image;
+				tData.image.accessory=[];
+				tData.ai="user";
+				tEnemies.push(tData);
+			}
+			Battle.init(tUserPygmies,tEnemies,tEncountData.feildData);
+			// prepareBattle();//決め打ちのデータ使用(仮)
 			SceneChanger.changeToBattleScene().then(()=>{
 				res();
 			})
@@ -38,7 +54,7 @@ class Encounter{
 	}
 	//ランダムエンカウントした時のフィールド情報を決定
 	static getRandomEncountBattleData(aNum){
-		let tEncountData=Map.getEncountData();
+		let tEncountData=MapFeild.getEncountData();
 		return tEncountData[aNum];
 
 	}
