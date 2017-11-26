@@ -2,7 +2,7 @@ class Hero extends Creature{
 	constructor(aPosition){
 		super(aPosition,"chara");
 		//カメラセット
-		let tPosition=Map.convertToThreeWarldPosition({x:this.x,y:this.y,z:this.z});
+		let tPosition=MapFeild.convertToThreeWarldPosition({x:this.x,y:this.y,z:this.z});
 		tPosition.y-=mGroundSize[1]*6;
 		tPosition.z+=mGroundSize[2]*4;
 		ThreeMap.setCamera(tPosition,{x:0.95});

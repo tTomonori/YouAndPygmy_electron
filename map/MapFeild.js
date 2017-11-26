@@ -1,4 +1,4 @@
-class Map{
+class MapFeild{
 	//マップセット
 	static setMap(aMap){
 		ThreeMap.init();

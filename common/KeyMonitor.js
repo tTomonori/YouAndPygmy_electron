@@ -40,7 +40,9 @@ class KeyMonitor{
 	//キー入力監視終了
 	static stopMonitor(){
 		$(window).off();
-		this.pushingKeys.length=0;
+		this.crossKeyFlag=false;
+		this.assignedFunctions=new Map();
+		this.pushingKeys=new Array();
 	}
 	//キー入力時の関数セット
 	static setKey(aKeyCode,aFunction){
@@ -49,7 +51,6 @@ class KeyMonitor{
 	//十字キー入力関数セット
 	static setCrossKey(aFunction){
 		this.crossKeyFlag=true;
-		this.pushingKeys=new Array();
 		this.assignedCrossKeyFunction=(aDirection)=>{aFunction(aDirection)};
 	}
 	//押し込んでいる十字キーを取得
@@ -60,23 +61,23 @@ class KeyMonitor{
 	static resetKey(aKeyCode){
 
 	}
+	//バトル用キー入力
+	static setBattleKey(){
+		this.stopMonitor();
+		//ショートカットキー設定
+		this.setKey(90,()=>{SkillButton.click()})
+		this.setKey(88,()=>{ItemButton.click()})
+		this.setKey(67,()=>{CancelMoveButton.click()})
+		this.setKey(86,()=>{EndTurnButton.click()})
+		this.setKey(65,()=>{SkillButton.clickList(0)})
+		this.setKey(83,()=>{SkillButton.clickList(1)})
+		this.setKey(68,()=>{SkillButton.clickList(2)})
+		this.startMonitor();
+	}
+	//マップ用キー入力
+	static setMapKey(){
+		this.stopMonitor();
+		this.setCrossKey((aDirection)=>{mMyChara.moveByInput(aDirection)});
+		this.startMonitor();
+	}
 }
-KeyMonitor.assignedFunctions=new Map();
-
-//ショートカットキー設定
-// KeyMonitor.setKey(90,()=>{SkillButton.click()})
-// KeyMonitor.setKey(88,()=>{ItemButton.click()})
-// KeyMonitor.setKey(67,()=>{CancelMoveButton.click()})
-// KeyMonitor.setKey(86,()=>{EndTurnButton.click()})
-// KeyMonitor.setKey(65,()=>{SkillButton.clickList(0)})
-// KeyMonitor.setKey(83,()=>{SkillButton.clickList(1)})
-// KeyMonitor.setKey(68,()=>{SkillButton.clickList(2)})
-// KeyMonitor.startMonitor();
-
-//マップ移動
-// KeyMonitor.setKey(37,()=>{mMyChara.move("left")})
-// KeyMonitor.setKey(38,()=>{mMyChara.move("up")})
-// KeyMonitor.setKey(39,()=>{mMyChara.move("right")})
-// KeyMonitor.setKey(40,()=>{mMyChara.move("down")})
-KeyMonitor.setCrossKey((aDirection)=>{mMyChara.moveByInput(aDirection)});
-KeyMonitor.startMonitor();

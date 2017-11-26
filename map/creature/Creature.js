@@ -32,7 +32,7 @@ class Creature{
 			this.direction="down";
 		}
 		//マスにキャラを載せる
-		this.ground=Map.getGround(this.x,this.y,this.z);
+		this.ground=MapFeild.getGround(this.x,this.y,this.z);
 		this.ground.on(this);
 		//移動中フラグ
 		this.moveFlag=false;
@@ -71,13 +71,13 @@ class Creature{
 			let tPrePosition=this.ground.getPosition();
 			let tNextPosition=tNextGround.getPosition();
 			let tEdgeHeight=this.ground.getHeight(aDirection);
-			let tEdgeThreePosition=Map.convertToThreeWarldPosition({
+			let tEdgeThreePosition=MapFeild.convertToThreeWarldPosition({
 				x:(tPrePosition.x+tNextPosition.x)/2,
 				y:(tPrePosition.y+tNextPosition.y)/2,
 				z:tEdgeHeight
 			});
-			let tPreThreePosition=Map.convertToThreeWarldPosition(tPrePosition);
-			let tNextThreePosition=Map.convertToThreeWarldPosition(tNextPosition);
+			let tPreThreePosition=MapFeild.convertToThreeWarldPosition(tPrePosition);
+			let tNextThreePosition=MapFeild.convertToThreeWarldPosition(tNextPosition);
 			//位置を再設定
 			this.ground=tNextGround;
 			this.x=tNextPosition.x;
@@ -109,7 +109,7 @@ class Creature{
 			case "up":tY-=1;tHereDirection="down";break;
 			default:
 		}
-		let tGround=Map.getGround(tX,tY,tZ);
+		let tGround=MapFeild.getGround(tX,tY,tZ);
 		//groundなし
 		if(tGround==null)return null;
 		//通過不可能なマス

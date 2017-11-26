@@ -5,11 +5,13 @@ class SceneChanger{
 			document.getElementById("battleScene").style.display="block";
 			document.getElementById("mapScene").style.display="none";
 			Battle.start();
+			KeyMonitor.setBattleKey();
 		})
 	}
 	//バトル終了
 	static endBattle(aWinOrLose){
 		document.getElementById("mapScene").style.display="block";
 		document.getElementById("battleScene").style.display="none";
+		KeyMonitor.setMapKey();
 	}
 }

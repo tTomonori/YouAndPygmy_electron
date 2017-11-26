@@ -36,8 +36,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
 function prepareMap(){
 	Encounter.init();
 	let tHeroPosition=Database.getPosition();
-	Map.setMap(MapDictionary.getMap(tHeroPosition.mapName));
+	MapFeild.setMap(MapDictionary.getMap(tHeroPosition.mapName));
 	mMyChara=new Hero(tHeroPosition);
+	KeyMonitor.setMapKey();
 }
 function prepareBattle(){
 	Battle.init([{
