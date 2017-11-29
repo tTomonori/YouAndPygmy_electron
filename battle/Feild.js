@@ -21,7 +21,7 @@ class Feild{
 		return this.feild[aY][aX];
 	}
 	//指定した座標を3dの座標に変換
-	static convertToThreeWarldPosition(aX,aY){
+	static convertToThreeFeildPosition(aX,aY){
 		return {x:mMasSize[0]*aX,y:-mMasSize[1]*aY};
 	}
 	//リスト内の座標のマスに関数実行
@@ -53,7 +53,7 @@ class Feild{
 	}
 	//マス選択イベントリセット
 	static resetSelectMasEvent(){
-		ThreeWarld.resetMouseMoveFunctions();
+		ThreeFeild.resetMouseMoveFunctions();
 		for(let tMasList of this.feild){
 			for(let tMas of tMasList){
 				tMas.resetSelectEvent();

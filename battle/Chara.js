@@ -81,7 +81,7 @@ class Chara{
 		this.y=aY;
 		Feild.getMas(aX,aY).on(this);
 		//画像の位置セット
-		let tThreePosition=Feild.convertToThreeWarldPosition(this.x,this.y);
+		let tThreePosition=Feild.convertToThreeFeildPosition(this.x,this.y);
 		this.bodyMesh.position.x=tThreePosition.x;
 		this.bodyMesh.position.y=tThreePosition.y;
 		this.bodyMesh.renderOrder=this.y+0.3;
@@ -103,23 +103,23 @@ class Chara{
 	//3dイメージ作成
 	makeImage(){
 		let tPosition=[mMasSize[0],0,mMasSize[2]*3/2];
-		let tThreePosition=Feild.convertToThreeWarldPosition(this.x,this.y);
+		let tThreePosition=Feild.convertToThreeFeildPosition(this.x,this.y);
 		//体
-		this.bodyMesh=ThreeWarld.createChara(tPosition,"image/"+this.image.body+".png");
+		this.bodyMesh=ThreeFeild.createChara(tPosition,"image/"+this.image.body+".png");
 		this.bodyMesh.position.x=tThreePosition.x;
 		this.bodyMesh.position.y=tThreePosition.y;
 		this.bodyMesh.position.z=mMasSize[2]+mMasSize[2]/3;
 		// this.bodyMesh.material[3].depthTest=false;
 		this.bodyMesh.material.transparent=true;
 		//目
-		this.eyeMesh=ThreeWarld.createChara(tPosition,"image/eye/"+this.image.eye.normal+".png");
+		this.eyeMesh=ThreeFeild.createChara(tPosition,"image/eye/"+this.image.eye.normal+".png");
 		this.eyeMesh.position.x=tThreePosition.x;
 		this.eyeMesh.position.y=tThreePosition.y;
 		this.eyeMesh.position.z=mMasSize[2]+mMasSize[2]/3;
 		// this.eyeMesh.material[3].depthTest=false;
 		this.eyeMesh.material.transparent=true;
 		//口
-		this.mouthMesh=ThreeWarld.createChara(tPosition,"image/mouth/"+this.image.mouth.normal+".png");
+		this.mouthMesh=ThreeFeild.createChara(tPosition,"image/mouth/"+this.image.mouth.normal+".png");
 		this.mouthMesh.position.x=tThreePosition.x;
 		this.mouthMesh.position.y=tThreePosition.y;
 		this.mouthMesh.position.z=mMasSize[2]+mMasSize[2]/3;
@@ -128,7 +128,7 @@ class Chara{
 		//アクセサリ
 		this.accessoryMeshs=new Array();
 		for(let tAccessoryPath of this.image.accessory){
-			let tAccessory=ThreeWarld.createChara(tPosition,"image/accessory/"+tAccessoryPath.image+".png");
+			let tAccessory=ThreeFeild.createChara(tPosition,"image/accessory/"+tAccessoryPath.image+".png");
 			tAccessory.position.x=tThreePosition.x;
 			tAccessory.position.y=tThreePosition.y;
 			tAccessory.position.z=mMasSize[2]+mMasSize[2]/3;
@@ -138,7 +138,7 @@ class Chara{
 			this.accessoryMeshs.push(tAccessory);
 		}
 		//影(チーム判別用)
-		this.shadowMesh=ThreeWarld.createCylinder(mMasSize[0]/6,1);
+		this.shadowMesh=ThreeFeild.createCylinder(mMasSize[0]/6,1);
 		this.shadowMesh.position.x=tThreePosition.x;
 		this.shadowMesh.position.y=tThreePosition.y;
 		this.shadowMesh.rotation.x=Math.PI/2;
@@ -204,8 +204,8 @@ class Chara{
 	//指定されたマスへ移動
 	move(aMas,aFunction){
 		let tPosition=aMas.getPosition();
-		let tTarget=Feild.convertToThreeWarldPosition(tPosition.x,tPosition.y);
-		ThreeWarld.setMoveAnimation([this.bodyMesh,this.eyeMesh,this.mouthMesh,this.shadowMesh].concat(this.accessoryMeshs),tTarget,300,()=>{aFunction();})
+		let tTarget=Feild.convertToThreeFeildPosition(tPosition.x,tPosition.y);
+		ThreeFeild.setMoveAnimation([this.bodyMesh,this.eyeMesh,this.mouthMesh,this.shadowMesh].concat(this.accessoryMeshs),tTarget,300,()=>{aFunction();})
 	}
 	//気力を消費する
 	useKiryoku(aMp){
@@ -225,7 +225,7 @@ class Chara{
 	displayText(aText,aColor,aAnimation,aLength){
 		let tTextlength=(aLength==undefined)?String(aText).length:aLength;
 		let tSize=mMasSize[0]/3;
-		let tText=ThreeWarld.createTextObject(aText,tSize);
+		let tText=ThreeFeild.createTextObject(aText,tSize);
 		let tPosition=this.bodyMesh.position;
 		tText.position.x=tPosition.x-(tTextlength/2*tSize);
 		tText.position.y=tPosition.y-5;
@@ -236,9 +236,9 @@ class Chara{
 				tText.position.z=mMasSize[2]*1.5;
 				return new Promise((res,rej)=>{
 					let i=0;
-					ThreeWarld.setAnimation(()=>{
+					ThreeFeild.setAnimation(()=>{
 						if(i>60){
-							ThreeWarld.deleteObject(tText);
+							ThreeFeild.deleteObject(tText);
 							return false;
 						}
 						tText.position.z+=0.6;
@@ -253,9 +253,9 @@ class Chara{
 				let tP=Math.PI/70;
 				return new Promise((res,rej)=>{
 					let i=0;
-					ThreeWarld.setAnimation(()=>{
+					ThreeFeild.setAnimation(()=>{
 						if(i>66){
-							ThreeWarld.deleteObject(tText);
+							ThreeFeild.deleteObject(tText);
 							return false;
 						}
 						tText.position.z=tZ+tAmplitude*Math.sin(tP*i);
@@ -272,19 +272,19 @@ class Chara{
 	damage(aDamage){
 		this.tairyoku-=aDamage;
 		if(this.tairyoku<0)this.tairyoku=0;
-		console.log(aDamage+"ダメージ");
+		// console.log(aDamage+"ダメージ");
 		this.displayText(aDamage,{r:1,g:0,b:0},"bound");
 	}
 	//回復する
 	heal(aDamage){
 		this.tairyoku+=aDamage;
 		if(this.tairyoku>this.maxTairyoku)this.tairyoku=this.maxTairyoku;
-		console.log(aDamage+"回復");
+		// console.log(aDamage+"回復");
 		this.displayText(aDamage,{r:0,g:1,b:0.2},"rise");
 	}
 	//スキル回避
 	avoid(){
-		console.log("スキル回避");
+		// console.log("スキル回避");
 		this.displayText("Miss",{r:0.3,g:0.3,b:0.3},"rise",2.6);
 	}
 	//被ダメージアニメ
@@ -292,7 +292,7 @@ class Chara{
 		this.changeToDamageFace();
 		let i=0;
 		return new Promise((res,rej)=>{
-			ThreeWarld.setAnimation(()=>{
+			ThreeFeild.setAnimation(()=>{
 				if(i>55){
 					//アニメ終了
 					this.operateMaterials((aMesh)=>{
@@ -314,7 +314,7 @@ class Chara{
 		this.shadowMesh.material.opacity=0;
 		return new Promise((res,rej)=>{
 			let i=0;
-			ThreeWarld.setAnimation(()=>{
+			ThreeFeild.setAnimation(()=>{
 				if(i>50){
 					//アニメーション終了
 					this.deleteChara();
@@ -332,8 +332,8 @@ class Chara{
 	//キャラをフィールドから消す
 	deleteChara(){
 		//3dイメージを削除
-		this.operateMeshs((aMesh)=>{ThreeWarld.deleteObject(aMesh);})
-		ThreeWarld.deleteObject(this.shadowMesh);
+		this.operateMeshs((aMesh)=>{ThreeFeild.deleteObject(aMesh);})
+		ThreeFeild.deleteObject(this.shadowMesh);
 		this.normalEyeImage.dispose();
 		this.damageEyeImage.dispose();
 		this.normalMouthImage.dispose();

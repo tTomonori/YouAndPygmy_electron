@@ -1,10 +1,10 @@
 class Battle{
 	static init(aUserTeam,aEnemyTeam,aFeild){
-		ThreeWarld.init();
+		ThreeFeild.init();
 		//背景設定
 		// mBattleSecene.style.backgroundImage="url('image/background/"+aFeild.background+"')";
 		//カメラ位置設定
-		ThreeWarld.setCamera({x:aFeild.feild[0].length/2*mMasSize[0],y:-aFeild.feild.length*mMasSize[1]-mMasSize[1]*5,z:mMasSize[2]+400},{x:0.95})
+		ThreeFeild.setCamera({x:aFeild.feild[0].length/2*mMasSize[0],y:-aFeild.feild.length*mMasSize[1]-mMasSize[1]*5,z:mMasSize[2]+400},{x:0.95})
 
 		this.userTeam=new Array();
 		this.enemyTeam=new Array();
@@ -42,9 +42,9 @@ class Battle{
 	static start(){
 		KeyMonitor.startMonitor();
 		Turn.nextTurn();
-		ThreeWarld.setMouseMove();
-		ThreeWarld.setClick();
-		ThreeWarld.setDrag();
+		ThreeFeild.setMouseMove();
+		ThreeFeild.setClick();
+		ThreeFeild.setDrag();
 	}
 	//キャラを消す(戦闘不能)
 	static deleteChara(aChara){

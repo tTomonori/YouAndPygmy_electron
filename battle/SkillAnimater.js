@@ -8,9 +8,9 @@ class SkillAnimater{
 				case "test":
 					this.animatingNum=aDamagedCharas.length;
 					for(let tChara of aDamagedCharas){
-						let tSphere=ThreeWarld.createSphere(5);
+						let tSphere=ThreeFeild.createSphere(5);
 						let tPosition=tChara.getPosition();
-						let tThreePosition=Feild.convertToThreeWarldPosition(tPosition.x,tPosition.y)
+						let tThreePosition=Feild.convertToThreeFeildPosition(tPosition.x,tPosition.y)
 						tSphere.position.x=tThreePosition.x;
 						tSphere.position.y=tThreePosition.y;
 						tSphere.position.z=mMasSize[2];
@@ -19,14 +19,14 @@ class SkillAnimater{
 						tSphere.material.opacity=0.6;
 						tSphere.material.color={r:1,g:0.6,b:0}
 						let i=0;
-						ThreeWarld.setAnimation(()=>{
+						ThreeFeild.setAnimation(()=>{
 							if(i>15)return false;
 							tSphere.scale.x+=0.4;
 							tSphere.scale.y+=0.4;
 							tSphere.scale.z+=0.4;
 							i++;
 							return true;
-						},()=>{ThreeWarld.deleteObject(tSphere);this.endAnimation();})
+						},()=>{ThreeFeild.deleteObject(tSphere);this.endAnimation();})
 					}
 					break;
 				default:

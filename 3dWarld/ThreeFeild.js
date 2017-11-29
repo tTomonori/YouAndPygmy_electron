@@ -1,4 +1,4 @@
-class ThreeWarld{
+class ThreeFeild{
 	static init(){
 		const width = mScreenSize.width;
 		const height = mScreenSize.height;
@@ -6,7 +6,7 @@ class ThreeWarld{
 		// レンダラーを作成
 		// レンダラーを作成
 		this.renderer = new THREE.WebGLRenderer({
-			canvas: document.querySelector('#threeWarld'),
+			canvas: document.querySelector('#threeFeild'),
 			alpha:true
 		});
 		this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -46,7 +46,7 @@ class ThreeWarld{
 				tFunction();
 			}
 			// レンダリング
-			ThreeWarld.renderer.render(ThreeWarld.scene, ThreeWarld.camera);
+			ThreeFeild.renderer.render(ThreeFeild.scene, ThreeFeild.camera);
 		}
 		// 初回実行
 		tick();
@@ -180,7 +180,7 @@ class ThreeWarld{
 		this.mouseMoveFunctions=new Array();
 	}
 	static setMouseMove(){
-		let tCanvas=document.getElementById("threeWarld");
+		let tCanvas=document.getElementById("threeFeild");
 		tCanvas.onmousemove=(e)=>{
 			//カーソル位置記憶
 			this.mousePoint={clientX:e.clientX,clientY:e.clientY,target:e.target};
@@ -205,7 +205,7 @@ class ThreeWarld{
 		}
 	}
 	static setClick(){
-		let tCanvas=document.getElementById("threeWarld");
+		let tCanvas=document.getElementById("threeFeild");
 		tCanvas.onclick=(e)=>{
 			let tObjects=this.getOverdObjects(e);
 			for(let tObject of tObjects){
@@ -218,9 +218,9 @@ class ThreeWarld{
 	}
 	//右クリックドラッグでカメラ移動
 	static setDrag(){
-		let tCanvas=document.getElementById("threeWarld");
+		let tCanvas=document.getElementById("threeFeild");
 		let tCameraMove=()=>{}
-		ThreeWarld.setMouseMoveForeverFunction(()=>{tCameraMove()})
+		ThreeFeild.setMouseMoveForeverFunction(()=>{tCameraMove()})
 		//カメラ座標上限下限
 		let tMinX=-mMasSize[0];
 		let tMaxX=mMasSize[0]*mFeildSize.x;

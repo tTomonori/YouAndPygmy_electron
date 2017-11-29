@@ -9,16 +9,16 @@ class Mas{
 
 		this.chara=null;//このマスにいるキャラ
 
-		let tThreePosition=Feild.convertToThreeWarldPosition(this.x,this.y);
+		let tThreePosition=Feild.convertToThreeFeildPosition(this.x,this.y);
 		//3dの要素
-		this.box=ThreeWarld.createTextureBox(mMasSize,"image/battleTile/"+this.image+".jpg");
+		this.box=ThreeFeild.createTextureBox(mMasSize,"image/battleTile/"+this.image+".jpg");
 		this.box.position.x=tThreePosition.x;
 		this.box.position.y=tThreePosition.y;
 		this.box.className="mas";
 		this.box.renderOrder=this.y;
 		this.box.class=this;
 		//マスを変色させるためのbox
-		this.cover=ThreeWarld.createBox([mMasSize[0],mMasSize[1],1])
+		this.cover=ThreeFeild.createBox([mMasSize[0],mMasSize[1],1])
 		this.cover.position.x=this.box.position.x;
 		this.cover.position.y=this.box.position.y;
 		this.cover.position.z=mMasSize[2]/2;
@@ -63,7 +63,7 @@ class Mas{
 			// Turn.getTurnChara().moveToSelectedMas(this);
 			CharaController.selectedDestination(this);
 		}
-		ThreeWarld.setMouseMoveFunction(()=>{
+		ThreeFeild.setMouseMoveFunction(()=>{
 			this.changeToMovableColor();
 		})
 	}
@@ -80,7 +80,7 @@ class Mas{
 			// Turn.getTurnChara().attack(this);
 			CharaController.selectedAttackMas(this);
 		}
-		ThreeWarld.setMouseMoveFunction(()=>{
+		ThreeFeild.setMouseMoveFunction(()=>{
 			this.changeToAttackableColor();
 		})
 	}
@@ -97,7 +97,7 @@ class Mas{
 			// Turn.getTurnChara().attack(this);
 			CharaController.selectedAttackMas(this);
 		}
-		ThreeWarld.setMouseMoveFunction(()=>{
+		ThreeFeild.setMouseMoveFunction(()=>{
 			this.changeToHealableColor();
 		})
 	}

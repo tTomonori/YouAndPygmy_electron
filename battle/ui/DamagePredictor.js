@@ -47,7 +47,7 @@ class DamagePredictor{
 		mBattleSecene.appendChild(this.tag);
 
 		//マウスが移動するたびにダメージ予測欄を消す
-		ThreeWarld.setMouseMoveForeverFunction(()=>{
+		ThreeFeild.setMouseMoveForeverFunction(()=>{
 			this.hidePredict();
 		})
 	}
