@@ -31,9 +31,7 @@ class Event{
 					})
 					break;
 				case "moveMap"://マップ移動
-				KeyMonitor.stopMonitor();
 					SceneChanger.moveMap(aEvent).then(()=>{
-						KeyMonitor.setMapKey();
 						res();
 					})
 					break;

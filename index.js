@@ -28,6 +28,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 		let tLoader=new THREE.FontLoader();
 		tLoader.load("threejsmaster/examples/fonts/helvetiker_bold.typeface.json",(aFont)=>{
 			mFont=aFont;
+			KeyMonitor.init();
 			// prepareBattle();//バトル開始
 			prepareMap();//マップ準備
 		})
@@ -41,6 +42,7 @@ function prepareMap(){
 	MapFeild.setMap(MapDictionary.getMap(tHeroPosition.mapName));
 	mMyChara=new Hero(tHeroPosition);
 	KeyMonitor.setMapKey();
+	KeyMonitor.startMonitor();
 }
 function prepareBattle(){
 	Battle.init([{

@@ -35,25 +35,30 @@ class Hero extends Creature{
 	}
 	//キー長押し移動
 	confirmKeyAndMove(){
-		let tDirection=KeyMonitor.getPushingCrossKeys();
-		if(tDirection.length==0)return;
-		this.moveByInput(tDirection[0]);//すぐに移動関数を呼ぶ
+		let tDirection=KeyMonitor.getPushingCrossKeyDirection();
+		if(tDirection==null)return;
+		this.moveByInput(tDirection);//すぐに移動関数を呼ぶ
 	}
 	//ユーザのキー入力による移動
 	moveByInput(aDirection){
+		KeyMonitor.stopMonitor();
 		this.move(aDirection).then((aFlag)=>{
-			if(!aFlag)return;//移動できなかった
+			if(!aFlag){//移動できなかった
+				KeyMonitor.startMonitor();
+				return;
+			}
 			//マスのイベント処理
 			let tEvent=this.ground.getEvent();
 			if(tEvent!=null){
 				//イベント実行
-				console.log(this.ground);
 				Event.runEvents(tEvent).then(()=>{
+					KeyMonitor.startMonitor();
 					//キー長押し移動
 					this.confirmKeyAndMove();
 				})
 			}
 			else{
+				KeyMonitor.startMonitor();
 				//キー長押し移動
 				this.confirmKeyAndMove();
 			}

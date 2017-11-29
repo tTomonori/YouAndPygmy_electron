@@ -40,6 +40,7 @@ class Battle{
 	}
 	//戦闘開始
 	static start(){
+		KeyMonitor.startMonitor();
 		Turn.nextTurn();
 		ThreeWarld.setMouseMove();
 		ThreeWarld.setClick();
@@ -80,6 +81,7 @@ class Battle{
 	}
 	//勝敗決定
 	static finish(aWinOrLose){
+		KeyMonitor.stopMonitor();
 		SceneChanger.endBattle(aWinOrLose);
 	}
 }
