@@ -1,0 +1,3 @@
+class MapMenu extends MenuBoard{
+
+}

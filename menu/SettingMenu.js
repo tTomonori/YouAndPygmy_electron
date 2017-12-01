@@ -1,0 +1,3 @@
+class SettingMenu extends MenuBoard{
+
+}

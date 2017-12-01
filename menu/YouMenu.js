@@ -1,0 +1,3 @@
+class YouMenu extends MenuBoard{
+
+}

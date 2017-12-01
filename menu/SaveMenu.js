@@ -1,0 +1,3 @@
+class SaveMenu extends MenuBoard{
+
+}

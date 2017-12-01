@@ -1,0 +1,3 @@
+class BookMenu extends MenuBoard{
+
+}

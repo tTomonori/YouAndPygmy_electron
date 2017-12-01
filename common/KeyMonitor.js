@@ -107,7 +107,8 @@ class KeyMonitor{
 	}
 	//キー入力時の関数リセット
 	static resetKey(aKeyCode){
-
+		this.assignedFunctions.clear();//キーに割り当てられた関数
+		this.assignedCrossKeyFunction=()=>{};//十字キーに割り当てられた関数
 	}
 	//セットした関数全てリセット
 	static reset(){
@@ -131,7 +132,13 @@ class KeyMonitor{
 	static setMapKey(){
 		this.reset();
 		this.setCrossKeyFunction((aDirection)=>{mMyChara.moveByInput(aDirection)});
-		this.setKeyFunction(65,()=>{})//決定キー
-		this.setKeyFunction(68,()=>{SceneChanger.changeToMenuScene()})//キャンセルキー
+		this.setKeyFunction(mOkKeyCode,()=>{})//決定キー
+		this.setKeyFunction(mCancelKeyCode,()=>{SceneChanger.changeToMenuScene()})//キャンセルキー
+	}
+	//メニュー用キー入力
+	static setMenuKey(){
+
 	}
 }
+var mOkKeyCode=65;
+var mCancelKeyCode=68;

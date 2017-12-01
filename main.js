@@ -13,7 +13,7 @@ let mMainWindow
 
 function createWindow () {
   // Create the browser window.
-  let mWindowWidth=1100;
+  let mWindowWidth=1200;
   let mWindowHeight=700;
   mMainWindow = new BrowserWindow({
     width: mWindowWidth,

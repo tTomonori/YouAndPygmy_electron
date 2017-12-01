@@ -30,6 +30,15 @@ class SceneChanger{
 	}
 	//メニューを開く
 	static changeToMenuScene(){
-		
+		KeyMonitor.stopMonitor();
+		KeyMonitor.setMenuKey();
+		document.getElementById("menuScene").style.display="block";
+		MainMenu.display().then(()=>{
+			//メニューが閉じられた
+			KeyMonitor.stopMonitor();
+			document.getElementById("menuScene").style.display="none";
+			KeyMonitor.setMapKey();
+			KeyMonitor.startMonitor();
+		})
 	}
 }
