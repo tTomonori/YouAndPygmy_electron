@@ -36,10 +36,10 @@ class Chara{
 	//データ取得
 	getName(){return this.name;}
 	getRace(){return this.race;}
-	getHp(){return this.tairyoku;}
-	getMaxHp(){return this.maxTairyoku;}
-	getMp(){return this.kiryoku;}
-	getMaxMp(){return this.maxKiryoku;}
+	getTairyoku(){return this.tairyoku;}
+	getMaxTairyoku(){return this.maxTairyoku;}
+	getKiryoku(){return this.kiryoku;}
+	getMaxKiryoku(){return this.maxKiryoku;}
 	getTikara(){return this.tikara;}
 	getMamori(){return this.mamori;}
 	getMaryoku(){return this.maryoku;}
@@ -56,6 +56,7 @@ class Chara{
 	getPosition(){return {x:this.x,y:this.y};}
 	getMas(){return Feild.getMas(this.x,this.y)}
 	getTeam(){return this.team;}
+	getAcconpanyingNumber(){return this.data.acconpanyingNumber}//ユーザの手持ちの何番目か
 	//戦闘不能判定
 	isDown(){return (this.tairyoku<=0)}
 	//最後に選択したスキル

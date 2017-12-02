@@ -402,15 +402,15 @@ class StatusBox{
 
 		//たいりょく
 		let tGageContainer=aTag.children[2];
-		let tNowValue=aChara.getHp();
-		let tMaxValue=aChara.getMaxHp();
+		let tNowValue=aChara.getTairyoku();
+		let tMaxValue=aChara.getMaxTairyoku();
 		tGageContainer.children[0].children[1].textContent=tNowValue;
 		tGageContainer.children[0].children[3].textContent=tMaxValue;
 		tGageContainer.children[1].firstChild.style.width=tNowValue/tMaxValue*100+"%";
 		//きりょく
 		tGageContainer=aTag.children[3];
-		tNowValue=aChara.getMp();
-		tMaxValue=aChara.getMaxMp();
+		tNowValue=aChara.getKiryoku();
+		tMaxValue=aChara.getMaxKiryoku();
 		tGageContainer.children[0].children[1].textContent=tNowValue;
 		tGageContainer.children[0].children[3].textContent=tMaxValue;
 		tGageContainer.children[1].firstChild.style.width=tNowValue/tMaxValue*100+"%";

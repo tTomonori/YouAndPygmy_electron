@@ -46,8 +46,9 @@ class Encounter{
 				tEnemies.push(tData);
 			}
 			Battle.init(tUserPygmies,tEnemies,tEncountData.feildData);
-			// prepareBattle();//決め打ちのデータ使用(仮)
-			SceneChanger.changeToBattleScene().then(()=>{
+			SceneChanger.changeToBattleScene().then((tResult)=>{
+				//キャラ情報更新
+				User.applyPygmies(tResult.pygmy)
 				res();
 			})
 		})
@@ -56,6 +57,5 @@ class Encounter{
 	static getRandomEncountBattleData(aNum){
 		let tEncountData=MapFeild.getEncountData();
 		return tEncountData[aNum];
-
 	}
 }

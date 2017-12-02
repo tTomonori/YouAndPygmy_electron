@@ -40,7 +40,8 @@ class Turn{
 	}
 	//ターン終了
 	static endTurn(){
-		this.actedChara.push(this.order.shift());
+		if(this.turnChara==this.order[0])
+			this.actedChara.push(this.order.shift());
 		this.nextTurn();
 	}
 	//キャラを消す(戦闘不能)

@@ -6,12 +6,15 @@ class Battle{
 		//カメラ位置設定
 		ThreeFeild.setCamera({x:aFeild.feild[0].length/2*mMasSize[0],y:-aFeild.feild.length*mMasSize[1]-mMasSize[1]*5,z:mMasSize[2]+400},{x:0.95})
 
+		this.userPygmies=new Array();//終了時に体力などの情報を返すための
 		this.userTeam=new Array();
 		this.enemyTeam=new Array();
 		this.userTeamDown=new Array();
 		this.enemyTeamDown=new Array();
 		for(let tChara of aUserTeam){//味方チームのキャラインスタンス生成
-			this.userTeam.push(new Chara(tChara,"ally"));
+			let tPygmy=new Chara(tChara,"ally");
+			this.userTeam.push(tPygmy);
+			this.userPygmies.push(tPygmy);
 		}
 		for(let tChara of aEnemyTeam){//敵チームのキャラインスタンス生成
 			this.enemyTeam.push(new Chara(tChara,"enemy"));
@@ -81,8 +84,12 @@ class Battle{
 	}
 	//勝敗決定
 	static finish(aWinOrLose){
+		let tReturn=new Array();
+		for(let tPygmy of this.userPygmies){
+			tReturn.push({tairyoku:tPygmy.getTairyoku(),item:tPygmy.getItem(),acconpanyingNumber:tPygmy.getAcconpanyingNumber()})
+		}
 		KeyMonitor.stopMonitor();
-		SceneChanger.endBattle(aWinOrLose);
+		SceneChanger.endBattle(aWinOrLose,tReturn);
 	}
 }
 var mMasSize=[80,80,80];

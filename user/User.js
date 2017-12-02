@@ -16,12 +16,22 @@ class User{
 		for(let i=0;tPygmyDatas.length<aNum&&i<this.acconpanying.length;i++){
 			let tPygmy=this.acconpanying[i];
 			if(tPygmy.getCurrentTairyoku()==0)continue;//戦闘不能
-			tPygmyDatas.push(tPygmy.getBattleData());
+			let tBattleData=tPygmy.getBattleData();
+			tBattleData.acconpanyingNumber=i;
+			tPygmyDatas.push(tBattleData);
 		}
 		return tPygmyDatas;
 	}
 	//手持ちぴぐみーを返す
 	static getAcconpanying(){
 		return this.acconpanying;
+	}
+	//バトル後にぴぐみー情報更新
+	static applyPygmies(aPygmyData){
+		for(let tPygmyData of aPygmyData){
+			let tPygmy=this.acconpanying[tPygmyData.acconpanyingNumber];
+			tPygmy.setCurrentTairyoku(tPygmyData.tairyoku);
+			tPygmy.setItem(tPygmyData.item);
+		}
 	}
 }

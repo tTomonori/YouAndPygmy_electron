@@ -31,6 +31,8 @@ class Pygmy{
 		}
 		return tAccessories;
 	}
+	setCurrentTairyoku(aTairyoku){this.currentTairyoku=aTairyoku}
+	setItem(aItem){this.item=aItem}
 	//体力ゲージ取得
 	getTairyokuGage(aWidth,aHeight){return Gage.createGage({width:aWidth,height:aHeight},{max:this.status.tairyoku,current:this.currentTairyoku},"tairyoku")}
 	//気力ゲージ取得

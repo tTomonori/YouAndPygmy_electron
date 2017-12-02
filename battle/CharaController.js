@@ -34,7 +34,7 @@ class CharaController{
 		this.selectingSkill=aSkill;
 		StatusBox.setSelectedSkillInfo(aSkill);
 		this.turnChara.setLastSelectedSkill(aSkill);
-		if(this.turnChara.getMp()<aSkill.mp){
+		if(this.turnChara.getKiryoku()<aSkill.mp){
 			//気力が足りない
 			AttackSelecter.displayNotEnoughSkillRange(aSkill);
 		}

@@ -31,7 +31,7 @@ class AttackDivider{
 		if(tAttackedChara==null)return;
 		//気力が足りない
 		let tMp=aSkill.mp
-		if(tMp!=undefined&&aChara.getMp()<tMp){
+		if(tMp!=undefined&&aChara.getKiryoku()<tMp){
 			console.log("気力が足りないスキルは使っちゃダメ");
 			return;
 		}
@@ -119,7 +119,7 @@ class AttackDivider{
 			//反撃不可スキル
 			if(tSkill.counter==false)continue;
 			//気力が足りない
-			if(aCounterChara.getMp()<tSkill.mp)continue;
+			if(aCounterChara.getKiryoku()<tSkill.mp)continue;
 			//攻撃範囲取得
 			let tRange=SkillRangeDeriver.deriveRange(tSkill,tCounterPosition);
 			for(let tRangePosition of tRange){

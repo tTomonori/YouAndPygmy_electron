@@ -6,18 +6,18 @@ class SceneChanger{
 			document.getElementById("mapScene").style.display="none";
 			Battle.start();
 			KeyMonitor.setBattleKey();
-			this.endBattleMessage=()=>{
+			this.endBattleMessage=(aWinOrLose,aReturn)=>{
 				KeyMonitor.setMapKey();
-				res();
+				res({winOrLose:aWinOrLose,pygmy:aReturn});
 			}
 		})
 	}
 	//バトル終了
-	static endBattle(aWinOrLose){
+	static endBattle(aWinOrLose,aReturn){
 		KeyMonitor.stopMonitor();
 		document.getElementById("mapScene").style.display="block";
 		document.getElementById("battleScene").style.display="none";
-		this.endBattleMessage();
+		this.endBattleMessage(aWinOrLose,aReturn);
 	}
 	//マップ移動
 	static moveMap(aMoveEvent){
