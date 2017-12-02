@@ -1,6 +1,6 @@
 class MapDictionary{
 	//マップ情報取得
-	static getMap(aMapName){
+	static get(aMapName){
 		return this.dictionary[aMapName];
 	}
 }

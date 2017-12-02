@@ -20,4 +20,8 @@ class User{
 		}
 		return tPygmyDatas;
 	}
+	//手持ちぴぐみーを返す
+	static getAcconpanying(){
+		return this.acconpanying;
+	}
 }

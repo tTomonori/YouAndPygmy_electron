@@ -1,7 +1,7 @@
 class PygmyDictionary{
 	//ぴぐみーのデータ取得
-	static getData(aName){
-		return this.dictionary[aName];
+	static get(aName){
+		return $.extend(true, {}, this.dictionary[aName])
 	}
 	//ステータス計算
 	static calcuStatus(aRaceStatus,aLevel){

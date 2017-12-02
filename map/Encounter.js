@@ -29,7 +29,7 @@ class Encounter{
 			let tEnemies=new Array();
 			for(let tEnemyData of tEncountData.enemies){//敵のデータ
 				let tData={};
-				let tRaceData=PygmyDictionary.getData(tEnemyData.race);
+				let tRaceData=PygmyDictionary.get(tEnemyData.race);
 				tData.name=tRaceData.race;
 				tData.race=tRaceData.race;
 				tData.level=tEnemyData.level;

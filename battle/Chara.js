@@ -24,7 +24,7 @@ class Chara{
 		//スキルデータを取得して記憶
 		this.skill=new Array();
 		for(let tSkillName of aData.skill){
-			this.skill.push(SkillDictionary.getSkill(tSkillName));
+			this.skill.push(SkillDictionary.get(tSkillName));
 		}
 
 		this.movablePositions={};//移動可能なマス
@@ -105,21 +105,21 @@ class Chara{
 		let tPosition=[mMasSize[0],0,mMasSize[2]*3/2];
 		let tThreePosition=Feild.convertToThreeFeildPosition(this.x,this.y);
 		//体
-		this.bodyMesh=ThreeFeild.createChara(tPosition,"image/"+this.image.body+".png");
+		this.bodyMesh=ThreeFeild.createChara(tPosition,ImagePathMaker.getBodyPath(this.image.body));
 		this.bodyMesh.position.x=tThreePosition.x;
 		this.bodyMesh.position.y=tThreePosition.y;
 		this.bodyMesh.position.z=mMasSize[2]+mMasSize[2]/3;
 		// this.bodyMesh.material[3].depthTest=false;
 		this.bodyMesh.material.transparent=true;
 		//目
-		this.eyeMesh=ThreeFeild.createChara(tPosition,"image/eye/"+this.image.eye.normal+".png");
+		this.eyeMesh=ThreeFeild.createChara(tPosition,ImagePathMaker.getEyePath(this.image.eye.normal));
 		this.eyeMesh.position.x=tThreePosition.x;
 		this.eyeMesh.position.y=tThreePosition.y;
 		this.eyeMesh.position.z=mMasSize[2]+mMasSize[2]/3;
 		// this.eyeMesh.material[3].depthTest=false;
 		this.eyeMesh.material.transparent=true;
 		//口
-		this.mouthMesh=ThreeFeild.createChara(tPosition,"image/mouth/"+this.image.mouth.normal+".png");
+		this.mouthMesh=ThreeFeild.createChara(tPosition,ImagePathMaker.getMouthPath(this.image.mouth.normal));
 		this.mouthMesh.position.x=tThreePosition.x;
 		this.mouthMesh.position.y=tThreePosition.y;
 		this.mouthMesh.position.z=mMasSize[2]+mMasSize[2]/3;
@@ -128,7 +128,7 @@ class Chara{
 		//アクセサリ
 		this.accessoryMeshs=new Array();
 		for(let tAccessoryPath of this.image.accessory){
-			let tAccessory=ThreeFeild.createChara(tPosition,"image/accessory/"+tAccessoryPath.image+".png");
+			let tAccessory=ThreeFeild.createChara(tPosition,ImagePathMaker.getAccessoryPath(tAccessoryPath.image));
 			tAccessory.position.x=tThreePosition.x;
 			tAccessory.position.y=tThreePosition.y;
 			tAccessory.position.z=mMasSize[2]+mMasSize[2]/3;
@@ -152,22 +152,22 @@ class Chara{
 		this.bodyMesh.class=this;
 		//画像変更用
 		this.damageEyeImage=document.createElement("img");
-		this.damageEyeImage.src="image/eye/"+this.image.eye.damage+".png";
+		this.damageEyeImage.src=ImagePathMaker.getEyePath(this.image.eye.damage);
 		this.damageEyeImage=new THREE.Texture(this.damageEyeImage);
 		this.damageEyeImage.needsUpdate=true;
 		this.damageEyeImage.minFilter=THREE.LinearFilter;
 		this.normalEyeImage=document.createElement("img");
-		this.normalEyeImage.src="image/eye/"+this.image.eye.normal+".png";
+		this.normalEyeImage.src=ImagePathMaker.getEyePath(this.image.eye.normal);
 		this.normalEyeImage=new THREE.Texture(this.normalEyeImage);
 		this.normalEyeImage.needsUpdate=true;
 		this.normalEyeImage.minFilter=THREE.LinearFilter;
 		this.damageMouthImage=document.createElement("img");
-		this.damageMouthImage.src="image/mouth/"+this.image.mouth.damage+".png";
+		this.damageMouthImage.src=ImagePathMaker.getMouthPath(this.image.mouth.damage);
 		this.damageMouthImage=new THREE.Texture(this.damageMouthImage);
 		this.damageMouthImage.needsUpdate=true;
 		this.damageMouthImage.minFilter=THREE.LinearFilter;
 		this.normalMouthImage=document.createElement("img");
-		this.normalMouthImage.src="image/mouth/"+this.image.mouth.normal+".png";
+		this.normalMouthImage.src=ImagePathMaker.getMouthPath(this.image.mouth.normal);
 		this.normalMouthImage=new THREE.Texture(this.normalMouthImage);
 		this.normalMouthImage.needsUpdate=true;
 		this.normalMouthImage.minFilter=THREE.LinearFilter;

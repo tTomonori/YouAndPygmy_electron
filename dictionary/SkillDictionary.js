@@ -1,5 +1,5 @@
 class SkillDictionary{
-	static getSkill(aSkillName){
+	static get(aSkillName){
 		return this.dictionary[aSkillName];
 	}
 }

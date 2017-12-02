@@ -3,6 +3,7 @@ class MenuBoard{
 		this.choices=aList;
 		this.menu=new Menu(aList,mScreenSize.width*0.18,(aKey)=>{this.select(aKey)});
 		this.boardWidth=mScreenSize.width-mScreenSize.width*0.18;
+		this.boardHeight=mScreenSize.height;
 		this.board=document.createElement("div");
 		this.board.style.position="absolute";
 		this.board.style.top="0";

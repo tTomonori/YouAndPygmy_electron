@@ -1,10 +1,11 @@
 class ItemDictionary{
-	static getItem(aItemName){
+	static get(aItemName){
 		return this.dictionary[aItemName];
 	}
 }
 ItemDictionary.dictionary={
 	kinomi:{
+		name:"きのみ",
 		skill:{
 			key:"kinomi",
 			name:"きのみ",

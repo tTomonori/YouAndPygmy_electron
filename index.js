@@ -39,7 +39,7 @@ function prepareMap(){
 	User.init();
 	Encounter.init();
 	let tHeroPosition=Database.getPosition();
-	MapFeild.setMap(MapDictionary.getMap(tHeroPosition.mapName));
+	MapFeild.setMap(MapDictionary.get(tHeroPosition.mapName));
 	mMyChara=new Hero(tHeroPosition);
 	document.getElementById("mapScene").style.display="block";
 	KeyMonitor.setMapKey();
