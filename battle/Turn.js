@@ -40,7 +40,7 @@ class Turn{
 	}
 	//ターン終了
 	static endTurn(){
-		if(this.turnChara==this.order[0])
+		if(this.order.length>0&&this.turnChara==this.order[0])
 			this.actedChara.push(this.order.shift());
 		this.nextTurn();
 	}

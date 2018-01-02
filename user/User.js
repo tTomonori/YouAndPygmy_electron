@@ -1,6 +1,7 @@
 class User{
 	static init(){
 		this.initAcconpanying();
+		this.initItem();
 	}
 	//手持ちぴぐみー初期化
 	static initAcconpanying(){
@@ -10,6 +11,15 @@ class User{
 			this.acconpanying.push(new Pygmy(tPygmyData));
 		}
 	}
+	//持ち物初期化
+	static initItem(){
+		this.item=Database.getItem();
+	}
+	//持ち物取得
+	static getConsum(){return this.item.consum}
+	static getImportant(){return this.item.important}
+	static getFragment(){return this.item.fragment}
+	static getAccessory(){return this.item.accessory}
 	//バトル用のぴぐみーのデータを取得
 	static getPygmiesBattleData(aNum){
 		let tPygmyDatas=new Array();

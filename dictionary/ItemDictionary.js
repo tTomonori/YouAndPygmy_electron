@@ -6,6 +6,9 @@ class ItemDictionary{
 ItemDictionary.dictionary={
 	kinomi:{
 		name:"きのみ",
+		use:true,
+		equip:true,
+		text:"小さいきのみ。ぴぐみーのたいりょくを10回復できる。",
 		skill:{
 			key:"kinomi",
 			name:"きのみ",

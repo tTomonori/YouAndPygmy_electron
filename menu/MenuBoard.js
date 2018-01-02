@@ -22,19 +22,22 @@ class MenuBoard{
 	}
 	//ボードの表示初期化
 	static initBoard(){}
+	//キー入力関数セット
+	static setKey(){}
+	//選択肢が選択された
+	static select(aKey){}
+	//選択肢が表示された
+	static displayed(){}
 	//選択肢,ボードを表示
 	static displayChoice(){
 		this.initBoard();
 		this.board.style.display="block";
 		this.setKey();
 		this.menu.display().then(()=>{
+			this.displayed();
 			KeyMonitor.startMonitor();
 		})
 	}
-	//キー入力関数セット
-	static setKey(){}
-	//選択肢が選択された
-	static select(aKey){}
 	//メニューを閉じる
 	static close(){
 		KeyMonitor.stopMonitor();

@@ -95,7 +95,7 @@ class ItemButton{
 			}
 			let tItem=aItemList[i]
 			let tItemEffect=ItemDictionary.get(tItem.name).skill;
-			tItemTag.textContent=tItemEffect.name+"　x"+tItem.number;
+			tItemTag.textContent=tItemEffect.name+"　x"+tItem.possess;
 			tItemTag.onclick=()=>{CharaController.selectedItem(tItemEffect)};
 			tItemTag.style.display="block";
 		}

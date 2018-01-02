@@ -1,3 +1,0 @@
-class ItemMenu extends MenuBoard{
-
-}

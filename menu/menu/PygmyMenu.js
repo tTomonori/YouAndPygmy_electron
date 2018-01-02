@@ -14,7 +14,6 @@ class PygmyMenu extends MenuBoard{
 				default:
 			}
 		})
-		KeyMonitor.startMonitor();
 	}
 	//ボード初期化
 	static initBoard(){
@@ -95,7 +94,7 @@ class PygmyMenu extends MenuBoard{
 			tBelongingsTag.appendChild(tBelongingsFrame);
 			let tBelongingsLabel=document.createElement("div");
 			let tBelongings=tPygmy.getItems();
-			tBelongingsLabel.innerHTML=(tBelongings.length==0)?"なし":tBelongings[0].data.name+"　x"+tBelongings[0].number;
+			tBelongingsLabel.innerHTML=(tBelongings.length==0)?"なし":tBelongings[0].data.name+"　x"+tBelongings[0].possess;
 			tBelongingsLabel.style.position="absolute";
 			tBelongingsLabel.style.top="0";
 			tBelongingsLabel.style.left=tBoxWidth*0.05+"px";
@@ -104,7 +103,6 @@ class PygmyMenu extends MenuBoard{
 			tBelongingsTag.appendChild(tBelongingsLabel);
 			tBox.appendChild(tBelongingsTag);
 			//アクセサリ
-			//持ち物
 			let tAccessoryTag=document.createElement("div");
 			tAccessoryTag.style.position="relative";
 			tAccessoryTag.style.width=tBoxWidth+"px";

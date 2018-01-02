@@ -20,7 +20,7 @@ class Pygmy{
 	getItems(){
 		let tItems=new Array();
 		for(let tItemData of this.item){
-			tItems.push({data:ItemDictionary.get(tItemData.name),number:tItemData.number})
+			tItems.push({data:ItemDictionary.get(tItemData.name),possess:tItemData.possess})
 		}
 		return tItems;
 	}

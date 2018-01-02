@@ -1,0 +1,30 @@
+PygmyDictionary.dictionary.yukiusagi={
+	race:"ゆきうさぎ",
+	raceStatus:{
+		tairyoku:100,
+		kiryoku:60,
+		tikara:110,
+		mamori:80,
+		maryoku:120,
+		seisin:90,
+		yuryoku:120,
+		waza:100,
+		binsei:125,
+		idou:4,
+	},
+	moveCost:{
+		grass:1,
+		sand:2,
+		water:false,
+		magma:false,
+		snow:0.7,
+		ice:1,
+		air:false,
+		object:false
+	},
+	image:{
+		body:"pygmy/yukiusagi/body",
+		eye:{normal:"../pygmy/yukiusagi/eye",damage:"../pygmy/yukiusagi/eye_damage"},
+		mouth:{normal:"../pygmy/yukiusagi/mouth",damage:"../pygmy/yukiusagi/mouth_damage"},
+	}
+}

@@ -217,9 +217,9 @@ class Chara{
 		for(let i=0;i<this.item.length;i++){
 			let tItem=this.item[i];
 			if(tItem.name!=aItemName)continue;
-			tItem.number--;
+			tItem.possess--;
 			//アイテムがなくなった
-			if(tItem.number<=0)this.item.splice(i,1);
+			if(tItem.possess<=0)this.item.splice(i,1);
 		}
 	}
 	//文字を表示

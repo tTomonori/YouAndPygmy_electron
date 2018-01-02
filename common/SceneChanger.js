@@ -23,7 +23,7 @@ class SceneChanger{
 	static moveMap(aMoveEvent){
 		return new Promise((res,rej)=>{
 			MapFeild.releaseMap();
-			MapFeild.setMap(MapDictionary.getMap(aMoveEvent.mapName));
+			MapFeild.setMap(MapDictionary.get(aMoveEvent.mapName));
 			mMyChara.setPosition(aMoveEvent.neighborPosition);
 			res();
 		})

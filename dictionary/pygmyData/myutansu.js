@@ -1,0 +1,30 @@
+PygmyDictionary.dictionary.myutansu={
+	race:"みゅーたんす",
+	raceStatus:{
+		tairyoku:90,
+		kiryoku:60,
+		tikara:135,
+		mamori:75,
+		maryoku:130,
+		seisin:80,
+		yuryoku:90,
+		waza:110,
+		binsei:110,
+		idou:4,
+	},
+	moveCost:{
+		grass:1,
+		sand:1,
+		water:false,
+		magma:false,
+		snow:1,
+		ice:1,
+		air:false,
+		object:false
+	},
+	image:{
+		body:"pygmy/myutansu/body",
+		eye:{normal:"../pygmy/myutansu/eye",damage:"../pygmy/myutansu/eye_damage"},
+		mouth:{normal:"../pygmy/myutansu/mouth",damage:"../pygmy/myutansu/mouth_damage"},
+	}
+}

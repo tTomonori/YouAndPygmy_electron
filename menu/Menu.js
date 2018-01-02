@@ -3,6 +3,7 @@ class Menu{
 		this.choiceWidth=(aChoiceWidth==null)?mScreenSize.width*0.18:aChoiceWidth;//選択肢バーの横幅
 		this.canChoiceFlag=false;//選択可能かどうか
 		this.selectedNum=null;//選択中の選択肢の番号
+		this.keepedNum=null;//選択維持中の選択肢の番号
 		this.allChoiceNum=aList.length;//選択肢の数
 		this.displayFlag=false;//このメニューが表示されているかどうか
 		this.selectedFunction=(aKey)=>{aSelectedFunction(aKey)}
@@ -49,7 +50,7 @@ class Menu{
 		tLabel.style.width="100%";
 		tLabel.style.top="0";
 		tLabel.style.right="0";
-		tLabel.style.fontSize=mScreenSize.height*0.055+"px";
+		tLabel.style.fontSize=mScreenSize.height*0.05+"px";
 		tLabel.style.pointerEvent="none";
 		tLabel.innerHTML="&nbsp"+aChoiceData.name;
 		tChoiceBar.appendChild(tLabel);
@@ -68,7 +69,8 @@ class Menu{
 	}
 	//選択肢を選択(決定はまだ)
 	pickChoice(aNum){
-		if(!this.canChoiceFlag)return;
+		if(!this.canChoiceFlag)return;//選択不可能なタイミング
+		if(this.keepedNum==aNum)return;//選択維持中の選択し
 		this.selectedNum=aNum;
 		let tBar=this.choices[aNum];
 		tBar.style.webkitFilter="brightness(120%)";
@@ -79,7 +81,7 @@ class Menu{
 	}
 	//選択肢の選択を解除
 	releaseChoice(){
-		if(this.selectedNum==null)return;
+		if(this.selectedNum==null)return;//何もpickされていない
 		let tBar=this.choices[this.selectedNum];
 		this.selectedNum=null;
 		tBar.style.webkitFilter="brightness(100%)";
@@ -91,10 +93,12 @@ class Menu{
 	//次の選択肢を選択
 	pickNextChoice(){
 		if(this.selectedNum==null){
-			this.pickChoice(0);
+			if(this.keepedNum==0)this.pickChoice(1);
+			else this.pickChoice(0);
 		}
 		else{
 			let tNextNum=(this.selectedNum+1)%this.allChoiceNum;
+			if(this.keepedNum==tNextNum)tNextNum=(tNextNum+1)%this.allChoiceNum;
 			this.releaseChoice(this.selectedNum);
 			this.pickChoice(tNextNum);
 		}
@@ -102,10 +106,12 @@ class Menu{
 	//一つ前の選択肢を選択
 	pickPreviousChoice(){
 		if(this.selectedNum==null){
-			this.pickChoice(this.allChoiceNum-1);
+			if(this.keepedNum==this.allChoiceNum-1)this.pickChoice(this.allChoiceNum-2);
+			else this.pickChoice(this.allChoiceNum-1);
 		}
 		else{
 			let tNextNum=(this.selectedNum+this.allChoiceNum-1)%this.allChoiceNum;
+			if(this.keepedNum==tNextNum)tNextNum=(tNextNum+this.allChoiceNum-1)%this.allChoiceNum;
 			this.releaseChoice(this.selectedNum);
 			this.pickChoice(tNextNum);
 		}
@@ -113,7 +119,32 @@ class Menu{
 	//選択肢決定
 	select(){
 		if(this.selectedNum==null)return;
-		this.selectedFunction(this.listData[this.selectedNum].key);
+		this.unKeep();
+		this.keep();
+		this.selectedFunction(this.listData[this.keepedNum].key);
+	}
+	//選択中の選択肢が選択された状態をキープ
+	keep(){
+		if(this.selectedNum==null)return;
+		this.keepedNum=this.selectedNum;
+		this.selectedNum=null;
+		let tBar=this.choices[this.keepedNum];
+		tBar.style.webkitFilter="brightness(100%)";
+		$(tBar).stop();
+		$(tBar).animate({
+			right:-this.choiceWidth*0.1+"px"
+		},250)
+	}
+	//選択維持中の選択肢をリセット
+	unKeep(){
+		if(this.keepedNum==null)return;
+		let tBar=this.choices[this.keepedNum];
+		this.keepedNum=null;
+		tBar.style.webkitFilter="brightness(100%)";
+		$(tBar).stop();
+		$(tBar).animate({
+			right:0
+		},250)
 	}
 	//選択肢を表示
 	display(){
@@ -142,6 +173,7 @@ class Menu{
 		this.displayFlag=false;
 		this.canChoiceFlag=false;
 		this.releaseChoice();
+		this.unKeep();
 		let tLength=this.choices.length;
 		return new Promise((res,rej)=>{
 			for(let i=0;i<this.allChoiceNum;i++){
