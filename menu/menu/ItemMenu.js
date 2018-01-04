@@ -48,6 +48,9 @@ class ItemMenu extends MenuBoard{
 			case "fragment":
 				this.itemList.setList(User.getFragment());
 				break;
+			case "back":
+				this.close();
+				break;
 			default:
 
 		}
@@ -57,6 +60,16 @@ class ItemMenu extends MenuBoard{
 		this.menu.pickNextChoice();
 		this.menu.select();
 	}
+	//選択可能に
+	static startSelect(){
+		this.menu.startSelect();
+		this.itemList.startSelect();
+	}
+	//選択不可に
+	static stopSelect(){
+		this.menu.stopSelect();
+		this.itemList.stopSelect();
+	}
 }
 //選択肢
 ItemMenu.init([
@@ -64,4 +77,5 @@ ItemMenu.init([
 	{name:"大切なもの",key:"important"},
 	{name:"アクセサリ",key:"accessory"},
 	{name:"かけら",key:"fragment"},
-])
+	{name:"もどる",key:"back"},
+],"item")

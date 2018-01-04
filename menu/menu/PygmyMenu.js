@@ -128,13 +128,10 @@ class PygmyMenu extends MenuBoard{
 	}
 	//選択肢が選択された
 	static select(aKey){
-		KeyMonitor.stopMonitor();
-		this.menu.hide().then(()=>{
-			if(aKey=="back")this.close();
-		})
+		this.close();
 	}
 }
 //選択肢
 PygmyMenu.init([
 	{name:"もどる",key:"back"},
-])
+],"pygmy")

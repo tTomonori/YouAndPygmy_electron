@@ -40,4 +40,4 @@ MainMenu.init([
 	{name:"ずかん",class:BookMenu,key:"book"},
 	{name:"あなた",class:YouMenu,key:"you"},
 	{name:"設定",class:SettingMenu,key:"setting"},
-])
+],"main")

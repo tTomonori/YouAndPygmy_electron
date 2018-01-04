@@ -1,10 +1,11 @@
 class MenuBoard{
-	static init(aList){
+	static init(aList,aName){
 		this.choices=aList;
 		this.menu=new Menu(aList,mScreenSize.width*0.18,(aKey)=>{this.select(aKey)});
 		this.boardWidth=mScreenSize.width-mScreenSize.width*0.18;
 		this.boardHeight=mScreenSize.height;
 		this.board=document.createElement("div");
+		this.board.id=aName+"MenuBoard";
 		this.board.style.position="absolute";
 		this.board.style.top="0";
 		this.board.style.right="0";
@@ -41,11 +42,13 @@ class MenuBoard{
 		this.menu.display().then(()=>{
 			this.displayed();
 			KeyMonitor.startMonitor();
+			this.startSelect();
 		})
 	}
 	//メニューを閉じる
 	static close(){
 		KeyMonitor.stopMonitor();
+		this.stopSelect();
 		this.menu.hide().then(()=>{
 			this.board.style.display="none";
 			this.closed();//メニューを開いた関数にresを返す
@@ -53,15 +56,26 @@ class MenuBoard{
 	}
 	//新たにMenuBoardを開く
 	static openNextStory(aMenu){
-			KeyMonitor.stopMonitor();
-			this.menu.hide().then(()=>{//メニューを閉じる
-				aMenu.display().then((aFlag)=>{
-					if(aFlag=="close"){
-						this.closed("close");
-						return;
-					}
-					this.displayChoice();
-				})
+		KeyMonitor.stopMonitor();
+		this.stopSelect();
+		this.menu.hide().then(()=>{//メニューを閉じる
+			this.board.style.display="none";
+			aMenu.display().then((aFlag)=>{
+				if(aFlag=="close"){
+					this.closed("close");
+					return;
+				}
+				this.board.style.display="block";
+				this.displayChoice();
 			})
+		})
+	}
+	//選択可能に
+	static startSelect(){
+		this.menu.startSelect();
+	}
+	//選択不可に
+	static stopSelect(){
+		this.menu.stopSelect();
 	}
 }

@@ -10,6 +10,33 @@ class Selector{
 		this.lastSelectNum=null;
 		this.choiceNum=this.choiceElements.length;
 	}
+	//選択可能に
+	startSelect(){
+		//マウスオーバー時関数
+		for(let i=0;i<this.choiceElements.length;i++){
+			let tChoiceBar=this.choiceElements[i];
+			tChoiceBar.onmouseover=()=>{
+				this.release();
+				if(this.keepNum!=i)this.pick(i);
+			}
+			tChoiceBar.onmouseout=()=>{
+				if(this.keepNum!=i)this.release(i);
+			}
+			tChoiceBar.onclick=()=>{
+				this.select();
+			}
+		}
+	}
+	//選択不可に
+	stopSelect(){
+		//マウスオーバー時関数
+		for(let i=0;i<this.choiceElements.length;i++){
+			let tChoiceBar=this.choiceElements[i];
+			tChoiceBar.onmouseover=()=>{}
+			tChoiceBar.onmouseout=()=>{}
+			tChoiceBar.onclick=()=>{}
+		}
+	}
 	//子クラスで定義する
 	selectNumber(aNum){}
 	pickElement(aNum){}
@@ -18,6 +45,7 @@ class Selector{
 	unKeepElement(aNum){}
 	//選択肢決定
 	select(){
+		if(this.pickNum==null)return;
 		let tSelectNum=this.pickNum;
 		if(this.keepFlag)this.keep(this.pickNum);
 		this.selectNumber(tSelectNum);
@@ -72,6 +100,7 @@ class Selector{
 	}
 	//強調した選択肢を解除
 	unKeep(){
+		if(this.keepNum==null)return;
 		this.unKeepElement(this.keepNum);
 		this.keepNum=null;
 	}
