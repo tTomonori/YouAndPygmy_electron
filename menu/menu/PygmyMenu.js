@@ -1,19 +1,21 @@
 class PygmyMenu extends MenuBoard{
-	//キー入力関数セット
-	static setKey(){
-		KeyMonitor.setKeyFunction(mOkKeyCode,()=>{this.menu.select()})
-		KeyMonitor.setKeyFunction(mCancelKeyCode,()=>{this.close()})
-		KeyMonitor.setCrossKeyFunction((aDirection)=>{
-			switch (aDirection) {
-				case "up":
-					this.menu.pickPreviousChoice();
-					break;
-				case "down":
-					this.menu.pickNextChoice();
-					break;
-				default:
-			}
-		})
+	//キー入力
+	static inputKey(aKey){
+		switch (aKey) {
+			case "up":
+				this.menu.pickPreviousChoice();
+				break;
+			case "down":
+				this.menu.pickNextChoice();
+				break;
+			case "ok":
+				this.menu.select();
+				break;
+			case "cancel":
+				this.close();
+				break;
+			default:
+		}
 	}
 	//ボード初期化
 	static initBoard(){

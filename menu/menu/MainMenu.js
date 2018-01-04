@@ -1,41 +1,34 @@
 class MainMenu extends MenuBoard{
-	//キー入力関数セット
-	static setKey(){
-		KeyMonitor.setKeyFunction(mOkKeyCode,()=>{this.menu.select()})
-		KeyMonitor.setKeyFunction(mCancelKeyCode,()=>{this.close()})
-		KeyMonitor.setCrossKeyFunction((aDirection)=>{
-			switch (aDirection) {
-				case "up":
-					this.menu.pickPreviousChoice();
-					break;
-				case "down":
-					this.menu.pickNextChoice();
-					break;
-				default:
-			}
-		})
+	//キー入力
+	static inputKey(aKey){
+		switch (aKey) {
+			case "up":
+				this.menu.pickPreviousChoice();
+				break;
+			case "down":
+				this.menu.pickNextChoice();
+				break;
+			case "ok":
+				this.menu.select();
+				break;
+			case "cancel":
+				this.close();
+				break;
+			default:
+		}
 	}
 	//選択肢が選択された
 	static select(aKey){
-		KeyMonitor.stopMonitor();
-		this.menu.hide().then(()=>{
-			let tMenu;
-			//次に表示するメニューのクラスを取得
-			for(let tChoice of this.choices){
-				if(aKey==tChoice.key){
-					tMenu=tChoice.class;
-					break;
-				}
+		let tMenu;
+		//次に表示するメニューのクラスを取得
+		for(let tChoice of this.choices){
+			if(aKey==tChoice.key){
+				tMenu=tChoice.class;
+				break;
 			}
-			//次の階層のメニューを表示
-			tMenu.display().then((aFlag)=>{
-				if(aFlag=="close"){
-					this.closed("close");
-					return;
-				}
-				this.displayChoice();
-			})
-		})
+		}
+		//次の階層のメニューを表示
+		this.openNextStory(tMenu);
 	}
 }
 //選択肢

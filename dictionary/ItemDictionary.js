@@ -23,5 +23,45 @@ ItemDictionary.dictionary={
 			animation:"test",
 			consum:true
 		}
-	}
+	},
+	ookinakinomi:{
+		name:"大きなきのみ",
+		use:true,
+		equip:true,
+		text:"大きなきのみ。ぴぐみーのたいりょくを15回復できる。",
+		skill:{
+			key:"kinomi",
+			name:"きのみ",
+			attribute:"heal",
+			magnification:"fixed",
+			power:15,
+			accuracy:100,
+			range:[{range:"circumference",value:1},{range:"my"}],
+			involve:{involve:"none"},
+			object:false,
+			wall:false,
+			animation:"test",
+			consum:true
+		}
+	},
+	hikarinohana:{
+		name:"光の花",
+		use:true,
+		equip:true,
+		text:"弱い光を放つ不思議な花。ぴぐみーのたいりょくを、使用者のゆりょく分回復する。",
+		skill:{
+			key:"kinomi",
+			name:"きのみ",
+			attribute:"heal",
+			magnification:"addition",
+			power:0,
+			accuracy:100,
+			range:[{range:"circumference",value:1},{range:"my"}],
+			involve:{involve:"none"},
+			object:false,
+			wall:false,
+			animation:"test",
+			consum:true
+		}
+	},
 }

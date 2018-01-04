@@ -28,11 +28,16 @@ class MenuBoard{
 	static select(aKey){}
 	//選択肢が表示された
 	static displayed(){}
+	//キー入力
+	static inputKey(aKey){}
 	//選択肢,ボードを表示
 	static displayChoice(){
 		this.initBoard();
 		this.board.style.display="block";
-		this.setKey();
+		//キー入力
+		KeyMonitor.setKeyFunction(mOkKeyCode,()=>{this.inputKey("ok")})
+		KeyMonitor.setKeyFunction(mCancelKeyCode,()=>{this.inputKey("cancel")})
+		KeyMonitor.setCrossKeyFunction((aDirection)=>{this.inputKey(aDirection)})
 		this.menu.display().then(()=>{
 			this.displayed();
 			KeyMonitor.startMonitor();
@@ -43,7 +48,20 @@ class MenuBoard{
 		KeyMonitor.stopMonitor();
 		this.menu.hide().then(()=>{
 			this.board.style.display="none";
-			this.closed();
+			this.closed();//メニューを開いた関数にresを返す
 		})
+	}
+	//新たにMenuBoardを開く
+	static openNextStory(aMenu){
+			KeyMonitor.stopMonitor();
+			this.menu.hide().then(()=>{//メニューを閉じる
+				aMenu.display().then((aFlag)=>{
+					if(aFlag=="close"){
+						this.closed("close");
+						return;
+					}
+					this.displayChoice();
+				})
+			})
 	}
 }

@@ -1,5 +1,6 @@
-class ItemList{
+class ItemList extends Selector{
 	constructor(aParentTag){
+		super(false);
 		this.parentTag=aParentTag;
 		this.parentSize={width:parseFloat(this.parentTag.style.width),height:parseFloat(this.parentTag.style.height)}
 		this.detailBoxHeight=this.parentSize.width*160/960;
@@ -10,7 +11,15 @@ class ItemList{
 		this.detailBoxFrame=document.createElement("img");
 		this.detailBoxFrame.src="image/choiceBar/blue/message/mesframe.png";
 		this.detailBoxFrame.style.width="100%";
+		this.detailBoxText=document.createElement("div");
+		this.detailBoxText.style.position="absolute";
+		this.detailBoxText.style.top=this.detailBoxHeight/10+"px";
+		this.detailBoxText.style.left=this.detailBoxHeight/10+"px";
+		this.detailBoxText.style.width="calc(100% - "+this.detailBoxHeight/10+"px)";
+		this.detailBoxText.style.height="calc(100% - "+this.detailBoxHeight/10+"px)";
+		this.detailBoxText.style.fontSize=this.detailBoxHeight/6+"px";
 		this.detailBox.appendChild(this.detailBoxFrame);
+		this.detailBox.appendChild(this.detailBoxText);
 		this.parentTag.appendChild(this.detailBox);
 		//リスト表示欄
 		this.listBox=document.createElement("div");
@@ -25,6 +34,7 @@ class ItemList{
 	}
 	//リストセット
 	setList(aList){
+		this.itemList=aList;
 		this.listBox.textContent="";
 		for(let tItemData of aList){
 			let tItem=ItemDictionary.get(tItemData.name);
@@ -40,9 +50,23 @@ class ItemList{
 			tName.style.left="0";
 			tName.style.fontSize=this.parentSize.width*0.03+"px";
 			tName.style.width="100%";
-			tName.textContent=tItem.name+"　x"+tItemData.possess;
+			tName.textContent="　"+tItem.name+"　x"+tItemData.possess;
 			tContainer.appendChild(tName);
 			this.listBox.appendChild(tContainer);
+
+			this.initSelector(this.listBox.children,this.listBox)
 		}
 	}
+	selectNumber(aNum){
+		console.log(aNum+"を選択");
+	}
+	pickElement(aNum){
+		this.listBox.children[aNum].style.webkitFilter="brightness(120%)";
+		this.detailBoxText.textContent=ItemDictionary.get(this.itemList[aNum].name).text;
+	}
+	releaseElement(aNum){
+		this.listBox.children[aNum].style.webkitFilter="brightness(100%)";
+	}
+	keepElement(aNum){}
+	unKeepElement(aNum){}
 }

@@ -116,6 +116,11 @@ class Menu{
 			this.pickChoice(tNextNum);
 		}
 	}
+	//選択中の選択肢の選択解除
+	release(){
+		this.releaseChoice(this.selectedNum);
+		this.selectedNum=null;
+	}
 	//選択肢決定
 	select(){
 		if(this.selectedNum==null)return;

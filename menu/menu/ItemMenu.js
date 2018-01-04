@@ -3,22 +3,35 @@ class ItemMenu extends MenuBoard{
 	static initBoard(){
 		this.board.textContent="";
 		this.itemList=new ItemList(this.board);
+		this.selectingList=this.menu;
 	}
-	//キー入力関数セット
-	static setKey(){
-		KeyMonitor.setKeyFunction(mOkKeyCode,()=>{this.menu.select()})
-		KeyMonitor.setKeyFunction(mCancelKeyCode,()=>{this.close()})
-		KeyMonitor.setCrossKeyFunction((aDirection)=>{
-			switch (aDirection) {
-				case "up":
-					this.menu.pickPreviousChoice();
-					break;
-				case "down":
-					this.menu.pickNextChoice();
-					break;
-				default:
-			}
-		})
+	//キー入力
+	static inputKey(aKey){
+		switch (aKey) {
+			case "up":
+				this.selectingList.pickPreviousChoice();
+				break;
+			case "down":
+				this.selectingList.pickNextChoice();
+				break;
+			case "right":
+				this.menu.release();
+				this.selectingList=this.itemList;
+				this.itemList.pickNextChoice();
+				break;
+			case "left":
+				this.itemList.release();
+				this.selectingList=this.menu;
+				this.menu.pickNextChoice();
+				break;
+			case "ok":
+				this.selectingList.select();
+				break;
+			case "cancel":
+				this.close();
+				break;
+			default:
+		}
 	}
 	//選択肢が選択された
 	static select(aKey){
