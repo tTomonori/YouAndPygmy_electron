@@ -47,6 +47,24 @@ class Selector{
 	releaseElement(aNum){}
 	keepElement(aNum){}
 	unKeepElement(aNum){}
+	//キー入力
+	inputKey(aKey){
+		switch (aKey) {
+			case "up":
+				break;
+			case "down":
+				break;
+			case "right":
+				break;
+			case "left":
+				break;
+			case "ok":
+				break;
+			case "cancel":
+				break;
+			default:
+		}
+	}
 	//選択肢決定
 	select(){
 		if(this.pickNum==null)return;

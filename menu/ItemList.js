@@ -44,8 +44,29 @@ class ItemList extends Selector{
 			this.initSelector(this.listBox.children,this.listBox)
 		}
 	}
+	//キー入力
+	inputKey(aKey){
+		switch (aKey) {
+			case "up":
+				this.pickPreviousChoice();
+				break;
+			case "down":
+				this.pickNextChoice();
+				break;
+			case "right":
+				break;
+			case "left":
+				break;
+			case "ok":
+				this.select();
+				break;
+			case "cancel":
+				this.selectedFunction("back");
+				break;
+			default:
+		}
+	}
 	selectNumber(aNum){
-		console.log(aNum+"を選択");
 		this.selectedFunction(this.itemList[aNum]);
 	}
 	pickElement(aNum){

@@ -5,56 +5,21 @@ class ItemMenu extends MenuBoard{
 		this.itemList=new ItemList(this.board);
 		this.itemList.setSelectedFunction((aItem)=>{this.selectedItem(aItem)});
 		this.selectingList=this.menu;
-		this.inputKey=(aKey)=>{this.inputKeyToMenuAndItem(aKey)};
 	}
-	//キー入力(メニューandアイテム)
-	static inputKeyToMenuAndItem(aKey){
-		switch (aKey) {
-			case "up":
-				this.selectingList.pickPreviousChoice();
-				break;
-			case "down":
-				this.selectingList.pickNextChoice();
-				break;
-			case "right":
-				this.menu.release();
-				this.selectingList=this.itemList;
-				this.itemList.pickNextChoice();
-				break;
-			case "left":
-				this.itemList.release();
-				this.selectingList=this.menu;
-				this.menu.pickNextChoice();
-				break;
-			case "ok":
-				this.selectingList.select();
-				break;
-			case "cancel":
-				this.close();
-				break;
-			default:
+	//キー入力
+	static inputKey(aKey){
+		if(this.selectingList==this.menu&&aKey=="right"){
+			this.menu.release();
+			this.selectingList=this.itemList;
+			this.itemList.pickNextChoice();
 		}
-	}
-	//キー入力(アラートメニュー)
-	static inputKeyToAlart(aKey){
-		switch (aKey) {
-			case "up":
-				this.alartMenu.pickPreviousChoice();
-				break;
-			case "down":
-				this.alartMenu.pickNextChoice();
-				break;
-			case "right":
-				break;
-			case "left":
-				break;
-			case "ok":
-				this.alartMenu.select();
-				break;
-			case "cancel":
-				this.alartMenu.close();
-				break;
-			default:
+		else if(this.selectingList==this.itemList&&aKey=="left"){
+			this.itemList.release();
+			this.selectingList=this.menu;
+			this.menu.pickNextChoice();
+		}
+		else{
+			this.selectingList.inputKey(aKey);
 		}
 	}
 	//選択肢が選択された
@@ -80,21 +45,51 @@ class ItemMenu extends MenuBoard{
 				this.close();
 				break;
 			default:
-
 		}
 	}
 	//アイテムが選択された
 	static selectedItem(aItem){
-		console.log(aItem);
+		if(aItem=="back"){//メニューを閉じる
+			this.select("back");
+			return;
+		}
 		this.stopSelect();
 		this.alartMenu=new AlartMenu([{name:"使う",key:"use"},{name:"持たせる",key:"have"},{name:"捨てる",key:"throw"},{name:"やめる",key:"back"}],{x:"700px",y:"200px"});
 		this.alartMenu.setSelectedFunction((aKey)=>{
-			console.log(aKey);
-			this.inputKey=(aKey)=>{this.inputKeyToMenuAndItem(aKey)};
-			this.startSelect();
+			//アイテムをどうするか決定した
+			switch (aKey) {
+				case "use":
+					this.pygmySelector=new PygmySelector();
+					this.pygmySelector.setSelectedFunction((aPygmy)=>{this.selectedPygmy(aPygmy,aItem,"use")})
+					this.selectingList=this.pygmySelector;
+					this.pygmySelector.startSelect();
+					break;
+				case "have":
+					this.pygmySelector=new PygmySelector();
+					this.pygmySelector.setSelectedFunction((aPygmy)=>{this.selectedPygmy(aPygmy,aItem,"have")})
+					this.selectingList=this.pygmySelector;
+					this.pygmySelector.startSelect();
+					break;
+				case "throw":
+
+					break;
+				case "back":
+					this.selectingList=this.itemList;
+					this.startSelect();
+					break;
+				default:
+			}
 		})
-		this.inputKey=(aKey)=>{this.inputKeyToAlart(aKey)};
+		//alartMenuからキー,マウスで選べるように
+		this.selectingList=this.alartMenu;
 		this.alartMenu.startSelect();
+	}
+	//ぴぐみーが選択された
+	static selectedPygmy(aPygmy,aItem,aAction){
+		if(aPygmy=="back"){
+			this.selectingList=this.itemList;
+			this.startSelect();
+		}
 	}
 	//選択肢が表示された
 	static displayed(){

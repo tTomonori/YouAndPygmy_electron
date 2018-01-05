@@ -21,6 +21,27 @@ class AlartMenu extends Selector{
 		this.container.remove();
 		this.selectedFunction(this.choices[aNum].key);
 	}
+	inputKey(aKey){
+		switch (aKey) {
+			case "up":
+				this.pickPreviousChoice();
+				break;
+			case "down":
+				this.pickNextChoice();
+				break;
+			case "right":
+				break;
+			case "left":
+				break;
+			case "ok":
+				this.select();
+				break;
+			case "cancel":
+				this.close();
+				break;
+			default:
+		}
+	}
 	//閉じる
 	close(){
 		this.stopSelect();

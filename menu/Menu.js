@@ -55,6 +55,28 @@ class Menu extends Selector{
 
 		return tChoiceBar;
 	}
+	//キー入力
+	inputKey(aKey){
+		switch (aKey) {
+			case "up":
+				this.pickPreviousChoice();
+				break;
+			case "down":
+				this.pickNextChoice();
+				break;
+			case "right":
+				break;
+			case "left":
+				break;
+			case "ok":
+				this.select();
+				break;
+			case "cancel":
+				this.selectedFunction("back");
+				break;
+			default:
+		}
+	}
 	selectNumber(aNum){
 		this.selectedFunction(this.listData[aNum].key);
 	}
