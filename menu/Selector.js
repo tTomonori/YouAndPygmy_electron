@@ -10,6 +10,10 @@ class Selector{
 		this.lastSelectNum=null;
 		this.choiceNum=this.choiceElements.length;
 	}
+	//選択された時に実行する関数をセット
+	setSelectedFunction(aFunction){
+		this.selectedFunction=(aData)=>{aFunction(aData)};
+	}
 	//選択可能に
 	startSelect(){
 		//マウスオーバー時関数
@@ -47,7 +51,8 @@ class Selector{
 	select(){
 		if(this.pickNum==null)return;
 		let tSelectNum=this.pickNum;
-		if(this.keepFlag)this.keep(this.pickNum);
+		if(this.keepFlag)this.keep(this.pickNum);//選択した選択肢を強調
+		else this.release();//選択肢のハイライト解除
 		this.selectNumber(tSelectNum);
 	}
 	//次の選択肢を選択

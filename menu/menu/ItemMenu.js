@@ -3,10 +3,12 @@ class ItemMenu extends MenuBoard{
 	static initBoard(){
 		this.board.textContent="";
 		this.itemList=new ItemList(this.board);
+		this.itemList.setSelectedFunction((aItem)=>{this.selectedItem(aItem)});
 		this.selectingList=this.menu;
+		this.inputKey=(aKey)=>{this.inputKeyToMenuAndItem(aKey)};
 	}
-	//キー入力
-	static inputKey(aKey){
+	//キー入力(メニューandアイテム)
+	static inputKeyToMenuAndItem(aKey){
 		switch (aKey) {
 			case "up":
 				this.selectingList.pickPreviousChoice();
@@ -33,20 +35,46 @@ class ItemMenu extends MenuBoard{
 			default:
 		}
 	}
+	//キー入力(アラートメニュー)
+	static inputKeyToAlart(aKey){
+		switch (aKey) {
+			case "up":
+				this.alartMenu.pickPreviousChoice();
+				break;
+			case "down":
+				this.alartMenu.pickNextChoice();
+				break;
+			case "right":
+				break;
+			case "left":
+				break;
+			case "ok":
+				this.alartMenu.select();
+				break;
+			case "cancel":
+				this.alartMenu.close();
+				break;
+			default:
+		}
+	}
 	//選択肢が選択された
 	static select(aKey){
 		switch (aKey) {
 			case "consum":
 				this.itemList.setList(User.getConsum());
+				this.startSelect();
 				break;
 			case "important":
 				this.itemList.setList(User.getImportant());
+				this.startSelect();
 				break;
 			case "accessory":
 				this.itemList.setList(User.getAccessory());
+				this.startSelect();
 				break;
 			case "fragment":
 				this.itemList.setList(User.getFragment());
+				this.startSelect();
 				break;
 			case "back":
 				this.close();
@@ -54,6 +82,19 @@ class ItemMenu extends MenuBoard{
 			default:
 
 		}
+	}
+	//アイテムが選択された
+	static selectedItem(aItem){
+		console.log(aItem);
+		this.stopSelect();
+		this.alartMenu=new AlartMenu([{name:"使う",key:"use"},{name:"持たせる",key:"have"},{name:"捨てる",key:"throw"},{name:"やめる",key:"back"}],{x:"700px",y:"200px"});
+		this.alartMenu.setSelectedFunction((aKey)=>{
+			console.log(aKey);
+			this.inputKey=(aKey)=>{this.inputKeyToMenuAndItem(aKey)};
+			this.startSelect();
+		})
+		this.inputKey=(aKey)=>{this.inputKeyToAlart(aKey)};
+		this.alartMenu.startSelect();
 	}
 	//選択肢が表示された
 	static displayed(){

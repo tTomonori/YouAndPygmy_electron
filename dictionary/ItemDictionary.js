@@ -30,8 +30,8 @@ ItemDictionary.dictionary={
 		equip:true,
 		text:"大きなきのみ。ぴぐみーのたいりょくを15回復できる。",
 		skill:{
-			key:"kinomi",
-			name:"きのみ",
+			key:"ookinakinomi",
+			name:"大きなきのみ",
 			attribute:"heal",
 			magnification:"fixed",
 			power:15,
@@ -50,8 +50,8 @@ ItemDictionary.dictionary={
 		equip:true,
 		text:"弱い光を放つ不思議な花。ぴぐみーのたいりょくを、使用者のゆりょく分回復する。",
 		skill:{
-			key:"kinomi",
-			name:"きのみ",
+			key:"hikarinohana",
+			name:"光の花",
 			attribute:"heal",
 			magnification:"addition",
 			power:0,

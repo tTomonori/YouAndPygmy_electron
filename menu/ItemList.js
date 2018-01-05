@@ -38,20 +38,7 @@ class ItemList extends Selector{
 		this.listBox.textContent="";
 		for(let tItemData of aList){
 			let tItem=ItemDictionary.get(tItemData.name);
-			let tContainer=document.createElement("div");
-			tContainer.style.position="relative";
-			let tImage=document.createElement("img");
-			tImage.src="image/choiceBar/green/choice/item.png";
-			tImage.style.width="100%";
-			tContainer.appendChild(tImage);
-			let tName=document.createElement("div");
-			tName.style.position="absolute";
-			tName.style.top="0";
-			tName.style.left="0";
-			tName.style.fontSize=this.parentSize.width*0.03+"px";
-			tName.style.width="100%";
-			tName.textContent="　"+tItem.name+"　x"+tItemData.possess;
-			tContainer.appendChild(tName);
+			let tContainer=ChoiceBarMaker.make("image/choiceBar/green/choice/item.png",tItem.name+"　x"+tItemData.possess,{width:"100%"})
 			this.listBox.appendChild(tContainer);
 
 			this.initSelector(this.listBox.children,this.listBox)
@@ -59,6 +46,7 @@ class ItemList extends Selector{
 	}
 	selectNumber(aNum){
 		console.log(aNum+"を選択");
+		this.selectedFunction(this.itemList[aNum]);
 	}
 	pickElement(aNum){
 		this.listBox.children[aNum].style.webkitFilter="brightness(120%)";
