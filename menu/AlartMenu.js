@@ -1,12 +1,14 @@
 class AlartMenu extends Selector{
-	constructor(aList,aPosition){
-		super(false);
+	constructor(aList,aOption){
+		super();
 		this.choices=aList;
 		this.container=document.createElement("div");
 		this.container.classList.add("alartMenu");
 		this.container.style.position="fixed";
-		this.container.style.top=aPosition.y;
-		this.container.style.left=aPosition.x;
+		if(aOption.top!=undefined)this.container.style.top=aOption.top;
+		if(aOption.left!=undefined)this.container.style.left=aOption.left;
+		if(aOption.right!=undefined)this.container.style.right=aOption.right;
+		if(aOption.bottom!=undefined)this.container.style.bottom=aOption.bottom;
 		let tList=new Array();
 		for(let i=0;i<aList.length;i++){
 			let tChoice=ChoiceBarMaker.make("image/choiceBar/purple/name/name.png",aList[i].name,{height:mScreenSize.height/18+"px"});

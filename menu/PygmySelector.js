@@ -1,8 +1,12 @@
 class PygmySelector extends Selector{
-	constructor(){
-		super(false);
+	constructor(aOption){
+		super();
 		this.container=document.createElement("div");
 		this.container.style.position="fixed";
+		if(aOption.top!=undefined)this.container.style.top=aOption.top;
+		if(aOption.left!=undefined)this.container.style.left=aOption.left;
+		if(aOption.right!=undefined)this.container.style.right=aOption.right;
+		if(aOption.bottom!=undefined)this.container.style.bottom=aOption.bottom;
 		mMenuScene.appendChild(this.container);
 		this.resetPygmies();
 	}

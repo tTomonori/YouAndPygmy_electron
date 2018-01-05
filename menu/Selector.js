@@ -1,6 +1,8 @@
 class Selector{
-	constructor(aKeepFlag){
-		this.keepFlag=aKeepFlag;//選択肢決定時に、選択肢をkeepするかどうか
+	constructor(aOption){
+		aOption=(aOption!=undefined)?aOption:{};
+		this.keepFlag=(aOption.keep!=undefined)?aOption.keep:false;//選択肢決定時に、選択肢をkeepするかどうか
+		this.resetPickOnSelect=(aOption.resetPickOnSelect!=undefined)?aOption.resetPickOnSelect:false;//選択時にハイライトをリセットするか
 	}
 	initSelector(aChoiceElements,aChoiceContainer){
 		this.choiceElements=aChoiceElements;
@@ -70,7 +72,7 @@ class Selector{
 		if(this.pickNum==null)return;
 		let tSelectNum=this.pickNum;
 		if(this.keepFlag)this.keep(this.pickNum);//選択した選択肢を強調
-		else this.release();//選択肢のハイライト解除
+		else if(this.resetPickOnSelect)this.release();//選択肢のハイライト解除
 		this.selectNumber(tSelectNum);
 	}
 	//次の選択肢を選択

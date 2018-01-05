@@ -54,18 +54,20 @@ class ItemMenu extends MenuBoard{
 			return;
 		}
 		this.stopSelect();
-		this.alartMenu=new AlartMenu([{name:"使う",key:"use"},{name:"持たせる",key:"have"},{name:"捨てる",key:"throw"},{name:"やめる",key:"back"}],{x:"700px",y:"200px"});
+		this.alartMenu=new AlartMenu(
+			[{name:"使う",key:"use"},{name:"持たせる",key:"have"},{name:"捨てる",key:"throw"},{name:"やめる",key:"back"}],
+			{right:mScreenSize.width/20+"px",top:mScreenSize.height/3+"px"});
 		this.alartMenu.setSelectedFunction((aKey)=>{
 			//アイテムをどうするか決定した
 			switch (aKey) {
 				case "use":
-					this.pygmySelector=new PygmySelector();
+					this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/2+"px"});
 					this.pygmySelector.setSelectedFunction((aPygmy)=>{this.selectedPygmy(aPygmy,aItem,"use")})
 					this.selectingList=this.pygmySelector;
 					this.pygmySelector.startSelect();
 					break;
 				case "have":
-					this.pygmySelector=new PygmySelector();
+					this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/2+"px"});
 					this.pygmySelector.setSelectedFunction((aPygmy)=>{this.selectedPygmy(aPygmy,aItem,"have")})
 					this.selectingList=this.pygmySelector;
 					this.pygmySelector.startSelect();

@@ -1,6 +1,6 @@
 class ItemList extends Selector{
 	constructor(aParentTag){
-		super(false);
+		super();
 		this.parentTag=aParentTag;
 		this.parentSize={width:parseFloat(this.parentTag.style.width),height:parseFloat(this.parentTag.style.height)}
 		this.detailBoxHeight=this.parentSize.width*160/960;

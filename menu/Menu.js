@@ -1,6 +1,6 @@
 class Menu extends Selector{
 	constructor(aList,aChoiceWidth,aSelectedFunction){
-		super(true);
+		super({keep:true});
 		this.choiceWidth=(aChoiceWidth==null)?mScreenSize.width*0.18:aChoiceWidth;//選択肢バーの横幅
 		this.allChoiceNum=aList.length;//選択肢の数
 		this.selectedFunction=(aKey)=>{aSelectedFunction(aKey)}

@@ -19,6 +19,10 @@ class MainMenu extends MenuBoard{
 	}
 	//選択肢が選択された
 	static select(aKey){
+		if(aKey=="back"){//メニューを閉じる
+			this.close();
+			return;
+		}
 		let tMenu;
 		//次に表示するメニューのクラスを取得
 		for(let tChoice of this.choices){
@@ -40,4 +44,5 @@ MainMenu.init([
 	{name:"ずかん",class:BookMenu,key:"book"},
 	{name:"あなた",class:YouMenu,key:"you"},
 	{name:"設定",class:SettingMenu,key:"setting"},
+	{name:"閉じる",class:null,key:"back"},
 ],"main")
