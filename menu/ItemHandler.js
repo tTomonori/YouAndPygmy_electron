@@ -22,9 +22,7 @@ class ItemHandler{
 	operate(){
 		return new Promise((res,rej)=>{
 			this.endFunction=()=>{res()}
-			KeyMonitor.setKeyFunction(mOkKeyCode,()=>{this.inputKey("ok")})
-			KeyMonitor.setKeyFunction(mCancelKeyCode,()=>{this.inputKey("cancel")})
-			KeyMonitor.setCrossKeyFunction((aDirection)=>{this.inputKey(aDirection)})
+			KeyMonitor.setInputKeyFunction((aKey)=>{this.inputKey(aKey)});
 		})
 	}
 	//キー入力

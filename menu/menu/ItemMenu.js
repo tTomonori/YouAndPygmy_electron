@@ -61,9 +61,7 @@ class ItemMenu extends MenuBoard{
 		this.itemHandler=new ItemHandler(aItem,this.itemCategory);
 		this.itemHandler.operate().then(()=>{
 			this.startSelect("item");
-			KeyMonitor.setKeyFunction(mOkKeyCode,()=>{this.inputKey("ok")})
-			KeyMonitor.setKeyFunction(mCancelKeyCode,()=>{this.inputKey("cancel")})
-			KeyMonitor.setCrossKeyFunction((aDirection)=>{this.inputKey(aDirection)})
+			KeyMonitor.setInputKeyFunction((aKey)=>{this.inputKey(aKey)});
 		})
 	}
 	//選択肢が表示された

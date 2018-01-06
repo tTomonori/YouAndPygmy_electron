@@ -44,6 +44,6 @@ function prepareMap(){
 	MapFeild.setMap(MapDictionary.get(tHeroPosition.mapName));
 	mMyChara=new Hero(tHeroPosition);
 	document.getElementById("mapScene").style.display="block";
-	KeyMonitor.setMapKey();
+	MapFeild.enableOperate();
 	KeyMonitor.startMonitor();
 }

@@ -36,9 +36,10 @@ class MenuBoard{
 		this.initBoard();
 		this.board.style.display="block";
 		//キー入力
-		KeyMonitor.setKeyFunction(mOkKeyCode,()=>{this.inputKey("ok")})
-		KeyMonitor.setKeyFunction(mCancelKeyCode,()=>{this.inputKey("cancel")})
-		KeyMonitor.setCrossKeyFunction((aDirection)=>{this.inputKey(aDirection)})
+		// KeyMonitor.setKeyFunction(mOkKeyCode,()=>{this.inputKey("ok")})
+		// KeyMonitor.setKeyFunction(mCancelKeyCode,()=>{this.inputKey("cancel")})
+		// KeyMonitor.setCrossKeyFunction((aDirection)=>{this.inputKey(aDirection)})
+		KeyMonitor.setInputKeyFunction((aKey)=>{this.inputKey(aKey)});
 		this.menu.display().then(()=>{
 			this.displayed();
 			KeyMonitor.startMonitor();

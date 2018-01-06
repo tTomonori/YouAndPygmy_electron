@@ -43,11 +43,40 @@ class Battle{
 	}
 	//戦闘開始
 	static start(){
+		KeyMonitor.setInputKeyFunction((aKey)=>{this.inputKey(aKey)});
 		KeyMonitor.startMonitor();
 		Turn.nextTurn();
 		ThreeFeild.setMouseMove();
 		ThreeFeild.setClick();
 		ThreeFeild.setDrag();
+	}
+	//キー入力
+	static inputKey(aKey){
+		switch (aKey) {
+			case "skill":
+				SkillButton.click()
+				break;
+			case "item":
+				ItemButton.click()
+				break;
+			case "reset":
+				CancelMoveButton.click()
+				break;
+			case "end":
+				EndTurnButton.click()
+				break;
+			case "skill0":
+				SkillButton.clickList(0)
+				break;
+			case "skill1":
+				SkillButton.clickList(1)
+				break;
+			case "skill2":
+				SkillButton.clickList(2)
+				break;
+			default:
+
+		}
 	}
 	//キャラを消す(戦闘不能)
 	static deleteChara(aChara){

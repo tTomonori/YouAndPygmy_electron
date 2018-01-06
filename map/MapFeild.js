@@ -93,6 +93,27 @@ class MapFeild{
 		//Creature
 
 	}
+	//自キャラを操作可能に
+	static enableOperate(){
+		KeyMonitor.setInputKeyFunction((aKey)=>{this.inputKey(aKey)});
+	}
+	//キー入力
+	static inputKey(aKey){
+		switch (aKey) {
+			case "up":
+			case "down":
+			case "left":
+			case "right":
+				mMyChara.moveByInput(aKey);
+				break;
+			case "ok":
+				break;
+			case "cancel":
+				SceneChanger.changeToMenuScene();
+				break;
+			default:
+		}
+	}
 }
 var mMapScene=document.getElementById("mapScene");
 var mGroundSize=[80,80,80];

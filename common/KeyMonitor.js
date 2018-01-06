@@ -61,8 +61,8 @@ class KeyMonitor{
 		let tDirection=this.getKeyDirection(aKeyCode);
 		if(tDirection==null)return;//押されたキーが十字キーでない
 		//キーが放されたことを記憶
-		for(let i=0;this.pushingKeys.length;i++){
-			let tPushing=this.pushingKeys[i]
+		for(let i=0;i<this.pushingKeys.length;i++){
+			let tPushing=this.pushingKeys[i];
 			if(tPushing.direction!=tDirection)continue;
 			let tIndex=tPushing.keys.indexOf(aKeyCode);
 			if(tIndex==-1)break;
@@ -76,16 +76,16 @@ class KeyMonitor{
 	static getKeyDirection(aKeyCode){
 		switch (aKeyCode) {
 			case 37:
-			case 90:
+			case mLeftKeyCode:
 				return "left";
 			case 38:
-			case 83:
+			case mUpKeyCode:
 				return "up";
 			case 39:
-			case 67:
+			case mRightKeyCode:
 				return "right";
 			case 40:
-			case 88:
+			case mDownKeyCode:
 				return "down";
 			default:
 			return null;//十字キーじゃないキーが押されていた
@@ -116,29 +116,32 @@ class KeyMonitor{
 		this.assignedCrossKeyFunction=()=>{};//十字キーに割り当てられた関数
 		this.pushingKeys.length=0;//押されている十字キーを記憶
 	}
-	//バトル用キー入力
-	static setBattleKey(){
+	//キー入力を処理する関数セット
+	static setInputKeyFunction(aFunction){
 		this.reset();
-		//ショートカットキー設定
-		this.setKeyFunction(90,()=>{SkillButton.click()})
-		this.setKeyFunction(88,()=>{ItemButton.click()})
-		this.setKeyFunction(67,()=>{CancelMoveButton.click()})
-		this.setKeyFunction(86,()=>{EndTurnButton.click()})
-		this.setKeyFunction(65,()=>{SkillButton.clickList(0)})
-		this.setKeyFunction(83,()=>{SkillButton.clickList(1)})
-		this.setKeyFunction(68,()=>{SkillButton.clickList(2)})
-	}
-	//マップ用キー入力
-	static setMapKey(){
-		this.reset();
-		this.setCrossKeyFunction((aDirection)=>{mMyChara.moveByInput(aDirection)});
-		this.setKeyFunction(mOkKeyCode,()=>{})//決定キー
-		this.setKeyFunction(mCancelKeyCode,()=>{SceneChanger.changeToMenuScene()})//キャンセルキー
-	}
-	//メニュー用キー入力
-	static setMenuKey(){
-
+		this.setCrossKeyFunction((aDirection)=>{aFunction(aDirection)});
+		for(let tKeyName in mKeyCodeSet){
+			let tKey=mKeyCodeSet[tKeyName];
+			this.setKeyFunction(tKey.code,()=>{aFunction(tKey.key)});
+		}
 	}
 }
 var mOkKeyCode=65;
 var mCancelKeyCode=68;
+
+var mKeyCodeSet={
+	ok:{code:65,key:"ok"},
+	cancel:{code:68,key:"cancel"},
+	skill:{code:81,key:"skill"},
+	item:{code:87,key:"item"},
+	reset:{code:69,key:"reset"},
+	end:{code:82,key:"end"},
+	skill0:{code:49,key:"skill0"},
+	skill1:{code:50,key:"skill1"},
+	skill2:{code:51,key:"skill2"},
+}
+
+var mUpKeyCode=83;
+var mDownKeyCode=88;
+var mLeftKeyCode=90;
+var mRightKeyCode=67;

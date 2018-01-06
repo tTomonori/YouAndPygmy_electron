@@ -5,9 +5,8 @@ class SceneChanger{
 			document.getElementById("battleScene").style.display="block";
 			document.getElementById("mapScene").style.display="none";
 			Battle.start();
-			KeyMonitor.setBattleKey();
 			this.endBattleMessage=(aWinOrLose,aReturn)=>{
-				KeyMonitor.setMapKey();
+				MapFeild.enableOperate();
 				res({winOrLose:aWinOrLose,pygmy:aReturn});
 			}
 		})
@@ -31,13 +30,12 @@ class SceneChanger{
 	//メニューを開く
 	static changeToMenuScene(){
 		KeyMonitor.stopMonitor();
-		KeyMonitor.setMenuKey();
 		document.getElementById("menuScene").style.display="block";
 		MainMenu.display().then(()=>{
 			//メニューが閉じられた
 			KeyMonitor.stopMonitor();
 			document.getElementById("menuScene").style.display="none";
-			KeyMonitor.setMapKey();
+			MapFeild.enableOperate();
 			KeyMonitor.startMonitor();
 		})
 	}
