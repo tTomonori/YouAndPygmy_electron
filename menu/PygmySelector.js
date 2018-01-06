@@ -1,14 +1,23 @@
 class PygmySelector extends Selector{
-	constructor(aOption){
+	constructor(aOption,aCountSelectorOption){
 		super();
 		this.container=document.createElement("div");
-		this.container.style.position="fixed";
+		this.container.classList.add("pygmySelector");
+		this.container.style.position="absolute";
 		if(aOption.top!=undefined)this.container.style.top=aOption.top;
 		if(aOption.left!=undefined)this.container.style.left=aOption.left;
 		if(aOption.right!=undefined)this.container.style.right=aOption.right;
 		if(aOption.bottom!=undefined)this.container.style.bottom=aOption.bottom;
-		mMenuScene.appendChild(this.container);
+		mAlartScene.appendChild(this.container);
 		this.resetPygmies();
+		//CountSelector
+		this.countSelector=null;
+		if(aCountSelectorOption==undefined)return;
+		this.countSelector=new CountSelector(aCountSelectorOption.list,aCountSelectorOption.option);
+		let tCountElement=this.countSelector.getElement();
+		tCountElement.style.display="inline-block";
+		tCountElement.style.position="relative";
+		if(aCountSelectorOption.position=="left")this.container.insertBefore(tCountElement,this.container.firstChild)
 	}
 	//表示更新
 	resetPygmies(){
@@ -32,8 +41,10 @@ class PygmySelector extends Selector{
 	inputKey(aKey){
 		switch (aKey) {
 			case "up":
+				if(this.countSelector!=null)this.countSelector.inputKey(aKey);
 				break;
 			case "down":
+				if(this.countSelector!=null)this.countSelector.inputKey(aKey);
 				break;
 			case "right":
 				this.pickNextChoice();
@@ -63,5 +74,6 @@ class PygmySelector extends Selector{
 	//閉じる
 	close(){
 		this.container.remove();
+		if(this.countSelector!=null)this.countSelector.close();
 	}
 }

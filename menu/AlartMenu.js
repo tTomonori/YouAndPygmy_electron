@@ -4,7 +4,7 @@ class AlartMenu extends Selector{
 		this.choices=aList;
 		this.container=document.createElement("div");
 		this.container.classList.add("alartMenu");
-		this.container.style.position="fixed";
+		this.container.style.position="absolute";
 		if(aOption.top!=undefined)this.container.style.top=aOption.top;
 		if(aOption.left!=undefined)this.container.style.left=aOption.left;
 		if(aOption.right!=undefined)this.container.style.right=aOption.right;
@@ -16,7 +16,7 @@ class AlartMenu extends Selector{
 			this.container.appendChild(tChoice);
 		}
 		this.initSelector(tList);
-		mMenuScene.appendChild(this.container);
+		mAlartScene.appendChild(this.container);
 	}
 	selectNumber(aNum){
 		this.stopSelect();

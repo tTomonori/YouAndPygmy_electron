@@ -16,6 +16,8 @@ mGameScreen.style.width=mScreenSize.width+"px";
 mGameScreen.style.height=mScreenSize.height+"px";
 mGameScreen.style.top=(mWindowSize.height-mScreenSize.height)/2+"px";
 mGameScreen.style.left=(mWindowSize.width-mScreenSize.width)/2+"px";
+//最前面表示する要素を入れるタグ
+mAlartScene=document.getElementById("alartScene");
 //3dで表示するフォント
 var mFont;
 //主人公

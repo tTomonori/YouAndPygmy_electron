@@ -1,4 +1,5 @@
 class ChoiceBarMaker{
+	//選択肢のbarを生成する
 	static make(aBarImage,aText,aOption){
 		let tOption=(aOption==undefined)?{}:aOption;
 		let tBar=document.createElement("div");
@@ -23,5 +24,9 @@ class ChoiceBarMaker{
 			// console.log(tBarImage.clientHeight,tBarImage.clientWidth);
 		}
 		return tBar;
+	}
+	//選択肢のbarの文字を変更する
+	static changeText(aBar,aText){
+		aBar.children[1].textContent=aText;
 	}
 }

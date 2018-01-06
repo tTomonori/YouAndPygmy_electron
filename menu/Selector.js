@@ -35,6 +35,7 @@ class Selector{
 	}
 	//選択不可に
 	stopSelect(){
+		if(this.choiceElements==undefined)return;
 		//マウスオーバー時関数
 		for(let i=0;i<this.choiceElements.length;i++){
 			let tChoiceBar=this.choiceElements[i];

@@ -18,6 +18,9 @@ body{
 	display:none;
 	overflow:hidden;
 }
+#alartScene > *{
+	pointer-events: auto;
+}
 .threeWarld{
 	position:absolute;
 	top:0;
