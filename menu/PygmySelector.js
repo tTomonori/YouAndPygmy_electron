@@ -32,6 +32,12 @@ class PygmySelector extends Selector{
 			tPygmyImage.style.width=mScreenSize.width/10+"px";
 			tPygmyTag.appendChild(tPygmyImage);
 
+			//たいりょく
+			let tTairyoku=document.createElement("div");
+			tTairyoku.textContent=tPygmy.getCurrentTairyoku()+"/"+tPygmy.getStatus().tairyoku;
+			tPygmyTag.appendChild(tTairyoku);
+			tPygmyTag.appendChild(tPygmy.getTairyokuGage(mScreenSize.width/10+"px",mScreenSize.width/100+"px"));
+
 			tPygmyTags.push(tPygmyTag);
 			this.container.appendChild(tPygmyTag);
 		}

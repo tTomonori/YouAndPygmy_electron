@@ -68,7 +68,7 @@ class PygmyMenu extends MenuBoard{
 			tTairyokuValue.style.fontSize=tFontSize+"px";
 			tBox.appendChild(tTairyokuValue);
 			//たいりょくゲージ
-			let tTairyokuGage=tPygmy.getTairyokuGage(tBoxWidth,tHeight/2);
+			let tTairyokuGage=tPygmy.getTairyokuGage(tBoxWidth+"px",tHeight/2+"px");
 			tBox.appendChild(tTairyokuGage);
 			//経験値
 			let tExperienceLabel=document.createElement("div");
@@ -82,7 +82,7 @@ class PygmyMenu extends MenuBoard{
 			tExperienceValue.style.fontSize=tFontSize+"px";
 			tBox.appendChild(tExperienceValue);
 			//経験値ゲージ
-			let tExperienceGage=tPygmy.getExperienceGage(tBoxWidth,tHeight/2);
+			let tExperienceGage=tPygmy.getExperienceGage(tBoxWidth+"px",tHeight/2+"px");
 			tBox.appendChild(tExperienceGage);
 			//持ち物
 			let tBelongingsTag=document.createElement("div");

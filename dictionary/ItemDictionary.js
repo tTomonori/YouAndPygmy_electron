@@ -68,6 +68,13 @@ ItemDictionary.dictionary={
 		have:false,
 		text:"お出かけするなら必需品。ぴぐみーのたいりょくを30回復する。",
 	},
+	hurututaruto:{
+		category:"consum",
+		name:"フルーツタルト",
+		use:[{effect:"heal",value:10,target:"all"}],
+		have:false,
+		text:"果物がトッピングされた甘いタルト。ぴぐみーの全員のたいりょくを10回復する。",
+	},
 	kyuukyuusupure:{
 		category:"consum",
 		name:"救急スプレー",

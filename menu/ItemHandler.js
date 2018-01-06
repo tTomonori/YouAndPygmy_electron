@@ -31,16 +31,35 @@ class ItemHandler{
 	}
 	//アイテムをどうするか決定した
 	selectedAction(aAction){
+		let tList;
 		switch (aAction) {
 			case "use"://使う
+				let tEffects=this.itemData.use;
+				tList=new Array();
+				//アイテムの効果によってリストを設定
+				for(let tEffect of tEffects){
+					if(tEffect.effect=="heal"){//回復
+						if(tEffect.target=="all"){//全体回復
+							tList.push({name:"１つ使う",key:"one"});
+							tList.push({name:"１人全回復",key:"targetFull"});
+							tList.push({name:"全員全回復",key:"allFull"});
+						}
+						else{//単体回復
+							tList.push({name:"１つ使う",key:"one"});
+							tList.push({name:"全回復",key:"full"});
+						}
+					}
+				}
+				if(tList.length==0)tList.push({name:"１つ使う",key:"one"});
 				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
-																							{list:[{name:"１つ使う",key:"one"},{name:"全回復",key:"all"}],position:"left",option:{loop:true}});
+																							{list:tList,position:"left",option:{loop:true}});
 				this.pygmySelector.setSelectedFunction((aData)=>{this.useItem(aData)})
 				this.selectingList=this.pygmySelector;
 				this.pygmySelector.startSelect();
 				break;
 			case "have"://持たせる
-				let tList=new Array();
+				tList=new Array();
+				//同時に所持できる最大数によってリストを設定
 				for(let i=1;i<=this.itemData.have;i++)tList.push({name:i,key:i});
 				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
 																							{list:tList,position:"left",option:{loop:false}});
@@ -63,6 +82,7 @@ class ItemHandler{
 			this.close();
 			return;
 		}
+		console.log(aData);
 	}
 	//アイテムを持たせる
 	toHaveItem(aData){
