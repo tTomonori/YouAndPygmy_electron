@@ -93,8 +93,13 @@ class ItemButton{
 				tItemTag.onclick=()=>{};
 				continue;
 			}
-			let tItem=aItemList[i]
-			let tItemEffect=ItemDictionary.get(tItem.name).skill;
+			let tItem=aItemList[i];
+			//アイテムの効果を、スキルと同様の形式で取得
+			let tItemData=ItemDictionary.get(tItem.name);
+			let tItemEffect=tItemData.skill;
+			tItemEffect.key=tItem.name;
+			tItemEffect.name=tItemData.name;
+			//アイテム名表示
 			tItemTag.textContent=tItemEffect.name+"　x"+tItem.possess;
 			tItemTag.onclick=()=>{CharaController.selectedItem(tItemEffect)};
 			tItemTag.style.display="block";

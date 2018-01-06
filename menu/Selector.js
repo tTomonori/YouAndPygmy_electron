@@ -78,6 +78,7 @@ class Selector{
 	}
 	//次の選択肢を選択
 	pickNextChoice(){
+		if(this.choiceNum==0)return;//選択肢が0個
 		let tPickNum;
 		if(this.pickNum==null){
 			tPickNum=0;
@@ -93,6 +94,7 @@ class Selector{
 	}
 	//前の選択肢を選択
 	pickPreviousChoice(){
+		if(this.choiceNum==0)return;//選択肢が0個
 		let tPickNum;
 		if(this.pickNum==null){
 			tPickNum=this.choiceNum-1;

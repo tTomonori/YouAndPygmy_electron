@@ -40,9 +40,8 @@ class ItemList extends Selector{
 			let tItem=ItemDictionary.get(tItemData.name);
 			let tContainer=ChoiceBarMaker.make("image/choiceBar/green/choice/item.png",tItem.name+"　x"+tItemData.possess,{width:"100%"})
 			this.listBox.appendChild(tContainer);
-
-			this.initSelector(this.listBox.children,this.listBox)
 		}
+		this.initSelector(this.listBox.children,this.listBox)
 	}
 	//キー入力
 	inputKey(aKey){

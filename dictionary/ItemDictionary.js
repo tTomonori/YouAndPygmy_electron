@@ -5,13 +5,12 @@ class ItemDictionary{
 }
 ItemDictionary.dictionary={
 	kinomi:{
+		category:"consum",
 		name:"きのみ",
-		use:true,
-		equip:true,
+		use:[{effect:"heal",value:10}],
+		have:5,
 		text:"小さいきのみ。ぴぐみーのたいりょくを10回復できる。",
 		skill:{
-			key:"kinomi",
-			name:"きのみ",
 			attribute:"heal",
 			magnification:"fixed",
 			power:10,
@@ -22,16 +21,15 @@ ItemDictionary.dictionary={
 			wall:false,
 			animation:"test",
 			consum:true
-		}
+		},
 	},
 	ookinakinomi:{
+		category:"consum",
 		name:"大きなきのみ",
-		use:true,
-		equip:true,
+		use:[{effect:"heal",value:15}],
+		have:2,
 		text:"大きなきのみ。ぴぐみーのたいりょくを15回復できる。",
 		skill:{
-			key:"ookinakinomi",
-			name:"大きなきのみ",
 			attribute:"heal",
 			magnification:"fixed",
 			power:15,
@@ -42,16 +40,15 @@ ItemDictionary.dictionary={
 			wall:false,
 			animation:"test",
 			consum:true
-		}
+		},
 	},
 	hikarinohana:{
+		category:"consum",
 		name:"光の花",
-		use:true,
-		equip:true,
+		use:false,
+		have:2,
 		text:"弱い光を放つ不思議な花。ぴぐみーのたいりょくを、使用者のゆりょく分回復する。",
 		skill:{
-			key:"hikarinohana",
-			name:"光の花",
 			attribute:"heal",
 			magnification:"addition",
 			power:0,
@@ -62,6 +59,20 @@ ItemDictionary.dictionary={
 			wall:false,
 			animation:"test",
 			consum:true
-		}
+		},
 	},
+	bansoukou:{
+		category:"consum",
+		name:"絆創膏",
+		use:[{effect:"heal",value:30}],
+		have:false,
+		text:"お出かけするなら必需品。ぴぐみーのたいりょくを30回復する。",
+	},
+	kyuukyuusupure:{
+		category:"consum",
+		name:"救急スプレー",
+		use:[{effect:"cure",value:"all",target:"all"},{effect:"heal",value:"full",target:"all"}],
+		have:false,
+		text:"どんな傷も一瞬で治せるすごいアイテム。ぴぐみー全員を全回復する。",
+	}
 }

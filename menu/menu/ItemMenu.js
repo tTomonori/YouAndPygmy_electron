@@ -4,9 +4,7 @@ class ItemMenu extends MenuBoard{
 		this.board.textContent="";
 		this.itemList=new ItemList(this.board);
 		this.itemList.setSelectedFunction((aItem)=>{this.selectedItem(aItem)});
-		this.selectingList=this.menu;
-		this.alartMenu=new Selector();
-		this.pygmySelector=new Selector();
+		this.itemCategory;//現在選んでいるアイテムのカテゴリ(消費or大切なものor...)
 	}
 	//キー入力
 	static inputKey(aKey){
@@ -29,18 +27,22 @@ class ItemMenu extends MenuBoard{
 		switch (aKey) {
 			case "consum":
 				this.itemList.setList(User.getConsum());
+				this.itemCategory="consum";
 				this.startSelect();
 				break;
 			case "important":
 				this.itemList.setList(User.getImportant());
+				this.itemCategory="important";
 				this.startSelect();
 				break;
 			case "accessory":
 				this.itemList.setList(User.getAccessory());
+				this.itemCategory="accessory";
 				this.startSelect();
 				break;
 			case "fragment":
 				this.itemList.setList(User.getFragment());
+				this.itemCategory="fragment";
 				this.startSelect();
 				break;
 			case "back":
@@ -55,65 +57,14 @@ class ItemMenu extends MenuBoard{
 			this.select("back");
 			return;
 		}
-		this.alartMenu=new AlartMenu(
-			[{name:"使う",key:"use"},{name:"持たせる",key:"have"},{name:"捨てる",key:"throw"},{name:"やめる",key:"back"}],
-			{right:mScreenSize.width/20+"px",top:mScreenSize.height/3+"px"});
-		this.alartMenu.setSelectedFunction((aKey)=>{
-			//アイテムをどうするか決定した
-			switch (aKey) {
-				case "use":
-					this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
-																								{list:[{name:"１つ使う",key:"one"},{name:"全回復",key:"all"}],position:"left",option:{loop:true}});
-					this.pygmySelector.setSelectedFunction((aPygmy)=>{this.useItem(aPygmy,aItem)})
-					this.selectFromPygmySelector();
-					break;
-				case "have":
-					this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
-																								{list:[{name:"１",key:"1"},{name:"２",key:"2"},{name:"３",key:"3"}],position:"left",option:{loop:false}});
-					this.pygmySelector.setSelectedFunction((aPygmy)=>{this.toHaveItem(aPygmy,aItem)})
-					this.selectFromPygmySelector();
-					break;
-				case "throw":
-					this.selectFromMenuAndItemList("item");
-					break;
-				case "back":
-					this.selectFromMenuAndItemList("item");
-					break;
-				default:
-			}
+		this.stopSelect();
+		this.itemHandler=new ItemHandler(aItem,this.itemCategory);
+		this.itemHandler.operate().then(()=>{
+			this.startSelect("item");
+			KeyMonitor.setKeyFunction(mOkKeyCode,()=>{this.inputKey("ok")})
+			KeyMonitor.setKeyFunction(mCancelKeyCode,()=>{this.inputKey("cancel")})
+			KeyMonitor.setCrossKeyFunction((aDirection)=>{this.inputKey(aDirection)})
 		})
-		//alartMenuからキー,マウスで選べるように
-		this.selectFromAlartMenu();
-	}
-	//アイテムを使う
-	static useItem(aPygmy,aItem,aAction){
-		if(aPygmy=="back"){
-			this.selectFromMenuAndItemList("item");
-		}
-	}
-	//アイテムを持たせる
-	static toHaveItem(aPygmy,aItem,aAction){
-		if(aPygmy=="back"){
-			this.selectFromMenuAndItemList("item");
-		}
-	}
-	static selectFromMenuAndItemList(aMenuOrItem){
-		this.alartMenu.stopSelect();
-		this.pygmySelector.stopSelect();
-		this.selectingList=(aMenuOrItem=="menu")?this.menu:this.itemList;
-		this.startSelect();
-	}
-	static selectFromAlartMenu(){
-		this.stopSelect();
-		this.pygmySelector.stopSelect();
-		this.selectingList=this.alartMenu;
-		this.selectingList.startSelect();
-	}
-	static selectFromPygmySelector(){
-		this.stopSelect();
-		this.alartMenu.stopSelect();
-		this.selectingList=this.pygmySelector;
-		this.selectingList.startSelect();
 	}
 	//選択肢が表示された
 	static displayed(){
@@ -121,7 +72,8 @@ class ItemMenu extends MenuBoard{
 		this.menu.select();
 	}
 	//選択可能に
-	static startSelect(){
+	static startSelect(aMenuOrItem){
+		this.selectingList=(aMenuOrItem=="item")?this.itemList:this.menu;
 		this.menu.startSelect();
 		this.itemList.startSelect();
 	}

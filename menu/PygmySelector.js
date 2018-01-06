@@ -63,7 +63,10 @@ class PygmySelector extends Selector{
 		}
 	}
 	selectNumber(aNum){
-		this.selectedFunction(this.pygmies[aNum]);
+		if(this.countSelector!=null){
+			this.selectedFunction({pygmy:this.pygmies[aNum],count:this.countSelector.getKey()});
+		}
+		else this.selectedFunction(this.pygmies[aNum]);
 	}
 	pickElement(aNum){
 		this.choiceElements[aNum].style.border="solid 1px #f00";
