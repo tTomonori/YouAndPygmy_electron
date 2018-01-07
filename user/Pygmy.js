@@ -107,4 +107,14 @@ class Pygmy{
 		}
 		return tTag;
 	}
+	//アイテムを預かる
+	receiveItem(){
+		let tItem=this.item;
+		this.item=[];
+		return tItem;
+	}
+	//アイテムを持たせる
+	haveItem(aItemName,aNum){
+		this.item.push({name:aItemName,possess:aNum});
+	}
 }

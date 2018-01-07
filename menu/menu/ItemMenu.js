@@ -51,6 +51,10 @@ class ItemMenu extends MenuBoard{
 			default:
 		}
 	}
+	//アイテムリスト表示更新
+	static renewList(){
+		this.select(this.itemCategory);
+	}
 	//アイテムが選択された
 	static selectedItem(aItem){
 		if(aItem=="back"){//メニューを閉じる
@@ -59,7 +63,8 @@ class ItemMenu extends MenuBoard{
 		}
 		this.stopSelect();
 		this.itemHandler=new ItemHandler(aItem,this.itemCategory);
-		this.itemHandler.operate().then(()=>{
+		this.itemHandler.operate({renew:()=>{this.renewList();}}).then(()=>{
+			this.renewList();//アイテムリスト表示更新
 			this.startSelect("item");
 			KeyMonitor.setInputKeyFunction((aKey)=>{this.inputKey(aKey)});
 		})

@@ -1,7 +1,6 @@
 class Gage{
 	//ゲージを生成
 	static createGage(aSize,aGage,aImage){
-		console.log(aSize);
 		let tGageContainer=document.createElement("div");
 		tGageContainer.classList.add("gage");
 		tGageContainer.style.width=aSize.width;

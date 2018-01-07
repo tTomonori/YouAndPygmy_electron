@@ -1,11 +1,11 @@
 class ItemHandler{
 	constructor(aItem,aCategory){
 		let tChoiceList=new Array();
-		this.item=aItem;
+		this.item=aItem.name;
 		this.itemData;
 		switch (aCategory) {
 			case "consum"://消費アイテム
-				this.itemData=ItemDictionary.get(aItem.name);
+				this.itemData=ItemDictionary.get(this.item);
 				if(this.itemData.use)tChoiceList.push({name:"使う",key:"use"});
 				if(this.itemData.have)tChoiceList.push({name:"持たせる",key:"have"});
 				tChoiceList.push({name:"やめる",key:"back"});
@@ -19,7 +19,8 @@ class ItemHandler{
 		this.alartMenu.startSelect();
 	}
 	//処理実行,終わったらresを返す
-	operate(){
+	operate(aFunctions){
+		this.functions=aFunctions;
 		return new Promise((res,rej)=>{
 			this.endFunction=()=>{res()}
 			KeyMonitor.setInputKeyFunction((aKey)=>{this.inputKey(aKey)});
@@ -53,7 +54,7 @@ class ItemHandler{
 				if(tList.length==0)tList.push({name:"１つ使う",key:"one"});
 				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
 																							{list:tList,position:"left",option:{loop:true}});
-				this.pygmySelector.setSelectedFunction((aData)=>{this.useItem(aData)})
+				this.pygmySelector.setSelectedFunction((aData)=>{this.decideUsing(aData)})
 				this.selectingList=this.pygmySelector;
 				this.pygmySelector.startSelect();
 				break;
@@ -63,7 +64,7 @@ class ItemHandler{
 				for(let i=1;i<=this.itemData.have;i++)tList.push({name:i,key:i});
 				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
 																							{list:tList,position:"left",option:{loop:false}});
-				this.pygmySelector.setSelectedFunction((aData)=>{this.toHaveItem(aData)})
+				this.pygmySelector.setSelectedFunction((aData)=>{this.decideToHaving(aData)})
 				this.selectingList=this.pygmySelector;
 				this.pygmySelector.startSelect();
 				break;
@@ -76,20 +77,49 @@ class ItemHandler{
 			default:
 		}
 	}
-	//アイテムを使う
-	useItem(aData){
+	//アイテムを使う対象と回数が決定された
+	decideUsing(aData){
 		if(aData=="back"){//閉じる
 			this.close();
 			return;
 		}
-		console.log(aData);
+
+		if(this.functions.renew!=undefined)this.functions.renew();
+	}
+	//アイテムを持たせる対象と個数が決定された
+	decideToHaving(aData){
+		if(aData=="back"){//閉じる
+			this.close();
+			return;
+		}
+		let tReceivedItem=this.receiveItem(aData.pygmy);
+		let tNum=User.getItemNum(this.item,"consum");
+		if(aData.count>tNum){
+			//アイテムの数が足りない
+			if(tReceivedItem==null)return;
+			//もともと持っていたアイテムを持たせ直す
+			this.toHaveItem(tReceivedItem.name,tReceivedItem.possess,aData.pygmy);
+			return;
+		}
+		this.toHaveItem(this.item,aData.count,aData.pygmy);
+		if(this.functions.renew!=undefined)this.functions.renew();
+	}
+	//アイテムを使う
+	useItem(aItem,aPygmy){
+
+	}
+	//アイテムを預かる
+	receiveItem(aPygmy){
+		let tItem=aPygmy.receiveItem();
+		if(tItem.length==0)return null;//アイテムを持っていなかった
+		tItem=tItem[0];
+		User.receiveItem(tItem.name,tItem.possess,"consum");
+		return {name:tItem.name,possess:tItem.possess};
 	}
 	//アイテムを持たせる
-	toHaveItem(aData){
-		if(aData=="back"){//閉じる
-			this.close();
-			return;
-		}
+	toHaveItem(aItem,aNum,aPygmy){
+		User.takeOutItem(aItem,aNum,"consum");
+		aPygmy.haveItem(aItem,aNum);
 	}
 	//閉じる
 	close(){
