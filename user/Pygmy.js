@@ -27,7 +27,7 @@ class Pygmy{
 	getAccessories(){
 		let tAccessories=new Array();
 		for(let tAccessoryName of this.accessory){
-			tAccessories.push(AccessoryDictionary.get(tAccessoryName));
+			tAccessories.push(ItemDictionary.get(tAccessoryName));
 		}
 		return tAccessories;
 	}
@@ -56,7 +56,7 @@ class Pygmy{
 		//アクセサリ情報付与
 		tData.image.accessory=new Array();
 		for(let tAccessoryName of this.accessory){
-			let tAccessory=AccessoryDictionary.get(tAccessoryName);
+			let tAccessory=ItemDictionary.get(tAccessoryName);
 			tData.image.accessory.push(tAccessory);
 			//ステータス補正
 			for(let tStatus in tAccessory.status){
@@ -96,7 +96,7 @@ class Pygmy{
 		tTag.appendChild(tMouthImage);
 		//アクセサリ
 		for(let tAccessoryName of this.accessory){
-			let tAccessory=AccessoryDictionary.get(tAccessoryName);
+			let tAccessory=ItemDictionary.get(tAccessoryName);
 			let tAccessoryImage=document.createElement("img");
 			tAccessoryImage.src=ImagePathMaker.getAccessoryPath(tAccessory.image);
 			tAccessoryImage.style.position="absolute";
@@ -116,6 +116,16 @@ class Pygmy{
 	//アイテムを持たせる
 	haveItem(aItemName,aNum){
 		this.item.push({name:aItemName,possess:aNum});
+	}
+	//アクセサリを外す
+	takeOfAccessory(){
+		let tAccessory=this.accessory;
+		this.accessory=[];
+		return tAccessory;
+	}
+	//アクセサリを装備する
+	equipAccessory(aAccessory){
+		this.accessory=[aAccessory];
 	}
 	//たいりょくを回復する
 	heal(aValue){

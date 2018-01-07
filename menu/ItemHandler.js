@@ -2,16 +2,17 @@ class ItemHandler{
 	constructor(aItem,aCategory){
 		let tChoiceList=new Array();
 		this.item=aItem.name;
-		this.itemData;
+		this.itemData=ItemDictionary.get(this.item);
 		switch (aCategory) {
 			case "consum"://消費アイテム
-				this.itemData=ItemDictionary.get(this.item);
 				if(this.itemData.use)tChoiceList.push({name:"使う",key:"use"});
 				if(this.itemData.have)tChoiceList.push({name:"持たせる",key:"have"});
-				tChoiceList.push({name:"やめる",key:"back"});
 				break;
+			case "accessory"://アクセサリ
+				tChoiceList.push({name:"装備する",key:"equip"});
 			default:
 		}
+		tChoiceList.push({name:"やめる",key:"back"});
 
 		this.alartMenu=new AlartMenu(tChoiceList,{right:mScreenSize.width/20+"px",top:mScreenSize.height/3+"px"});
 		this.alartMenu.setSelectedFunction((aKey)=>{this.selectedAction(aKey)})
@@ -65,6 +66,12 @@ class ItemHandler{
 				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
 																							{list:tList,position:"left",option:{loop:false}});
 				this.pygmySelector.setSelectedFunction((aData)=>{this.decideToHaving(aData);this.pygmySelector.resetPygmies();})
+				this.selectingList=this.pygmySelector;
+				this.pygmySelector.startSelect();
+				break;
+			case "equip"://装備する
+				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"});
+				this.pygmySelector.setSelectedFunction((aData)=>{this.decideToEquip(aData);this.pygmySelector.resetPygmies();})
 				this.selectingList=this.pygmySelector;
 				this.pygmySelector.startSelect();
 				break;
@@ -128,6 +135,7 @@ class ItemHandler{
 				break;
 			default:
 		}
+		//アイテムを操作した時に実行する関数
 		if(this.functions.renew!=undefined)this.functions.renew();
 	}
 	//アイテムを持たせる対象と個数が決定された
@@ -136,8 +144,9 @@ class ItemHandler{
 			this.close();
 			return;
 		}
+		//アイテムを預かる
 		let tReceivedItem=this.receiveItem(aData.pygmy);
-		let tNum=User.getItemNum(this.item,"consum");
+		let tNum=User.getItemNum(this.item);
 		if(aData.count>tNum){
 			//アイテムの数が足りない
 			AlartText.alart("アイテムの数が足りないよ",{barColor:"yellow"});
@@ -149,6 +158,32 @@ class ItemHandler{
 		//アイテムを持たせる
 		this.toHaveItem(this.item,aData.count,aData.pygmy);
 		AlartText.alart(aData.pygmy.getName()+"は"+this.itemData.name+"を"+aData.count+"個受け取ったよ",{barColor:"purple"});
+		//アイテムを操作した時に実行する関数
+		if(this.functions.renew!=undefined)this.functions.renew();
+	}
+	//アクセサリを装備させるぴぐみーを決定した
+	decideToEquip(aPygmy){
+		if(aPygmy=="back"){//閉じる
+			this.close();
+			return;
+		}
+		//アクセサリを預かる
+		let tAccessory=aPygmy.takeOfAccessory();
+		if(tAccessory.length!=0)User.receiveItem(tAccessory[0],1);
+		//アクセサリの数確認
+		if(User.getItemNum(this.item)==0){
+			//アクセサリが足りない
+			AlartText.alart("アクセサリの数が足りないよ",{barColor:"yellow"});
+			User.takeOutItem(tAccessory[0],1);
+			aPygmy.equipAccessory(tAccessory[0]);
+			return;
+		}
+		//アクセサリを装備する
+		User.takeOutItem(this.item,1);
+		aPygmy.equipAccessory(this.item);
+		if(this.item==tAccessory[0]) AlartText.alart(aPygmy.getName()+"は既に"+this.itemData.name+"を身につけているよ",{barColor:"purple"});
+		else AlartText.alart(aPygmy.getName()+"は"+this.itemData.name+"を"+"身につけたよ",{barColor:"purple"});
+		//アイテムを操作した時に実行する関数
 		if(this.functions.renew!=undefined)this.functions.renew();
 	}
 	//パーティーに指定したアイテムを使うことができるか
@@ -176,7 +211,7 @@ class ItemHandler{
 	}
 	//アイテムを使う
 	useItem(aItem,aPygmy){
-		User.takeOutItem(aItem,1,"consum");//アイテムの所持数を減らす
+		User.takeOutItem(aItem,1);//アイテムの所持数を減らす
 		let tEffects=ItemDictionary.get(aItem).use;
 		//効果適用
 		for(let tEffect of tEffects){
@@ -211,12 +246,12 @@ class ItemHandler{
 		let tItem=aPygmy.receiveItem();
 		if(tItem.length==0)return null;//アイテムを持っていなかった
 		tItem=tItem[0];
-		User.receiveItem(tItem.name,tItem.possess,"consum");
+		User.receiveItem(tItem.name,tItem.possess);
 		return {name:tItem.name,possess:tItem.possess};
 	}
 	//アイテムを持たせる
 	toHaveItem(aItem,aNum,aPygmy){
-		User.takeOutItem(aItem,aNum,"consum");
+		User.takeOutItem(aItem,aNum);
 		aPygmy.haveItem(aItem,aNum);
 	}
 	//閉じる

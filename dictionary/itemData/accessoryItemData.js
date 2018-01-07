@@ -1,0 +1,19 @@
+ItemDictionary.dictionary.hosinokamikazari={
+	category:"accessory",
+	name:"星の髪飾り",
+	text:"星の形をしたデザインの髪飾り。身につければ星のように輝けるかも。",
+	image:"starOrnaments",
+	status:{
+		seisin:2
+	}
+}
+ItemDictionary.dictionary.suzurannokanzasi={
+	category:"accessory",
+	name:"すずらんの簪",
+	text:"すずらんの花をあしらった簪。おしとやかな雰囲気を醸し出せるかも。",
+	image:"suzurannokanzasi",
+	status:{
+		maryoku:2,
+		yuryoku:2
+	}
+}

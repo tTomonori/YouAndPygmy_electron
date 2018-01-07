@@ -55,16 +55,17 @@ class User{
 		}
 	}
 	//指定したアイテムの所持数を返す
-	static getItemNum(aItemName,aCategory){
-		let tItemList=this.getItemList(aCategory);
+	static getItemNum(aItemName){
+		let tItemList=this.getItemList(ItemDictionary.get(aItemName).category);
 		for(let tItem of tItemList){
 			if(tItem.name==aItemName)return tItem.possess;
 		}
 		return 0;
 	}
 	//持っているアイテムを増やす
-	static receiveItem(aItemName,aNum,aCategory){
-		let tItemList=this.getItemList(aCategory);
+	static receiveItem(aItemName,aNum){
+		if(aNum==undefined)aNum=1;
+		let tItemList=this.getItemList(ItemDictionary.get(aItemName).category);
 		for(let tItem of tItemList){
 			if(tItem.name==aItemName){
 				//入手したアイテムをすでに一つ以上所持していた
@@ -76,8 +77,9 @@ class User{
 		tItemList.push({name:aItemName,possess:aNum});
 	}
 	//持っているアイテムを減らす
-	static takeOutItem(aItemName,aNum,aCategory){
-		let tItemList=this.getItemList(aCategory);
+	static takeOutItem(aItemName,aNum){
+		if(aNum==undefined)aNum=1;
+		let tItemList=this.getItemList(ItemDictionary.get(aItemName).category);
 		for(let i=0;i<tItemList.length;i++){
 			let tItem=tItemList[i];
 			if(tItem.name==aItemName){
