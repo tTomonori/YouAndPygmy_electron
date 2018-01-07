@@ -64,7 +64,7 @@ class ItemMenu extends MenuBoard{
 		this.stopSelect();
 		this.itemHandler=new ItemHandler(aItem,this.itemCategory);
 		this.itemHandler.operate({renew:()=>{this.renewList();}}).then(()=>{
-			this.renewList();//アイテムリスト表示更新
+			// this.renewList();//アイテムリスト表示更新
 			this.startSelect("item");
 			KeyMonitor.setInputKeyFunction((aKey)=>{this.inputKey(aKey)});
 		})

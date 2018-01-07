@@ -96,12 +96,15 @@ class ItemHandler{
 		let tNum=User.getItemNum(this.item,"consum");
 		if(aData.count>tNum){
 			//アイテムの数が足りない
+			AlartText.alart("アイテムの数が足りません",{barColor:"yellow"});
 			if(tReceivedItem==null)return;
 			//もともと持っていたアイテムを持たせ直す
 			this.toHaveItem(tReceivedItem.name,tReceivedItem.possess,aData.pygmy);
 			return;
 		}
+		//アイテムを持たせる
 		this.toHaveItem(this.item,aData.count,aData.pygmy);
+		AlartText.alart(aData.pygmy.getName()+"に"+this.itemData.name+"を"+aData.count+"個持たせました",{barColor:"purple"});
 		if(this.functions.renew!=undefined)this.functions.renew();
 	}
 	//アイテムを使う
