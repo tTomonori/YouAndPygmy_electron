@@ -4,6 +4,10 @@ class PygmySelector extends Selector{
 		this.container=document.createElement("div");
 		this.container.classList.add("pygmySelector");
 		this.container.style.position="absolute";
+		this.pygmyContainer=document.createElement("div");
+		this.pygmyContainer.style.position="relative";
+		this.pygmyContainer.style.display="inline-block";
+		this.container.appendChild(this.pygmyContainer);
 		if(aOption.top!=undefined)this.container.style.top=aOption.top;
 		if(aOption.left!=undefined)this.container.style.left=aOption.left;
 		if(aOption.right!=undefined)this.container.style.right=aOption.right;
@@ -21,7 +25,8 @@ class PygmySelector extends Selector{
 	}
 	//表示更新
 	resetPygmies(){
-		this.container.textContent="";
+		let tTempPick=this.pickNum;//更新前に選択していたぴぐみーの番号
+		this.pygmyContainer.textContent="";
 		this.pygmies=User.getAcconpanying();
 		let tPygmyTags=new Array();
 		for(let tPygmy of this.pygmies){
@@ -39,9 +44,11 @@ class PygmySelector extends Selector{
 			tPygmyTag.appendChild(tPygmy.getTairyokuGage(mScreenSize.width/10+"px",mScreenSize.width/100+"px"));
 
 			tPygmyTags.push(tPygmyTag);
-			this.container.appendChild(tPygmyTag);
+			this.pygmyContainer.appendChild(tPygmyTag);
 		}
 		this.initSelector(tPygmyTags);
+		this.startSelect();
+		if(tTempPick!=null&&tTempPick!=undefined)this.pick(tTempPick);//更新前に選択していたぴぐみーを選択し直す
 	}
 	//キー入力
 	inputKey(aKey){

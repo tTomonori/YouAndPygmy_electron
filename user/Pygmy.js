@@ -117,4 +117,9 @@ class Pygmy{
 	haveItem(aItemName,aNum){
 		this.item.push({name:aItemName,possess:aNum});
 	}
+	//たいりょくを回復する
+	heal(aValue){
+		this.currentTairyoku+=aValue;
+		if(this.status.tairyoku<this.currentTairyoku)this.currentTairyoku=this.status.tairyoku;
+	}
 }

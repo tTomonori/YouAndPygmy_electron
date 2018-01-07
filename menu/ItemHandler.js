@@ -47,14 +47,14 @@ class ItemHandler{
 						}
 						else{//単体回復
 							tList.push({name:"１つ使う",key:"one"});
-							tList.push({name:"全回復",key:"full"});
+							tList.push({name:"全回復",key:"targetFull"});
 						}
 					}
 				}
 				if(tList.length==0)tList.push({name:"１つ使う",key:"one"});
 				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
 																							{list:tList,position:"left",option:{loop:true}});
-				this.pygmySelector.setSelectedFunction((aData)=>{this.decideUsing(aData)})
+				this.pygmySelector.setSelectedFunction((aData)=>{this.decideUsing(aData);this.pygmySelector.resetPygmies();})
 				this.selectingList=this.pygmySelector;
 				this.pygmySelector.startSelect();
 				break;
@@ -64,7 +64,7 @@ class ItemHandler{
 				for(let i=1;i<=this.itemData.have;i++)tList.push({name:i,key:i});
 				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
 																							{list:tList,position:"left",option:{loop:false}});
-				this.pygmySelector.setSelectedFunction((aData)=>{this.decideToHaving(aData)})
+				this.pygmySelector.setSelectedFunction((aData)=>{this.decideToHaving(aData);this.pygmySelector.resetPygmies();})
 				this.selectingList=this.pygmySelector;
 				this.pygmySelector.startSelect();
 				break;
@@ -83,7 +83,51 @@ class ItemHandler{
 			this.close();
 			return;
 		}
-
+		//アイテムが使用可能か
+		let tCanUseFlag=false;
+		for(let tEffect of this.itemData.use){
+			if(tEffect.target=="all"){
+				//パーティー全体に効果がある
+				if(this.canUseToParty(this.item)){
+					tCanUseFlag=true;
+					break;
+				}
+			}
+			else{
+				//単体にのみ効果がある
+				if(this.canUseToPygmy(this.item,aData.pygmy)){
+					tCanUseFlag=true;
+					break;
+				}
+			}
+		}
+		if(!tCanUseFlag){//アイテムが使用できない
+			AlartText.alart("使っても効果がないよ",{barColor:"yellow"});
+			return;
+		}
+		//アイテムを使用(指定した使用回数で分岐)
+		switch (aData.count) {
+			case "one"://一つ使う
+				this.useItem(this.item,aData.pygmy);
+				break;
+			case "targetFull"://一人全回復
+				if(!this.canUseToPygmy(this.item,aData.pygmy)){
+					AlartText.alart(aData.pygmy.getName()+"は既に元気だよ",{barColor:"yellow"});
+					return;
+				}
+				while(true){
+					if(!this.canUseToPygmy(this.item,aData.pygmy))break;
+					this.useItem(this.item,aData.pygmy);
+				}
+				break;
+			case "allFull"://全員全回復
+				while(true){
+					if(!this.canUseToParty(this.item))break;
+					this.useItem(this.item,aData.pygmy);
+				}
+				break;
+			default:
+		}
 		if(this.functions.renew!=undefined)this.functions.renew();
 	}
 	//アイテムを持たせる対象と個数が決定された
@@ -96,7 +140,7 @@ class ItemHandler{
 		let tNum=User.getItemNum(this.item,"consum");
 		if(aData.count>tNum){
 			//アイテムの数が足りない
-			AlartText.alart("アイテムの数が足りません",{barColor:"yellow"});
+			AlartText.alart("アイテムの数が足りないよ",{barColor:"yellow"});
 			if(tReceivedItem==null)return;
 			//もともと持っていたアイテムを持たせ直す
 			this.toHaveItem(tReceivedItem.name,tReceivedItem.possess,aData.pygmy);
@@ -104,12 +148,63 @@ class ItemHandler{
 		}
 		//アイテムを持たせる
 		this.toHaveItem(this.item,aData.count,aData.pygmy);
-		AlartText.alart(aData.pygmy.getName()+"に"+this.itemData.name+"を"+aData.count+"個持たせました",{barColor:"purple"});
+		AlartText.alart(aData.pygmy.getName()+"は"+this.itemData.name+"を"+aData.count+"個受け取ったよ",{barColor:"purple"});
 		if(this.functions.renew!=undefined)this.functions.renew();
+	}
+	//パーティーに指定したアイテムを使うことができるか
+	canUseToParty(aItem){
+		let tPygmies=User.getAcconpanying();
+		for(let tPygmy of tPygmies){
+			if(this.canUseToPygmy(aItem,tPygmy))return true;
+		}
+		return false;
+	}
+	//指定したぴぐみーにアイテムを使うことができるか
+	canUseToPygmy(aItem,aPygmy){
+		let tEffects=ItemDictionary.get(aItem).use;
+		for(let tEffect of tEffects){
+			switch (tEffect.effect) {
+				case "heal"://たいりょく回復
+					if(aPygmy.getCurrentTairyoku()<aPygmy.getStatus().tairyoku)return true;//たいりょくが減っている
+					break;
+				case "cure"://状態異常治療
+
+					break;
+				default:
+			}
+		}
 	}
 	//アイテムを使う
 	useItem(aItem,aPygmy){
+		User.takeOutItem(aItem,1,"consum");//アイテムの所持数を減らす
+		let tEffects=ItemDictionary.get(aItem).use;
+		//効果適用
+		for(let tEffect of tEffects){
+			if(tEffect.target=="all"){
+				//パーティー全体に効果あり
+				for(let tPygmy of User.getAcconpanying()){
+					this.applyEffect(tPygmy,tEffect);
+				}
+			}
+			else{
+				//単体にのみ効果あり
+				this.applyEffect(aPygmy,tEffect);
+			}
+		}
+	}
+	//指定したぴぐみーに効果を適用
+	applyEffect(aPygmy,aEffect){
+		switch (aEffect.effect) {
+			case "heal"://たいりょく回復
+				if(aEffect.value=="full") aPygmy.heal(999);//全回復
+				else aPygmy.heal(aEffect.value);
+				break;
+			case "cure"://状態異常治療
 
+				break;
+			default:
+
+		}
 	}
 	//アイテムを預かる
 	receiveItem(aPygmy){
