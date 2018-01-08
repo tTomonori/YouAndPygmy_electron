@@ -45,7 +45,7 @@ class Pygmy{
 			name:this.name,
 			race:this.raceData.race,
 			level:this.level,
-			status:this.status,
+			status:$.extend(true, {}, this.status),
 			skill:this.skills,
 			item:this.item,
 			moc:this.raceData.moveCost,
