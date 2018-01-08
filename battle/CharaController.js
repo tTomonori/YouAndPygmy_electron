@@ -18,15 +18,29 @@ class CharaController{
 	}
 	//ターン開始
 	static startTurn(){
-		 SkillButton.setSkillList(this.turnChara.getSkill());
-		 ItemButton.setItemList(this.turnChara.getItem());
-		this.setBeforMoveUi();
+		if(this.ai=="user"){
+			SkillButton.setSkillList(this.turnChara.getSkill());
+			ItemButton.setItemList(this.turnChara.getItem());
+			this.setBeforMoveUi();
+		}
+		else{
+			let tAction=BattleAi.decideAction(this.turnChara,this.ai);
+			console.log(tAction);
+			MoveSelecter.moveTo(Feild.getMas(tAction.goTo.x,tAction.goTo.y)).then(()=>{
+				if(tAction.skill!=undefined){
+					AttackSelecter.attackTo(Feild.getMas(tAction.attackTo.x,tAction.attackTo.y),tAction.skill).then(()=>{
+						Turn.endTurn();
+					});
+				}
+				else Turn.endTurn();
+			});
+		}
 	}
 	//移動先のマスが選択された
 	static selectedDestination(aMas){
 		Feild.resetSelectMasEvent();
 		this.resetButtonFunctions();
-		MoveSelecter.moveTo(aMas);
+		MoveSelecter.moveTo(aMas).then(()=>{this.moved()});
 	}
 	//スキルが選択された
 	static selectedSkill(aSkill){
@@ -52,7 +66,9 @@ class CharaController{
 	static selectedAttackMas(aMas){
 		if(AttackSelecter.judgeAttackable(aMas,this.selectingSkill)){
 			this.resetButtonFunctions();
-			AttackSelecter.attackTo(aMas,this.selectingSkill);
+			AttackSelecter.attackTo(aMas,this.selectingSkill).then(()=>{
+				this.endAttack();
+			});
 		}
 	}
 	//移動したあと

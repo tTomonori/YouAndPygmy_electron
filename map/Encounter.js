@@ -36,13 +36,13 @@ class Encounter{
 				if(tEnemyData.status=="default"){//種族値とレベルからステータスを決定
 					tData.status=PygmyDictionary.calcuStatus(tRaceData.raceStatus,tEnemyData.level);
 					tData.status.currentTairyoku=tData.status.tairyoku;
+					tData.ai=tRaceData.ai;
 				}
 				tData.skill=tEnemyData.skill;
 				tData.item=(tEnemyData.item==undefined)?[]:tEnemyData.item;
 				tData.moc=tRaceData.moveCost;
 				tData.image=tRaceData.image;
 				tData.image.accessory=[];
-				tData.ai="user";
 				tEnemies.push(tData);
 			}
 			Battle.init(tUserPygmies,tEnemies,tEncountData.feildData);

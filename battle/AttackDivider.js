@@ -1,14 +1,17 @@
 class AttackDivider{
 	//攻撃する
 	static attack(aSkill,aDefender,aAttacker){
-		this.endActivateSkill=()=>{
-			this.counter(aSkill,aDefender,aAttacker);
-		}
-		this.activateSkill(aSkill,aDefender.getMas(),aAttacker);
+		return new Promise((res,rej)=>{
+			this.attackedFunction=()=>{res()}
+			this.endActivateSkill=()=>{
+				this.counter(aSkill,aDefender,aAttacker);
+			}
+			this.activateSkill(aSkill,aDefender.getMas(),aAttacker);
+		})
 	}
 	//反撃する
 	static counter(aActivatedSkill,aCounterChara,aAttackedChara){
-		let tEndFunction=()=>{CharaController.endAttack()};
+		let tEndFunction=()=>{this.attackedFunction()};
 		//倒されている
 		if(aCounterChara.isDown()||aAttackedChara.isDown()){
 			tEndFunction();
@@ -30,7 +33,7 @@ class AttackDivider{
 		let tAttackedChara=aMas.getOnChara();
 		if(tAttackedChara==null)return;
 		//気力が足りない
-		let tMp=aSkill.mp
+		let tMp=aSkill.mp;
 		if(tMp!=undefined&&aChara.getKiryoku()<tMp){
 			console.log("気力が足りないスキルは使っちゃダメ");
 			return;

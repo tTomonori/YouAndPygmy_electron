@@ -26,5 +26,6 @@ PygmyDictionary.dictionary.yukiusagi={
 		body:"pygmy/yukiusagi/body",
 		eye:{normal:"../pygmy/yukiusagi/eye",damage:"../pygmy/yukiusagi/eye_damage"},
 		mouth:{normal:"../pygmy/yukiusagi/mouth",damage:"../pygmy/yukiusagi/mouth_damage"},
-	}
+	},
+	ai:"tonikakunaguru"
 }

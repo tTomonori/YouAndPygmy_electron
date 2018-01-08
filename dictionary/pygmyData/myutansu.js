@@ -26,5 +26,6 @@ PygmyDictionary.dictionary.myutansu={
 		body:"pygmy/myutansu/body",
 		eye:{normal:"../pygmy/myutansu/eye",damage:"../pygmy/myutansu/eye_damage"},
 		mouth:{normal:"../pygmy/myutansu/mouth",damage:"../pygmy/myutansu/mouth_damage"},
-	}
+	},
+	ai:"tonikakunaguru"
 }

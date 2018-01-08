@@ -26,5 +26,6 @@ PygmyDictionary.dictionary.suraimu={
 		body:"pygmy/suraimu",
 		eye:{normal:"green",damage:"sanMe"},
 		mouth:{normal:"smile",damage:"sanKuti"},
-	}
+	},
+	ai:"tonikakunaguru"
 }

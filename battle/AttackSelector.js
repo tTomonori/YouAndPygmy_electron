@@ -26,7 +26,11 @@ class AttackSelecter{
 	}
 	//指定したマスに攻撃
 	static attackTo(aMas,aSkill){
-		let tChara=aMas.getOnChara();
-		AttackDivider.attack(this.selectedSkill,tChara,this.turnChara);
+		return new Promise((res,rej)=>{
+			let tChara=aMas.getOnChara();
+			AttackDivider.attack(aSkill,tChara,this.turnChara).then(()=>{
+				res();
+			});
+		})
 	}
 }

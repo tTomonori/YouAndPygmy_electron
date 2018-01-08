@@ -12,6 +12,8 @@ class Feild{
 			}
 		}
 	}
+	//全てのマスを取得
+	static getAllMas(){return this.feild}
 	//指定した座標のマスを取得
 	static getMas(aX,aY){
 		if(aX<0)return null;

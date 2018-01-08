@@ -26,5 +26,6 @@ PygmyDictionary.dictionary.bakeneko={
 		body:"pygmy/bakeneko",
 		eye:{normal:"gray",damage:"sanMe"},
 		mouth:{normal:"yaeba",damage:"sanKuti"},
-	}
+	},
+	ai:"tonikakunaguru"
 }

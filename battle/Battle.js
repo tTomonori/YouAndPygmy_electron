@@ -41,6 +41,9 @@ class Battle{
 		DamagePredictor.init();
 		StatusBox.init();
 	}
+	//チームメンバー取得(生存キャラのみ)
+	static getUserTeam(){return this.userTeam}
+	static getEnemyTeam(){return this.enemyTeam}
 	//戦闘開始
 	static start(){
 		KeyMonitor.setInputKeyFunction((aKey)=>{this.inputKey(aKey)});
