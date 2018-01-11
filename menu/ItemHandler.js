@@ -53,7 +53,7 @@ class ItemHandler{
 					}
 				}
 				if(tList.length==0)tList.push({name:"１つ使う",key:"one"});
-				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
+				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",right:mScreenSize.width/50+"px",displayData:["image","name","tairyoku"]},
 																							{list:tList,position:"left",option:{loop:true}});
 				this.pygmySelector.setSelectedFunction((aData)=>{this.decideUsing(aData);this.pygmySelector.resetPygmies();})
 				this.selectingList=this.pygmySelector;
@@ -63,14 +63,14 @@ class ItemHandler{
 				tList=new Array();
 				//同時に所持できる最大数によってリストを設定
 				for(let i=1;i<=this.itemData.have;i++)tList.push({name:i,key:i});
-				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"},
+				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",right:mScreenSize.width/50+"px",displayData:["image","name","item"]},
 																							{list:tList,position:"left",option:{loop:false}});
 				this.pygmySelector.setSelectedFunction((aData)=>{this.decideToHaving(aData);this.pygmySelector.resetPygmies();})
 				this.selectingList=this.pygmySelector;
 				this.pygmySelector.startSelect();
 				break;
 			case "equip"://装備する
-				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",left:mScreenSize.width/4+"px"});
+				this.pygmySelector=new PygmySelector({bottom:mScreenSize.height/10+"px",right:mScreenSize.width/50+"px",displayData:["image","name","accessory"]});
 				this.pygmySelector.setSelectedFunction((aData)=>{this.decideToEquip(aData);this.pygmySelector.resetPygmies();})
 				this.selectingList=this.pygmySelector;
 				this.pygmySelector.startSelect();
@@ -88,6 +88,11 @@ class ItemHandler{
 	decideUsing(aData){
 		if(aData=="back"){//閉じる
 			this.close();
+			return;
+		}
+		//アイテムが足りているか
+		if(User.getItemNum(this.item)==0){
+			AlartText.alart("アイテムが足りないよ",{barColor:"yellow"});
 			return;
 		}
 		//アイテムが使用可能か
@@ -123,13 +128,15 @@ class ItemHandler{
 					return;
 				}
 				while(true){
-					if(!this.canUseToPygmy(this.item,aData.pygmy))break;
+					if(!this.canUseToPygmy(this.item,aData.pygmy))break;//体力満タンになった
+					if(User.getItemNum(this.item)==0)break;//アイテムがなくなった
 					this.useItem(this.item,aData.pygmy);
 				}
 				break;
 			case "allFull"://全員全回復
 				while(true){
-					if(!this.canUseToParty(this.item))break;
+					if(!this.canUseToParty(this.item))break;//全員体力満タンになった
+					if(User.getItemNum(this.item)==0)break;//アイテムがなくなった
 					this.useItem(this.item,aData.pygmy);
 				}
 				break;

@@ -24,36 +24,35 @@ class ItemMenu extends MenuBoard{
 	}
 	//選択肢が選択された
 	static select(aKey){
-		switch (aKey) {
+		if(aKey=="back"){
+			this.close();
+			return;
+		}
+		this.renewList(aKey);
+		this.startSelect();
+	}
+	//アイテムリスト表示更新
+	static renewList(aCategory){
+		if(aCategory==undefined)aCategory=this.itemCategory;
+		switch (aCategory) {
 			case "consum":
 				this.itemList.setList(User.getConsum());
 				this.itemCategory="consum";
-				this.startSelect();
 				break;
 			case "important":
 				this.itemList.setList(User.getImportant());
 				this.itemCategory="important";
-				this.startSelect();
 				break;
 			case "accessory":
 				this.itemList.setList(User.getAccessory());
 				this.itemCategory="accessory";
-				this.startSelect();
 				break;
 			case "fragment":
 				this.itemList.setList(User.getFragment());
 				this.itemCategory="fragment";
-				this.startSelect();
-				break;
-			case "back":
-				this.close();
 				break;
 			default:
 		}
-	}
-	//アイテムリスト表示更新
-	static renewList(){
-		this.select(this.itemCategory);
 	}
 	//アイテムが選択された
 	static selectedItem(aItem){

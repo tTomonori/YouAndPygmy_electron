@@ -95,3 +95,4 @@ class User{
 		return;
 	}
 }
+const mMaxAcconpanyingNum=5;

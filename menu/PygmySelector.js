@@ -12,6 +12,7 @@ class PygmySelector extends Selector{
 		if(aOption.left!=undefined)this.container.style.left=aOption.left;
 		if(aOption.right!=undefined)this.container.style.right=aOption.right;
 		if(aOption.bottom!=undefined)this.container.style.bottom=aOption.bottom;
+		this.displayData=(aOption.displayData!=undefined)?aOption.displayData:["image"];
 		mAlartScene.appendChild(this.container);
 		this.resetPygmies();
 		//CountSelector
@@ -29,22 +30,73 @@ class PygmySelector extends Selector{
 		this.pygmyContainer.textContent="";
 		this.pygmies=User.getAcconpanying();
 		let tPygmyTags=new Array();
-		for(let tPygmy of this.pygmies){
+		for(let i=0;i<mMaxAcconpanyingNum;i++){
 			let tPygmyTag=document.createElement("div");
+			tPygmyTag.style.position="relative";
 			tPygmyTag.style.display="inline-block";
+			tPygmyTag.style.width=mScreenSize.width/8+"px";
 			tPygmyTag.style.border="solid 1px rgba(0,0,0,0)";
-			let tPygmyImage=tPygmy.getImageTag();
-			tPygmyImage.style.width=mScreenSize.width/10+"px";
-			tPygmyTag.appendChild(tPygmyImage);
-
-			//たいりょく
-			let tTairyoku=document.createElement("div");
-			tTairyoku.textContent=tPygmy.getCurrentTairyoku()+"/"+tPygmy.getStatus().tairyoku;
-			tPygmyTag.appendChild(tTairyoku);
-			tPygmyTag.appendChild(tPygmy.getTairyokuGage(mScreenSize.width/10+"px",mScreenSize.width/100+"px"));
-
-			tPygmyTags.push(tPygmyTag);
 			this.pygmyContainer.appendChild(tPygmyTag);
+			if(this.pygmies.length<=i)continue;
+			let tPygmy=this.pygmies[i];
+			for(let tDataName of this.displayData){
+				switch (tDataName) {
+					case "image"://ぴぐみー画像
+						let tPygmyImage=tPygmy.getImageTag();
+						tPygmyImage.style.width="100%";
+						tPygmyTag.appendChild(tPygmyImage);
+						break;
+					case "name"://名前
+						let tNameLabel=document.createElement("div");
+						tNameLabel.textContent=tPygmy.getName();
+						tPygmyTag.appendChild(tNameLabel);
+						break;
+					case "race"://種族
+						let tRaceLabel=document.createElement("div");
+						tRaceLabel.textContent="種族:"+tPygmy.getRaceName();
+						tPygmyTag.appendChild(tRaceLabel);
+						break;
+					case "level"://レベル
+						let tLevelLabel=document.createElement("div");
+						tLevelLabel.innerHTML="Lv.&nbsp"+tPygmy.getLevel();
+						tPygmyTag.appendChild(tLevelLabel);
+						break;
+					case "closeness"://親密度
+
+						break;
+					case "experience"://経験値
+						let tExperience=document.createElement("div");
+						tExperience.innerHTML="けいけんち<br>"+tPygmy.getCurrentExperience()+"/"+tPygmy.getNextExperience();
+						tPygmyTag.appendChild(tExperience);
+						tPygmyTag.appendChild(tPygmy.getExperienceGage(mScreenSize.width/10+"px",mScreenSize.width/100+"px"));
+						break;
+					case "tairyoku"://たいりょく
+						let tTairyoku=document.createElement("div");
+						tTairyoku.innerHTML="たいりょく<br>"+tPygmy.getCurrentTairyoku()+"/"+tPygmy.getStatus().tairyoku;
+						tPygmyTag.appendChild(tTairyoku);
+						tPygmyTag.appendChild(tPygmy.getTairyokuGage(mScreenSize.width/10+"px",mScreenSize.width/100+"px"));
+						break;
+					case "item"://持ち物
+						let tItemName=tPygmy.getItems();
+						tItemName=(tItemName.length!=0)?tItemName[0].data.name+"　x"+tItemName[0].possess:"";
+						let tItemBar=ChoiceBarMaker.make("image/choiceBar/green/name/name.png",tItemName,{width:"90%"});
+						tItemBar.style.marginLeft="5%";
+						tPygmyTag.appendChild(tItemBar);
+						break;
+					case "accessory"://アクセサリ
+						let tAccessoryName=tPygmy.getAccessories();
+						tAccessoryName=(tAccessoryName.length!=0)?tAccessoryName[0].name:"";
+						let tAccessoryBar=ChoiceBarMaker.make("image/choiceBar/yellow/name/name.png",tAccessoryName,{width:"90%"});
+						tAccessoryBar.style.marginLeft="5%";
+						tPygmyTag.appendChild(tAccessoryBar);
+					break;
+					case "":
+
+						break;
+					default:
+				}
+			}
+			tPygmyTags.push(tPygmyTag);
 		}
 		this.initSelector(tPygmyTags);
 		this.startSelect();
