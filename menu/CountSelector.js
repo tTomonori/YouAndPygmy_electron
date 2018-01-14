@@ -23,7 +23,7 @@ class CountSelector{
 		this.downButton.src="image/ui/arowButton.png";
 		this.downButton.style.width="30%";
 		this.downButton.onclick=()=>{this.inputKey("down")}
-		this.downButton.style.transform="rotate(180deg)";
+		this.downButton.style.transform="rotateX(180deg)";
 		this.container.appendChild(this.upButton);
 		this.container.appendChild(this.label);
 		this.container.appendChild(this.downButton);

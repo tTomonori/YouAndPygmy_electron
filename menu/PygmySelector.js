@@ -7,13 +7,15 @@ class PygmySelector extends Selector{
 		this.pygmyContainer=document.createElement("div");
 		this.pygmyContainer.style.position="relative";
 		this.pygmyContainer.style.display="inline-block";
+		this.width=(aOption.width!=undefined)?aOption.width:mScreenSize.width/2;//単位はpxで指定する(引数にはpxをつけない)
+		this.pygmyContainer.style.width=this.width+"px";
 		this.container.appendChild(this.pygmyContainer);
 		if(aOption.top!=undefined)this.container.style.top=aOption.top;
 		if(aOption.left!=undefined)this.container.style.left=aOption.left;
 		if(aOption.right!=undefined)this.container.style.right=aOption.right;
 		if(aOption.bottom!=undefined)this.container.style.bottom=aOption.bottom;
 		this.displayData=(aOption.displayData!=undefined)?aOption.displayData:["image"];
-		mAlartScene.appendChild(this.container);
+		if(aOption.append!=false)mAlartScene.appendChild(this.container);
 		this.resetPygmies();
 		//CountSelector
 		this.countSelector=null;
@@ -24,9 +26,13 @@ class PygmySelector extends Selector{
 		tCountElement.style.position="relative";
 		if(aCountSelectorOption.position=="left")this.container.insertBefore(tCountElement,this.container.firstChild)
 	}
+	getElement(){
+		return this.container;
+	}
 	//表示更新
 	resetPygmies(){
 		let tTempPick=this.pickNum;//更新前に選択していたぴぐみーの番号
+		let tPygmyTagWidth=this.width/5-2;
 		this.pygmyContainer.textContent="";
 		this.pygmies=User.getAcconpanying();
 		let tPygmyTags=new Array();
@@ -34,7 +40,7 @@ class PygmySelector extends Selector{
 			let tPygmyTag=document.createElement("div");
 			tPygmyTag.style.position="relative";
 			tPygmyTag.style.display="inline-block";
-			tPygmyTag.style.width=mScreenSize.width/8+"px";
+			tPygmyTag.style.width=tPygmyTagWidth+"px"
 			tPygmyTag.style.border="solid 1px rgba(0,0,0,0)";
 			this.pygmyContainer.appendChild(tPygmyTag);
 			if(this.pygmies.length<=i)continue;
@@ -49,16 +55,19 @@ class PygmySelector extends Selector{
 					case "name"://名前
 						let tNameLabel=document.createElement("div");
 						tNameLabel.textContent=tPygmy.getName();
+						tNameLabel.style.fontSize=tPygmyTagWidth/7+"px";
 						tPygmyTag.appendChild(tNameLabel);
 						break;
 					case "race"://種族
 						let tRaceLabel=document.createElement("div");
 						tRaceLabel.textContent="種族:"+tPygmy.getRaceName();
+						tRaceLabel.style.fontSize=tPygmyTagWidth/10+"px";
 						tPygmyTag.appendChild(tRaceLabel);
 						break;
 					case "level"://レベル
 						let tLevelLabel=document.createElement("div");
 						tLevelLabel.innerHTML="Lv.&nbsp"+tPygmy.getLevel();
+						tLevelLabel.style.fontSize=tPygmyTagWidth/7+"px";
 						tPygmyTag.appendChild(tLevelLabel);
 						break;
 					case "closeness"://親密度
@@ -67,14 +76,22 @@ class PygmySelector extends Selector{
 					case "experience"://経験値
 						let tExperience=document.createElement("div");
 						tExperience.innerHTML="けいけんち<br>"+tPygmy.getCurrentExperience()+"/"+tPygmy.getNextExperience();
+						tExperience.style.fontSize=tPygmyTagWidth/10+"px";
 						tPygmyTag.appendChild(tExperience);
-						tPygmyTag.appendChild(tPygmy.getExperienceGage(mScreenSize.width/10+"px",mScreenSize.width/100+"px"));
+						let tExperienceGage=tPygmy.getExperienceGage("92%",tPygmyTagWidth/12+"px");
+						tExperienceGage.style.marginLeft="auto";
+						tExperienceGage.style.marginRight="auto";
+						tPygmyTag.appendChild(tExperienceGage);
 						break;
 					case "tairyoku"://たいりょく
 						let tTairyoku=document.createElement("div");
 						tTairyoku.innerHTML="たいりょく<br>"+tPygmy.getCurrentTairyoku()+"/"+tPygmy.getStatus().tairyoku;
+						tTairyoku.style.fontSize=tPygmyTagWidth/10+"px";
 						tPygmyTag.appendChild(tTairyoku);
-						tPygmyTag.appendChild(tPygmy.getTairyokuGage(mScreenSize.width/10+"px",mScreenSize.width/100+"px"));
+						let tTairyokuGage=tPygmy.getTairyokuGage("92%",tPygmyTagWidth/12+"px");
+						tTairyokuGage.style.marginLeft="auto";
+						tTairyokuGage.style.marginRight="auto";
+						tPygmyTag.appendChild(tTairyokuGage);
 						break;
 					case "item"://持ち物
 						let tItemName=tPygmy.getItems();
