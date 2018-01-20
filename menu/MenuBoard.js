@@ -10,7 +10,7 @@ class MenuBoard{
 		this.board.style.top="0";
 		this.board.style.right="0";
 		this.board.style.width=this.boardWidth+"px";
-		this.board.style.height="100%";
+		this.board.style.height=mScreenSize.height+"px";
 		this.board.style.display="none";
 		mMenuScene.appendChild(this.board);
 	}

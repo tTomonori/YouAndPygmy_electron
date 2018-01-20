@@ -34,9 +34,19 @@ class PygmyMenu extends MenuBoard{
 	//ボード初期化
 	static initBoard(){
 		this.board.textContent="";
-		this.board.style.paddingTop=mScreenSize.height/20+"px";
+		this.board.style.paddingTop=mScreenSize.height/40+"px";
 		this.pygmySelector=new PygmySelector({displayData:["image","name","race","tairyoku","experience","item","accessory"],append:false,width:this.boardWidth});
-		this.pygmySelector.setSelectedFunction((aData)=>{console.log(aData);})
+		this.pygmySelector.setSelectedFunction((aData)=>{
+			if(aData!=this.displayedPygmy){
+				this.displayedPygmy=aData;
+				StatusBoard.setPygmyData(aData,{bottom:0});
+				StatusBoard.display();
+			}
+			else{
+				this.displayedPygmy=null;
+				StatusBoard.close();
+			}
+			;})
 		let tSelector=this.pygmySelector.getElement();
 		tSelector.style.width="100%";
 		this.board.appendChild(tSelector);
@@ -47,6 +57,10 @@ class PygmyMenu extends MenuBoard{
 	//選択肢が選択された
 	static select(aKey){
 		this.close();
+	}
+	static close(){
+		StatusBoard.close();
+		super.close();
 	}
 }
 //選択肢
