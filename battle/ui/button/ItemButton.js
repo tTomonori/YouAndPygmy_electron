@@ -88,12 +88,12 @@ class ItemButton{
 	static setItemList(aItemList){
 		for(let i=0;i<this.itemNum;i++){
 			let tItemTag=this.items[i];
-			if(i>=aItemList.length){
+			if(i>=aItemList.length||aItemList.possess==0){
 				tItemTag.style.display="none";
 				tItemTag.onclick=()=>{};
 				continue;
 			}
-			let tItem=aItemList[i];
+			let tItem=aItemList;
 			//アイテムの効果を、スキルと同様の形式で取得
 			let tItemData=ItemDictionary.get(tItem.name);
 			let tItemEffect=tItemData.skill;
@@ -104,7 +104,7 @@ class ItemButton{
 			tItemTag.onclick=()=>{CharaController.selectedItem(tItemEffect)};
 			tItemTag.style.display="block";
 		}
-		if(aItemList.length==0)this.noneItem.style.display="block";
+		if(aItemList.possess==0)this.noneItem.style.display="block";
 		else this.noneItem.style.display="none";
 	}
 	//アイテムリストを表示していたらture

@@ -102,6 +102,10 @@ SkillDictionary.dictionary={
 		counter:false,
 		animation:"test",
 	},
+	"hayaasi":{
+		name:"早足",
+		passive:true
+	}
 }
 /*
 name:{

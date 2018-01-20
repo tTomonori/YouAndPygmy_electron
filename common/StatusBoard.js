@@ -154,27 +154,23 @@ class StatusBoard{
 	//持ち物更新
 	static renewItem(){
 		this.itemBox.textContent="";
-		let tItem=this.pygmy.getItems();
-		tItem=(tItem.length==0)?null:tItem[0];
-		let tItemBar=ChoiceBarMaker.make("image/choiceBar/green/name/name.png",(tItem==null)?"":tItem.data.name+"　x"+tItem.possess,{width:"95%"});
+		let tItem=this.pygmy.getItem();
+		let tItemBar=ChoiceBarMaker.make("image/choiceBar/green/name/name.png",(tItem.possess==0)?"なし":ItemDictionary.get(tItem.name).name+"　x"+tItem.possess,{width:"95%"});
 		this.itemBox.appendChild(tItemBar);
 	}
 	//アクセサリ更新
 	static renewAccessory(){
 		this.accessoryBox.textContent="";
-		let tAccessory=this.pygmy.getAccessories();
-		tAccessory=(tAccessory.length==0)?null:tAccessory[0];
-		let tAccessoryBar=ChoiceBarMaker.make("image/choiceBar/yellow/name/name.png",(tAccessory==null)?"":tAccessory.name,{width:"95%"});
+		let tAccessory=this.pygmy.getAccessory();
+		let tAccessoryBar=ChoiceBarMaker.make("image/choiceBar/yellow/name/name.png",(tAccessory=="")?"なし":ItemDictionary.get(tAccessory).name,{width:"95%"});
 		this.accessoryBox.appendChild(tAccessoryBar);
 	}
 	//ステータス更新
 	static renewStatus(){
 		this.statusBox.textContent="";
-		//アイテム,アクセサリデータ取得
-		let tItem=this.pygmy.getItems();
-		tItem=(tItem.length==0)?null:tItem[0];
-		let tAccessory=this.pygmy.getAccessories();
-		tAccessory=(tAccessory.length==0)?null:tAccessory[0];
+		//アクセサリデータ取得
+		let tAccessory=this.pygmy.getAccessory();
+		if(tAccessory!="")tAccessory=ItemDictionary.get(tAccessory);
 		//データ更新
 		let tStatusButton=document.createElement("div");
 		tStatusButton.textContent=(this.correction)?"補正込み":"補正抜き";
@@ -190,7 +186,7 @@ class StatusBoard{
 			{name:"びんせい",property:"binsei"},];
 		let tInner="";
 		for(let i=0;i<tStatusList.length;i++){
-			let tAccessoryStatus=(tAccessory==null||tAccessory.status[tStatusList[i].property]==undefined)?0:tAccessory.status[tStatusList[i].property];
+			let tAccessoryStatus=(tAccessory==""||tAccessory.status[tStatusList[i].property]==undefined)?0:tAccessory.status[tStatusList[i].property];
 			let tCorrectionColor;//補正値の文字の色
 			let tCorrectionLabel;//補正値("+"を文字列として含む)
 			if(tAccessoryStatus<0){

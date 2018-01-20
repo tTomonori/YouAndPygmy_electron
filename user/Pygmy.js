@@ -17,20 +17,9 @@ class Pygmy{
 	getCurrentExperience(){return 70}
 	getNextExperience(){return 100}
 	getCurrentTairyoku(){return this.currentTairyoku}
-	getItems(){
-		let tItems=new Array();
-		for(let tItemData of this.item){
-			tItems.push({data:ItemDictionary.get(tItemData.name),possess:tItemData.possess})
-		}
-		return tItems;
-	}
-	getAccessories(){
-		let tAccessories=new Array();
-		for(let tAccessoryName of this.accessory){
-			tAccessories.push(ItemDictionary.get(tAccessoryName));
-		}
-		return tAccessories;
-	}
+	getItem(){return this.item}
+	getAccessory(){return this.accessory.status}
+	getLooksAccessory(){return this.accessory.looks}
 	setCurrentTairyoku(aTairyoku){this.currentTairyoku=aTairyoku}
 	setItem(aItem){this.item=aItem}
 	//体力ゲージ取得
@@ -46,19 +35,31 @@ class Pygmy{
 			race:this.raceData.race,
 			level:this.level,
 			status:$.extend(true, {}, this.status),
-			skill:this.skills,
+			skill:[],
+			passive:[],
 			item:this.item,
 			moc:this.raceData.moveCost,
 			image:this.raceData.image,
 			ai:"user",
 		}
 		tData.status.currentTairyoku=this.currentTairyoku;//現在のたいりょく
+		//スキル
+		for(let tSkillName of this.skills.set){
+			if(tSkillName=="")continue;
+			let tSkillData=SkillDictionary.get(tSkillName);
+			if(!tSkillData.passive)tData.skill.push(tSkillName);//通常のスキル
+			else tData.passive.push(tSkillName);//パッシブスキル
+		}
+
 		//アクセサリ情報付与
-		tData.image.accessory=new Array();
-		for(let tAccessoryName of this.accessory){
-			let tAccessory=ItemDictionary.get(tAccessoryName);
-			tData.image.accessory.push(tAccessory);
-			//ステータス補正
+		//見た目
+		if(this.accessory.looks!=""||this.accessory.statu!=""){
+			let tAccessory=(this.accessory.looks!="")?ItemDictionary.get(this.accessory.looks):ItemDictionary.get(this.accessory.status);
+			tData.image.accessory=[tAccessory];
+		}
+		//ステータス補正
+		if(this.accessory.status!=""){
+			let tAccessory=ItemDictionary.get(this.accessory.status);
 			for(let tStatus in tAccessory.status){
 				tData.status[tStatus]+=tAccessory.status[tStatus];
 				if(tStatus=="tairyoku")tData.status.currentTairyoku+=tAccessory.status[tStatus];//体力補正なら現在体力に補正をかける
@@ -73,9 +74,6 @@ class Pygmy{
 		//体
 		let tBodyImage=document.createElement("img");
 		tBodyImage.src=ImagePathMaker.getBodyPath(this.raceData.image.body);
-		// tBodyImage.style.position="absolute";
-		// tBodyImage.style.top="0";
-		// tBodyImage.style.left="0";
 		tBodyImage.style.width="100%";
 		tTag.appendChild(tBodyImage);
 		//目
@@ -95,8 +93,8 @@ class Pygmy{
 		tMouthImage.style.width="100%";
 		tTag.appendChild(tMouthImage);
 		//アクセサリ
-		for(let tAccessoryName of this.accessory){
-			let tAccessory=ItemDictionary.get(tAccessoryName);
+		if(this.accessory.looks!=""||this.accessory.status!=""){
+			let tAccessory=(this.accessory.looks!="")?ItemDictionary.get(this.accessory.looks):ItemDictionary.get(this.accessory.status);
 			let tAccessoryImage=document.createElement("img");
 			tAccessoryImage.src=ImagePathMaker.getAccessoryPath(tAccessory.image);
 			tAccessoryImage.style.position="absolute";
@@ -110,22 +108,32 @@ class Pygmy{
 	//アイテムを預かる
 	receiveItem(){
 		let tItem=this.item;
-		this.item=[];
+		this.item={possess:0};
 		return tItem;
 	}
 	//アイテムを持たせる
 	haveItem(aItemName,aNum){
-		this.item.push({name:aItemName,possess:aNum});
+		this.item=({name:aItemName,possess:aNum});
 	}
 	//アクセサリを外す
 	takeOfAccessory(){
-		let tAccessory=this.accessory;
-		this.accessory=[];
+		let tAccessory=this.accessory.status;
+		this.accessory.status="";
 		return tAccessory;
 	}
 	//アクセサリを装備する
 	equipAccessory(aAccessory){
-		this.accessory=[aAccessory];
+		this.accessory.status=aAccessory;
+	}
+	//見た目アクセサリを外す
+	dressDown(){
+		let tAccessory=this.accessory.looks;
+		this.accessory.looks="";
+		return tAccessory;
+	}
+	//見た目アクセサリを装備
+	dressUp(aAccessory){
+		this.accessory.looks=aAccessory;
 	}
 	//たいりょくを回復する
 	heal(aValue){

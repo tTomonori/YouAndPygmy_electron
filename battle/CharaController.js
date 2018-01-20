@@ -25,7 +25,6 @@ class CharaController{
 		}
 		else{
 			let tAction=BattleAi.decideAction(this.turnChara,this.ai);
-			console.log(tAction);
 			MoveSelecter.moveTo(Feild.getMas(tAction.goTo.x,tAction.goTo.y)).then(()=>{
 				if(tAction.skill!=undefined){
 					AttackSelecter.attackTo(Feild.getMas(tAction.attackTo.x,tAction.attackTo.y),tAction.skill).then(()=>{

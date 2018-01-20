@@ -17,3 +17,14 @@ ItemDictionary.dictionary.suzurannokanzasi={
 		yuryoku:2
 	}
 }
+ItemDictionary.dictionary.hatonokamikazari={
+	category:"accessory",
+	name:"ハートの髪飾り",
+	text:"ハート型の髪飾り。乙女の象徴。",
+	image:"hatonokamikazari",
+	status:{
+		tikara:-2,
+		maryoku:-2,
+		yuryoku:7
+	}
+}

@@ -214,13 +214,14 @@ class Chara{
 	}
 	//アイテムを使用した
 	useItem(aItemName){
-		for(let i=0;i<this.item.length;i++){
-			let tItem=this.item[i];
-			if(tItem.name!=aItemName)continue;
-			tItem.possess--;
-			//アイテムがなくなった
-			if(tItem.possess<=0)this.item.splice(i,1);
-		}
+		// for(let i=0;i<this.item.length;i++){
+		// 	let tItem=this.item[i];
+		// 	if(tItem.name!=aItemName)continue;
+		// 	tItem.possess--;
+		// 	//アイテムがなくなった
+		// 	if(tItem.possess<=0)this.item.splice(i,1);
+		// }
+		this.item.possess-=1;
 	}
 	//文字を表示
 	displayText(aText,aColor,aAnimation,aLength){

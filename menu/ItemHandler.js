@@ -176,19 +176,19 @@ class ItemHandler{
 		}
 		//アクセサリを預かる
 		let tAccessory=aPygmy.takeOfAccessory();
-		if(tAccessory.length!=0)User.receiveItem(tAccessory[0],1);
+		if(tAccessory!="")User.receiveItem(tAccessory,1);
 		//アクセサリの数確認
 		if(User.getItemNum(this.item)==0){
 			//アクセサリが足りない
 			AlartText.alart("アクセサリの数が足りないよ",{barColor:"yellow"});
-			User.takeOutItem(tAccessory[0],1);
-			aPygmy.equipAccessory(tAccessory[0]);
+			User.takeOutItem(tAccessory,1);
+			aPygmy.equipAccessory(tAccessory);
 			return;
 		}
 		//アクセサリを装備する
 		User.takeOutItem(this.item,1);
 		aPygmy.equipAccessory(this.item);
-		if(this.item==tAccessory[0]) AlartText.alart(aPygmy.getName()+"は既に"+this.itemData.name+"を身につけているよ",{barColor:"purple"});
+		if(this.item==tAccessory)AlartText.alart(aPygmy.getName()+"は既に"+this.itemData.name+"を身につけているよ",{barColor:"purple"});
 		else AlartText.alart(aPygmy.getName()+"は"+this.itemData.name+"を"+"身につけたよ",{barColor:"purple"});
 		//アイテムを操作した時に実行する関数
 		if(this.functions.renew!=undefined)this.functions.renew();
@@ -251,8 +251,7 @@ class ItemHandler{
 	//アイテムを預かる
 	receiveItem(aPygmy){
 		let tItem=aPygmy.receiveItem();
-		if(tItem.length==0)return null;//アイテムを持っていなかった
-		tItem=tItem[0];
+		if(!tItem.possess)return null;//アイテムを持っていなかった
 		User.receiveItem(tItem.name,tItem.possess);
 		return {name:tItem.name,possess:tItem.possess};
 	}

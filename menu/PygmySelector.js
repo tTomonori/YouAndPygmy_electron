@@ -94,15 +94,15 @@ class PygmySelector extends Selector{
 						tPygmyTag.appendChild(tTairyokuGage);
 						break;
 					case "item"://持ち物
-						let tItemName=tPygmy.getItems();
-						tItemName=(tItemName.length!=0)?tItemName[0].data.name+"　x"+tItemName[0].possess:"";
+						let tItemName=tPygmy.getItem();
+						tItemName=(tItemName.possess!=0)?ItemDictionary.get(tItemName.name).name+"　x"+tItemName.possess:"なし";
 						let tItemBar=ChoiceBarMaker.make("image/choiceBar/green/name/name.png",tItemName,{width:"90%"});
 						tItemBar.style.marginLeft="5%";
 						tPygmyTag.appendChild(tItemBar);
 						break;
 					case "accessory"://アクセサリ
-						let tAccessoryName=tPygmy.getAccessories();
-						tAccessoryName=(tAccessoryName.length!=0)?tAccessoryName[0].name:"";
+						let tAccessoryName=tPygmy.getAccessory();
+						tAccessoryName=(tAccessoryName!="")?ItemDictionary.get(tAccessoryName).name:"なし";
 						let tAccessoryBar=ChoiceBarMaker.make("image/choiceBar/yellow/name/name.png",tAccessoryName,{width:"90%"});
 						tAccessoryBar.style.marginLeft="5%";
 						tPygmyTag.appendChild(tAccessoryBar);
