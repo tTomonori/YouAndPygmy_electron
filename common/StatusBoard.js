@@ -1,25 +1,27 @@
 class StatusBoard{
 	static init(){
-		this.board=document.createElement("div");
+		let tBoard=BarMaker.makeWinterBar(7);
+		this.window=tBoard.bar;
+		this.board=tBoard.content;
 		this.board.style.position="absolute";
-		this.board.style.background="#20d0ff";
-		this.board.style.borderRadius=mScreenSize.width/50+"px";
+		// this.board.style.background="#20d0ff";
+		// this.board.style.borderRadius=mScreenSize.width/50+"px";
 		this.board.style.float="left";
-		this.board.style.display="none";
-		this.board.style.width=mScreenSize.width+"px";
-		this.board.style.height=mScreenSize.height*3/7+"px";
+		this.window.style.display="none";
+		this.window.style.width="100%";
+		// this.board.style.height=mScreenSize.height*3/7+"px";
 		//ボード内dom作成
 		//画像
 		this.imageBox=document.createElement("div");
-		this.imageBox.style.width=mScreenSize.width/5+"px";
+		this.imageBox.style.width="20%";
 		this.imageBox.style.height="100%";
-		this.imageBox.style.overflow="hidden";
+		// this.imageBox.style.overflow="hidden";
 		this.imageBox.style.display="inline-block";
 		this.board.appendChild(this.imageBox);
 
 		//画像以外のデータ
 		this.dataBox=document.createElement("div");
-		this.dataBox.style.width=mScreenSize.width*4/5+"px";
+		this.dataBox.style.width="80%";
 		this.dataBox.style.height="100%";
 		this.dataBox.style.display="inline-block";
 		this.dataBox.style.verticalAlign="top";
@@ -67,7 +69,7 @@ class StatusBoard{
 		this.dataBox.appendChild(this.dataFoot);
 		//ステータス
 		this.statusBox=document.createElement("div");
-		this.statusBox.style.width="30%";
+		this.statusBox.style.width="40%";
 		this.statusBox.style.height="100%";
 		this.statusBox.style.display="inline-block";
 		this.statusBox.style.verticalAlign="top";
@@ -87,7 +89,7 @@ class StatusBoard{
 		this.moveBox.style.verticalAlign="top";
 		this.dataFoot.appendChild(this.moveBox);
 
-		mAlartScene.appendChild(this.board);
+		mAlartScene.appendChild(this.window);
 	}
 	//情報セット
 	static setPygmyData(aPygmy,aOption){
@@ -95,10 +97,10 @@ class StatusBoard{
 		this.pygmy=aPygmy;
 		this.option=aOption;
 		//オプション反映
-		if(aOption.top!=undefined)this.board.style.top=aOption.top;
-		if(aOption.bottom!=undefined)this.board.style.bottom=aOption.bottom;
-		if(aOption.right!=undefined)this.board.style.right=aOption.right;
-		if(aOption.left!=undefined)this.board.style.left=aOption.left;
+		if(aOption.top!=undefined)this.window.style.top=aOption.top;
+		if(aOption.bottom!=undefined)this.window.style.bottom=aOption.bottom;
+		if(aOption.right!=undefined)this.window.style.right=aOption.right;
+		if(aOption.left!=undefined)this.window.style.left=aOption.left;
 		//データ更新
 		this.renewImage();
 		this.renewName();
@@ -225,11 +227,11 @@ class StatusBoard{
 	}
 	//表示する
 	static display(){
-		this.board.style.display="block";
+		this.window.style.display="block";
 	}
 	//非表示にする
 	static close(){
-		this.board.style.display="none";
+		this.window.style.display="none";
 	}
 }
 //最後に表示したデータ
