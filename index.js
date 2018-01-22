@@ -1,6 +1,6 @@
 var mWindowSize={width:document.documentElement.clientWidth,height:document.documentElement.clientHeight};
 //画面の縦横比
-const mScreenRatio={width:12,height:7};
+const mScreenRatio={width:16,height:9};
 //ゲーム画面のサイズ
 var mScreenSize;
 //ゲーム画面サイズ決定

@@ -1,21 +1,19 @@
 class StatusBoard{
 	static init(){
-		let tBoard=BarMaker.makeWinterBar(7);
+		let tBoard=BarMaker.makeWinterBar(6);
 		this.window=tBoard.bar;
+		this.window.style.position="absolute";
+		this.window.id="StatusBoard";
 		this.board=tBoard.content;
 		this.board.style.position="absolute";
-		// this.board.style.background="#20d0ff";
-		// this.board.style.borderRadius=mScreenSize.width/50+"px";
 		this.board.style.float="left";
 		this.window.style.display="none";
 		this.window.style.width="100%";
-		// this.board.style.height=mScreenSize.height*3/7+"px";
 		//ボード内dom作成
 		//画像
 		this.imageBox=document.createElement("div");
 		this.imageBox.style.width="20%";
 		this.imageBox.style.height="100%";
-		// this.imageBox.style.overflow="hidden";
 		this.imageBox.style.display="inline-block";
 		this.board.appendChild(this.imageBox);
 

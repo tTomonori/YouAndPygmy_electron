@@ -4,11 +4,14 @@ class PygmySelector extends Selector{
 		this.container=document.createElement("div");
 		this.container.classList.add("pygmySelector");
 		this.container.style.position="absolute";
+		this.container.style.height=mScreenSize.height*2/5+"px"
 		this.pygmyContainer=document.createElement("div");
 		this.pygmyContainer.style.position="relative";
 		this.pygmyContainer.style.display="inline-block";
 		this.width=(aOption.width!=undefined)?aOption.width:mScreenSize.width/2;//単位はpxで指定する(引数にはpxをつけない)
 		this.pygmyContainer.style.width=this.width+"px";
+		this.pygmyContainer.style.height="100%";
+		this.pygmyContainer.style.verticalAlign="top";
 		this.container.appendChild(this.pygmyContainer);
 		if(aOption.top!=undefined)this.container.style.top=aOption.top;
 		if(aOption.left!=undefined)this.container.style.left=aOption.left;
@@ -16,6 +19,13 @@ class PygmySelector extends Selector{
 		if(aOption.bottom!=undefined)this.container.style.bottom=aOption.bottom;
 		this.displayData=(aOption.displayData!=undefined)?aOption.displayData:["image"];
 		if(aOption.append!=false)mAlartScene.appendChild(this.container);
+		this.selectorContents=new Array();
+		for(let i=0;i<mMaxAcconpanyingNum;i++){
+			let tBar=BarMaker.makeWinterBar(this.displayData.length-1,{trans:true});
+			tBar.bar.style.height="95%"
+			this.selectorContents.push(tBar.content);
+			this.pygmyContainer.appendChild(tBar.bar);
+		}
 		this.resetPygmies();
 		//CountSelector
 		this.countSelector=null;
@@ -33,16 +43,12 @@ class PygmySelector extends Selector{
 	resetPygmies(){
 		let tTempPick=this.pickNum;//更新前に選択していたぴぐみーの番号
 		let tPygmyTagWidth=this.width/5-2;
-		this.pygmyContainer.textContent="";
 		this.pygmies=User.getAcconpanying();
 		let tPygmyTags=new Array();
 		for(let i=0;i<mMaxAcconpanyingNum;i++){
 			let tPygmyTag=document.createElement("div");
-			tPygmyTag.style.position="relative";
-			tPygmyTag.style.display="inline-block";
-			tPygmyTag.style.width=tPygmyTagWidth+"px"
-			tPygmyTag.style.border="solid 1px rgba(0,0,0,0)";
-			this.pygmyContainer.appendChild(tPygmyTag);
+			tPygmyTag=this.selectorContents[i];
+			tPygmyTag.textContent="";
 			if(this.pygmies.length<=i)continue;
 			let tPygmy=this.pygmies[i];
 			for(let tDataName of this.displayData){

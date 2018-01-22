@@ -49,6 +49,7 @@ class PygmyMenu extends MenuBoard{
 			;})
 		let tSelector=this.pygmySelector.getElement();
 		tSelector.style.width="100%";
+		tSelector.style.height="100%";
 		this.board.appendChild(tSelector);
 	}
 	static displayed(){

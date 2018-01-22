@@ -1,64 +1,103 @@
 class BarMaker{
-	static makeWinterBar(aTileNum){
-		return this.makeTileBar("image/choiceBar/winter/01 message/message_frame_not_opacity.png",
-		aTileNum,
-		{leftSize:100,rightSize:60,centerSize:80,imageWidth:960,imageHeight:170,trans:false});
+	static makeWinterBar(aTileNum,aOption){
+		if(aOption==undefined)aOption={};
+
+		return (aOption.trans)
+		?this.makeTileBar("image/choiceBar/winter/01 message/message_frame_v_not_opacity.png",aTileNum,
+		{leftSize:100,rightSize:60,centerSize:80,imageWidth:960,imageHeight:170,imageMargin:{width:10,height:5},frameMargin:{width:12,height:12},trans:true})
+		:this.makeTileBar("image/choiceBar/winter/01 message/message_frame_not_opacity.png",aTileNum,
+		{leftSize:100,rightSize:60,centerSize:80,imageWidth:960,imageHeight:170,imageMargin:{width:10,height:5},frameMargin:{width:12,height:12}});
 	}
 	static makeTileBar(aBarImage,aTileNum,aOption){
-		let tOriginalWidth=aOption.leftSize+aOption.rightSize+aOption.centerSize*aTileNum;
+		//元画像のサイズで生成した時のdomの幅
+		let tOriginalBarWidth=aOption.leftSize+aOption.rightSize+aOption.centerSize*aTileNum;
+		//外枠,この要素でサイズを指定する
 		let tBar=document.createElement("div");
-		tBar.style.position="absolute";
-		tBar.style.width="500px";
-		tBar.style.zIndex="10"
-		//左端
-		let tLeft=document.createElement("div");
-		if(!aOption.trans)tLeft.style.display="inline-block";
-		tLeft.style.overflow="hidden";
-		tLeft.style.width=aOption.leftSize/tOriginalWidth*100+"%";
-		tLeft.style.height="100%";
-		let tLeftImage=document.createElement("img");
-		tLeftImage.src=aBarImage;
-		tLeftImage.style.width=aOption.imageWidth/aOption.leftSize*100+"%";
-		tLeft.appendChild(tLeftImage);
-		tBar.appendChild(tLeft);
-		//中央
-		for(let i=0;i<aTileNum;i++){
-			let tCenter=document.createElement("div");
-			if(!aOption.trans)tCenter.style.display="inline-block";
-			tCenter.style.overflow="hidden";
-			tCenter.style.width=aOption.centerSize/tOriginalWidth*100+"%";
-			let tCenterImage=document.createElement("img");
-			tCenterImage.src=aBarImage;
-			tCenterImage.style.height="100%";
-			tCenterImage.style.width=aOption.imageWidth/aOption.centerSize*100+"%";
-			tCenterImage.style.marginLeft=-aOption.leftSize/aOption.centerSize*100+"%";
-			tCenter.appendChild(tCenterImage);
-			tBar.appendChild(tCenter);
-		}
-		//右端
-		let tRight=document.createElement("div");
-		if(!aOption.trans)tRight.style.display="inline-block";
-		tRight.style.overflow="hidden";
-		tRight.style.width=aOption.rightSize/tOriginalWidth*100+"%";
-		let tRightImage=document.createElement("img");
-		tRightImage.src=aBarImage;
-		tRightImage.style.position="relative";
-		tRightImage.style.marginLeft=-(aOption.imageWidth-aOption.rightSize)/aOption.rightSize*100+"%"
-		tRightImage.style.height="100%";
-		tRightImage.style.width=aOption.imageWidth/aOption.rightSize*100+"%";
-		tRight.appendChild(tRightImage);
-		tBar.appendChild(tRight);
-		//中身
+		tBar.classList.add("resizebleBar");
+		tBar.style.position="relative";
+		//外枠の幅か高さのどちらかを設定すると、生成する要素の高さが決まるようにする
+		let tBefore=document.createElement("div");
+		tBefore.style.display="block";
+		tBefore.style.paddingTop=aOption.imageHeight/tOriginalBarWidth*100+"%";//外枠の幅に対する高さの割合
+		tBar.appendChild(tBefore);
+		//外枠の幅か高さを決定すると、この要素の高さが決まる
 		let tContent=document.createElement("div");
 		tContent.style.position="absolute";
 		tContent.style.top="0";
 		tContent.style.left="0";
-		tContent.style.marginTop=17/tOriginalWidth*100+"%";
-		tContent.style.marginLeft=22/tOriginalWidth*100+"%";
-		tContent.style.width=100-44/tOriginalWidth*100+"%";
-		tContent.style.height=100-34/aOption.imageHeight*100+"%";
-		tBar.appendChild(tContent);
+		tContent.style.bottom="0";
+		tContent.style.right="0";
+		tBefore.appendChild(tContent);
+		//画像の設定
+		let tTrimmer,tImage;
+		//画像の幅と高さを取得するための要素,画像と高さと幅が同じになる
+		let tSizeBox=document.createElement("div");
+		tSizeBox.style.position="absolute";
+		tSizeBox.style.height="100%";
+		tSizeBox.style.letterSpacing="-.4em";
+		// tSizeBox.style.fontSize="0";
+		tSizeBox.style.whiteSpace="nowrap";
+		tContent.appendChild(tSizeBox);
+		//画像の左端
+		//画像をトリミングする
+		tTrimmer=document.createElement("span");
+		tTrimmer.style.display="inline-block";
+		tTrimmer.style.width=aOption.leftSize/aOption.imageWidth*100+"%";
+		tTrimmer.style.height="100%";
+		tTrimmer.style.overflow="hidden";
+		tSizeBox.appendChild(tTrimmer);
+		//画像
+		tImage=document.createElement("img");
+		tImage.src=aBarImage;
+		tImage.style.height="100%";
+		tTrimmer.appendChild(tImage);
+		//画像の中央
+		for(let i=0;i<aTileNum;i++){
+			//画像をトリミングする
+			tTrimmer=document.createElement("span");
+			tTrimmer.style.display="inline-block";
+			tTrimmer.style.position="relative";
+			tTrimmer.style.width=aOption.centerSize/aOption.imageWidth*100+"%";
+			tTrimmer.style.height="100%";
+			tTrimmer.style.overflow="hidden";
+			tSizeBox.appendChild(tTrimmer);
+			//画像
+			tImage=document.createElement("img");
+			tImage.src=aBarImage;
+			tImage.style.height="100%";
+			tImage.style.marginLeft=-aOption.leftSize/aOption.centerSize*100+"%";
+			tImage.style.position="absolute";
+			tTrimmer.appendChild(tImage);
+		}
+		//画像の右端
+		//画像をトリミングする
+		tTrimmer=document.createElement("span");
+		tTrimmer.style.display="inline-block";
+		tTrimmer.style.position="relative";
+		tTrimmer.style.width=aOption.rightSize/aOption.imageWidth*100+"%";
+		tTrimmer.style.height="100%";
+		tTrimmer.style.overflow="hidden";
+		tSizeBox.appendChild(tTrimmer);
+		//画像
+		tImage=document.createElement("img");
+		tImage.src=aBarImage;
+		tImage.style.height="100%";
+		tImage.style.position="absolute";
+		tImage.style.right="0";
+		tTrimmer.appendChild(tImage);
+		//生成した要素に中身を入れるための要素,画像の枠になっている部分を除いたサイズにする
+		let tMarginTop=(aOption.imageMargin.height+aOption.frameMargin.height)/aOption.imageHeight*100;
+		let tMarginLeft=(aOption.imageMargin.width+aOption.frameMargin.width)/aOption.imageWidth*100;
+		let tInner=document.createElement("div");
+		tInner.classList.add("inner")
+		tInner.style.position="absolute";
+		tInner.style.top=tMarginTop+"%";
+		tInner.style.left=tMarginLeft+"%";
+		tInner.style.letterSpacing="normal";
+		tInner.style.width=(tOriginalBarWidth/aOption.imageWidth)*100-2*tMarginLeft+"%";
+		tInner.style.height=100-2*tMarginTop+"%";
+		tSizeBox.appendChild(tInner);
 
-		return {bar:tBar,content:tContent}
+		return {bar:tBar,content:tInner};
 	}
 }
