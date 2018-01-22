@@ -19,11 +19,13 @@ class PygmySelector extends Selector{
 		if(aOption.bottom!=undefined)this.container.style.bottom=aOption.bottom;
 		this.displayData=(aOption.displayData!=undefined)?aOption.displayData:["image"];
 		if(aOption.append!=false)mAlartScene.appendChild(this.container);
-		this.selectorContents=new Array();
+		this.selectorContents=new Array();//ぴぐみーの情報を入れる要素
+		this.pygmyBar=new Array();//ぴぐみーの情報を入れる要素を含んだbar
 		for(let i=0;i<mMaxAcconpanyingNum;i++){
-			let tBar=BarMaker.makeWinterBar(this.displayData.length-1,{trans:true});
-			tBar.bar.style.height="95%"
+			let tBar=BarMaker.makeWinterBar(this.displayData.length-2,{trans:true});
+			tBar.bar.style.width="20%"
 			this.selectorContents.push(tBar.content);
+			this.pygmyBar.push(tBar.bar);
 			this.pygmyContainer.appendChild(tBar.bar);
 		}
 		this.resetPygmies();
@@ -49,7 +51,11 @@ class PygmySelector extends Selector{
 			let tPygmyTag=document.createElement("div");
 			tPygmyTag=this.selectorContents[i];
 			tPygmyTag.textContent="";
-			if(this.pygmies.length<=i)continue;
+			if(this.pygmies.length<=i){
+				this.pygmyBar[i].style.webkitFilter="brightness(70%)";
+				continue;
+			}
+			this.pygmyBar[i].style.webkitFilter="brightness(100%)";
 			let tPygmy=this.pygmies[i];
 			for(let tDataName of this.displayData){
 				switch (tDataName) {
@@ -157,10 +163,14 @@ class PygmySelector extends Selector{
 		else this.selectedFunction(this.pygmies[aNum]);
 	}
 	pickElement(aNum){
-		this.choiceElements[aNum].style.border="solid 1px #f00";
+		this.pygmyBar[aNum].style.webkitFilter="hue-rotate(35deg)";
+		this.selectorContents[aNum].style.webkitFilter="hue-rotate(-35deg)";
+		// this.choiceElements[aNum].style.border="solid 1px #f00";
 	}
 	releaseElement(aNum){
-		this.choiceElements[aNum].style.border="solid 1px rgba(0,0,0,0)";
+		this.pygmyBar[aNum].style.webkitFilter="hue-rotate(0deg)";
+		this.selectorContents[aNum].style.webkitFilter="hue-rotate(0deg)";
+		// this.choiceElements[aNum].style.border="solid 1px rgba(0,0,0,0)";
 	}
 	//閉じる
 	close(){
