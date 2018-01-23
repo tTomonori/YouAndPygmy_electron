@@ -19,14 +19,32 @@ class PygmySelector extends Selector{
 		if(aOption.bottom!=undefined)this.container.style.bottom=aOption.bottom;
 		this.displayData=(aOption.displayData!=undefined)?aOption.displayData:["image"];
 		if(aOption.append!=false)mAlartScene.appendChild(this.container);
+		//ぴぐみーの情報を入れるbarの長さを決める
+		let tBarLength=0;
+		for(let tData of this.displayData){
+			switch (tData) {
+				case "image":tBarLength+=5;break;
+				case "name":tBarLength+=1;break;
+				case "race":tBarLength+=0.5;break;
+				case "level":tBarLength+=0.5;break;
+				case "experience":tBarLength+=1.5;break;
+				case "tairyoku":tBarLength+=1.5;break;
+				case "item":tBarLength+=1;break;
+				case "accessory":tBarLength+=1;break;
+				default:
+			}
+		}
+		tBarLength=Math.ceil((tBarLength-3)/2);
 		this.selectorContents=new Array();//ぴぐみーの情報を入れる要素
 		this.pygmyBar=new Array();//ぴぐみーの情報を入れる要素を含んだbar
+		this.barImage=new Array();//ぴぐみーの情報を入れる要素を含んだbarの画像のタグ
 		for(let i=0;i<mMaxAcconpanyingNum;i++){
-			let tBar=BarMaker.makeWinterBar(this.displayData.length-2,{trans:true});
-			tBar.bar.style.width="20%"
+			let tBar=BarMaker.makeWinterBar(tBarLength,{trans:true});
+			tBar.tag.style.width="20%"
 			this.selectorContents.push(tBar.content);
-			this.pygmyBar.push(tBar.bar);
-			this.pygmyContainer.appendChild(tBar.bar);
+			this.pygmyBar.push(tBar.tag);
+			this.barImage.push(tBar.image);
+			this.pygmyContainer.appendChild(tBar.tag);
 		}
 		this.resetPygmies();
 		//CountSelector
@@ -73,13 +91,13 @@ class PygmySelector extends Selector{
 					case "race"://種族
 						let tRaceLabel=document.createElement("div");
 						tRaceLabel.textContent="種族:"+tPygmy.getRaceName();
-						tRaceLabel.style.fontSize=tPygmyTagWidth/10+"px";
+						tRaceLabel.style.fontSize=tPygmyTagWidth/12+"px";
 						tPygmyTag.appendChild(tRaceLabel);
 						break;
 					case "level"://レベル
 						let tLevelLabel=document.createElement("div");
 						tLevelLabel.innerHTML="Lv.&nbsp"+tPygmy.getLevel();
-						tLevelLabel.style.fontSize=tPygmyTagWidth/7+"px";
+						tLevelLabel.style.fontSize=tPygmyTagWidth/10+"px";
 						tPygmyTag.appendChild(tLevelLabel);
 						break;
 					case "closeness"://親密度
@@ -163,13 +181,11 @@ class PygmySelector extends Selector{
 		else this.selectedFunction(this.pygmies[aNum]);
 	}
 	pickElement(aNum){
-		this.pygmyBar[aNum].style.webkitFilter="hue-rotate(35deg)";
-		this.selectorContents[aNum].style.webkitFilter="hue-rotate(-35deg)";
+		this.barImage[aNum].style.webkitFilter="hue-rotate(-90deg)";
 		// this.choiceElements[aNum].style.border="solid 1px #f00";
 	}
 	releaseElement(aNum){
-		this.pygmyBar[aNum].style.webkitFilter="hue-rotate(0deg)";
-		this.selectorContents[aNum].style.webkitFilter="hue-rotate(0deg)";
+		this.barImage[aNum].style.webkitFilter="hue-rotate(0deg)";
 		// this.choiceElements[aNum].style.border="solid 1px rgba(0,0,0,0)";
 	}
 	//閉じる

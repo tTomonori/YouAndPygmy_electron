@@ -20,6 +20,8 @@ class Pygmy{
 	getItem(){return this.item}
 	getAccessory(){return this.accessory.status}
 	getLooksAccessory(){return this.accessory.looks}
+	getSettingSkill(){return this.skills.set}
+	getMasteredSkill(){return this.skills.master}
 	setCurrentTairyoku(aTairyoku){this.currentTairyoku=aTairyoku}
 	setItem(aItem){this.item=aItem}
 	//体力ゲージ取得

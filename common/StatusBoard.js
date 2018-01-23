@@ -1,7 +1,8 @@
 class StatusBoard{
 	static init(){
 		let tBoard=BarMaker.makeWinterBar(6);
-		this.window=tBoard.bar;
+		tBoard.image.style.webkitFilter="hue-rotate(40deg)";
+		this.window=tBoard.tag;
 		this.window.style.position="absolute";
 		this.window.id="StatusBoard";
 		this.board=tBoard.content;
@@ -67,14 +68,14 @@ class StatusBoard{
 		this.dataBox.appendChild(this.dataFoot);
 		//ステータス
 		this.statusBox=document.createElement("div");
-		this.statusBox.style.width="40%";
+		this.statusBox.style.width="33%";
 		this.statusBox.style.height="100%";
 		this.statusBox.style.display="inline-block";
 		this.statusBox.style.verticalAlign="top";
 		this.dataFoot.appendChild(this.statusBox);
 		//スキル
 		this.skillBox=document.createElement("div");
-		this.skillBox.style.width="30%";
+		this.skillBox.style.width="35%";
 		this.skillBox.style.height="100%";
 		this.skillBox.style.display="inline-block";
 		this.skillBox.style.verticalAlign="top";
@@ -214,6 +215,54 @@ class StatusBoard{
 	//スキル更新
 	static renewskill(){
 		this.skillBox.textContent="";
+		//セットスキル
+		let tSetBar=BarMaker.makeWinterBar(1,{trans:true});
+		tSetBar.tag.style.maxWidth="50%";
+		tSetBar.tag.style.maxHeight="105%";
+		tSetBar.tag.style.width="100%";
+		this.skillBox.appendChild(tSetBar.tag);
+		let tSkillList=this.pygmy.getSettingSkill();
+		for(let i=0;i<4;i++){
+			let tSkillKey=tSkillList[i];
+			let tSkill,tSkillName;
+			if(tSkillKey!=""){
+				tSkill=SkillDictionary.get(tSkillKey);
+				tSkillName=tSkill.name;
+			}
+			if(i<2){
+				let tBar=ChoiceBarMaker.make("image/choiceBar/yellow/name/name.png",tSkillName,{width:"100%"});
+				tSetBar.content.appendChild(tBar);
+			}
+			else if(i==2){
+				let tBar=ChoiceBarMaker.make("image/choiceBar/yellow/name/name.png",tSkillName,{width:"100%"});
+				if(tSkillKey=="")tBar.style.webkitFilter="brightness(70%)";
+				tSetBar.content.appendChild(tBar);
+			}
+			else{
+				let tBar=ChoiceBarMaker.make("image/choiceBar/red/name/name.png",tSkill,{width:"100%"});
+				tSetBar.content.appendChild(tBar);
+			}
+		}
+		//習得スキル
+		let tMasterBar=BarMaker.makeWinterBar(1,{trans:true});
+		tMasterBar.tag.style.maxWidth="50%";
+		tMasterBar.tag.style.maxHeight="105%";
+		tMasterBar.tag.style.width="100%";
+		this.skillBox.appendChild(tMasterBar.tag);
+		for(let tSkillKey of this.pygmy.getMasteredSkill()){
+			let tSkillName,tBarImage;
+			if(tSkillKey==""){//スキルがセットされていない
+				tSkillName="";
+				tBarImage="image/choiceBar/yellow/name/name.png";
+			}
+			else{//スキルがセットされている
+				let tSkill=SkillDictionary.get(tSkillKey);
+				tSkillName=tSkill.name;
+				tBarImage=(tSkill.passive)?"image/choiceBar/red/name/name.png":"image/choiceBar/yellow/name/name.png";
+			}
+			let tBar=ChoiceBarMaker.make(tBarImage,tSkillName,{width:"100%"});
+			tMasterBar.content.appendChild(tBar);
+		}
 	}
 	//移動力更新
 	static renewMove(){

@@ -35,7 +35,7 @@ class PygmyMenu extends MenuBoard{
 	static initBoard(){
 		this.board.textContent="";
 		this.board.style.paddingTop=mScreenSize.height/40+"px";
-		this.pygmySelector=new PygmySelector({displayData:["image","name","race","tairyoku","experience","item","accessory"],append:false,width:this.boardWidth});
+		this.pygmySelector=new PygmySelector({displayData:["image","name","race","level","tairyoku","experience","item","accessory"],append:false,width:this.boardWidth});
 		this.pygmySelector.setSelectedFunction((aData)=>{
 			if(aData!=this.displayedPygmy){
 				this.displayedPygmy=aData;

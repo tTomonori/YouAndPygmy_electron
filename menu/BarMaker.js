@@ -35,21 +35,36 @@ class BarMaker{
 		tSizeBox.style.position="absolute";
 		tSizeBox.style.height="100%";
 		tSizeBox.style.letterSpacing="-.4em";
-		// tSizeBox.style.fontSize="0";
 		tSizeBox.style.whiteSpace="nowrap";
 		tContent.appendChild(tSizeBox);
+		//画像の幅と高さを取得するための画像
+		tImage=document.createElement("img");
+		tImage.src=aBarImage;
+		tImage.style.height="100%";
+		tImage.style.opacity="0";
+		tSizeBox.appendChild(tImage);
+		//画像をまとめるタグ
+		let tImageTag=document.createElement("div");
+		tImageTag.style.position="absolute";
+		tImageTag.style.width="100%";
+		tImageTag.style.height="100%";
+		tImageTag.style.left="0";
+		tImageTag.style.top="0";
+		tSizeBox.appendChild(tImageTag);
 		//画像の左端
 		//画像をトリミングする
 		tTrimmer=document.createElement("span");
 		tTrimmer.style.display="inline-block";
+		tTrimmer.style.position="relative";
 		tTrimmer.style.width=aOption.leftSize/aOption.imageWidth*100+"%";
 		tTrimmer.style.height="100%";
 		tTrimmer.style.overflow="hidden";
-		tSizeBox.appendChild(tTrimmer);
+		tImageTag.appendChild(tTrimmer);
 		//画像
 		tImage=document.createElement("img");
 		tImage.src=aBarImage;
 		tImage.style.height="100%";
+		tImage.style.position="absolute";
 		tTrimmer.appendChild(tImage);
 		//画像の中央
 		for(let i=0;i<aTileNum;i++){
@@ -60,7 +75,7 @@ class BarMaker{
 			tTrimmer.style.width=aOption.centerSize/aOption.imageWidth*100+"%";
 			tTrimmer.style.height="100%";
 			tTrimmer.style.overflow="hidden";
-			tSizeBox.appendChild(tTrimmer);
+			tImageTag.appendChild(tTrimmer);
 			//画像
 			tImage=document.createElement("img");
 			tImage.src=aBarImage;
@@ -77,7 +92,7 @@ class BarMaker{
 		tTrimmer.style.width=aOption.rightSize/aOption.imageWidth*100+"%";
 		tTrimmer.style.height="100%";
 		tTrimmer.style.overflow="hidden";
-		tSizeBox.appendChild(tTrimmer);
+		tImageTag.appendChild(tTrimmer);
 		//画像
 		tImage=document.createElement("img");
 		tImage.src=aBarImage;
@@ -98,8 +113,9 @@ class BarMaker{
 		tInner.style.height=100-2*tMarginTop+"%";
 		tSizeBox.appendChild(tInner);
 
-		return {bar:tBar,content:tInner};
+		return {tag:tBar,content:tInner,image:tImageTag};
 	}
+	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//画像が縦向きのとき
 	static makeTransTileBar(aBarImage,aTileNum,aOption){
 		//元画像のサイズで生成した時のdomの幅
@@ -129,42 +145,51 @@ class BarMaker{
 		let tSizeBox=document.createElement("div");
 		tSizeBox.style.position="absolute";
 		tSizeBox.style.lineHeight="0";
-		//
 		tSizeBox.style.height=aOption.imageWidth/tOriginalBarWidth*100+"%";
-		// tSizeBox.style.letterSpacing="-.4em";
-		// tSizeBox.style.fontSize="0";
-		// tSizeBox.style.whiteSpace="nowrap";
 		tContent.appendChild(tSizeBox);
+		//画像の幅と高さを取得するための画像
+		tImage=document.createElement("img");
+		tImage.src=aBarImage;
+		tImage.style.height="100%";
+		tImage.style.opacity="0";
+		tSizeBox.appendChild(tImage);
+		//画像をまとめるタグ
+		let tImageTag=document.createElement("div");
+		tImageTag.style.position="absolute";
+		tImageTag.style.width="100%";
+		tImageTag.style.height="100%";
+		tImageTag.style.left="0";
+		tImageTag.style.top="0";
+		tSizeBox.appendChild(tImageTag);
 		//画像の左端
 		//画像をトリミングする
 		tTrimmer=document.createElement("span");
-		tTrimmer.style.display="inline-block";
-		//
+		tTrimmer.style.display="block";
+		tTrimmer.style.position="relative";
 		tTrimmer.style.height=aOption.leftSize/aOption.imageWidth*100+"%";
 		tTrimmer.style.width="100%";
 		tTrimmer.style.overflow="hidden";
-		tSizeBox.appendChild(tTrimmer);
+		tImageTag.appendChild(tTrimmer);
 		//画像
 		tImage=document.createElement("img");
 		tImage.src=aBarImage;
-		tImage.style.height=aOption.imageWidth/aOption.leftSize*100+"%";
+		tImage.style.width="100%";
+		tImage.style.position="absolute";
 		tTrimmer.appendChild(tImage);
 		//画像の中央
 		for(let i=0;i<aTileNum;i++){
 			//画像をトリミングする
 			tTrimmer=document.createElement("span");
-			tTrimmer.style.display="inline-block";
+			tTrimmer.style.display="block";
 			tTrimmer.style.position="relative";
 			tTrimmer.style.height=aOption.centerSize/aOption.imageWidth*100+"%";
 			tTrimmer.style.width="100%";
 			tTrimmer.style.overflow="hidden";
-			tSizeBox.appendChild(tTrimmer);
+			tImageTag.appendChild(tTrimmer);
 			//画像
 			tImage=document.createElement("img");
 			tImage.src=aBarImage;
-			//
 			tImage.style.width="100%";
-			//
 			tImage.style.marginTop=-aOption.leftSize/aOption.imageHeight*100+"%";
 			tImage.style.position="absolute";
 			tTrimmer.appendChild(tImage);
@@ -172,13 +197,12 @@ class BarMaker{
 		//画像の右端
 		//画像をトリミングする
 		tTrimmer=document.createElement("span");
-		tTrimmer.style.display="inline-block";
+		tTrimmer.style.display="block";
 		tTrimmer.style.position="relative";
-		//
 		tTrimmer.style.height=aOption.rightSize/aOption.imageWidth*100+"%";
 		tTrimmer.style.width="100%";
 		tTrimmer.style.overflow="hidden";
-		tSizeBox.appendChild(tTrimmer);
+		tImageTag.appendChild(tTrimmer);
 		//画像
 		tImage=document.createElement("img");
 		tImage.src=aBarImage;
@@ -195,12 +219,11 @@ class BarMaker{
 		tInner.style.top=tMarginTop+"%";
 		tInner.style.left=tMarginLeft+"%";
 		tInner.style.boxSizing="border-box";
-		//
 		tInner.style.lineHeight="normal";
 		tInner.style.height=(tOriginalBarWidth/aOption.imageWidth)*100-2*tMarginTop+"%";
 		tInner.style.width=100-2*tMarginLeft+"%";
 		tSizeBox.appendChild(tInner);
 
-		return {bar:tBar,content:tInner};
+		return {tag:tBar,content:tInner,image:tImageTag};
 	}
 }
